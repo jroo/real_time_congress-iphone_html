@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>RtCongress</title>
+	<link rel="stylesheet" type="text/css"  href="css/iphone.css" />
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<link rel="apple-touch-icon" href="images/appicon.jpg" />
+	<link rel="apple-touch-startup-image" href="images/default_460.png" />
+	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="js/application.js"></script>
+	<script type="text/javascript" src="js/date_utils.js"></script>
+	<script type="text/javascript" src="js/whip_notices.js"></script>
+</head>
+<body>
+	<div id="header">
+		<div class="leftButton" onclick="loadView('index')">Menu</div>
+		<h1 id="title_text">Whip Notices</h1>
+	</div>
+	<div id="whip_notices">
+		<ul id="whip_menu" class="classic_list">
+			<li>
+				<a href="#" onClick="loadWhip('dwd')">
+				<div>Democratic Daily Whipline</div>
+				<div id="dwd_date" class="whip_date"></div>
+				</a>
+			</li>
+			<li>
+				<a href="#" onClick="loadWhip('dww')">
+				<div>Democratic Weekly Whip Pack</div>
+				<div id="dww_date" class="whip_date"></div>
+				</a>
+			</li>
+			<li>
+				<a href="#" onClick="loadWhip('rwd')">
+				<div>Republican Daily Whipping Post</div>
+				<div id="rwd_date" class="whip_date"></div>
+				</a>
+			</li>
+			<li>
+				<a href="#" onClick="loadWhip('rww')">
+				<div>Republican Weekly Whip Notice</div>
+				<div id="rww_date" class="whip_date"></div>
+				</a>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>
