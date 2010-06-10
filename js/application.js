@@ -1,5 +1,13 @@
 $(document).ready(function() {
     initializeDb(LOCAL_DB);
+
+	$('a.view').click(function() {
+		//$('a.loading').removeClass('loading');
+		//$(this).addClass('loading');
+		window.location = this.href;
+		return false;
+	});
+
 });
 
 RTC_DOMAIN = 'eleventy6.com:8000'; //realtimecongress.org

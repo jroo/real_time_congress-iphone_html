@@ -1,9 +1,12 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>RtCongress</title>
-	<link rel="stylesheet" type="text/css"  href="css/iphone.css" />
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="viewport" content="user-scalable=no">
+	<title>RtCongress</title>
+	<link rel="stylesheet" type="text/css"  href="css/iphone.css" />
 	<link rel="apple-touch-icon" href="images/appicon.jpg" />
 	<link rel="apple-touch-startup-image" href="images/default_460.png" />
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
@@ -18,13 +21,35 @@
 	</div>
 	<div id="main_menu">
 		<ul class="menu">
-			<li><a onClick="loadView('floor_updates')"><img class="menu_icon" src="images/updates.png"> Floor Updates</a></li>
+			<li class="floor-updates">
+				<a href="floor_updates.html" class="view">Floor Updates</a>
+			</li>
+			<li class="whip-notices">
+				<a href="whip_notices.html" class="view">Whip Notices</a>
+			</li>
+			<li class="hearings">
+				<a href="hearings.html" class="view">Hearings</a>
+			</li>
+			<li class="documents">
+				<a href="documents.html" class="view">Documents</a>
+			</li>
+			<li class="news">
+				<a href="news.html" class="view">News</a>
+			</li>
+			<li class="about">
+				<a href="about.html" class="view">About</a>
+			</li>
+		</ul>
+		<!--
+		<ul class="menu">
+			<li><a onClick="loadView('floor_updates')"><img class="menu_icon" src=""> Floor Updates</a></li>
 			<li><a onClick="loadView('whip_notices')"><img class="menu_icon" src="images/notices.png"> Whip Notices</a></li>
 			<li><a onClick="loadView('hearings')"><img class="menu_icon" src="images/hearings.png"> Hearings</a></li>
 			<li><a onClick="loadView('documents')"><img class="menu_icon" src="images/docs.png"> Documents</a></li>
 			<li><a onClick="loadView('news')"><img class="menu_icon" src="images/news.png"> News</a></li>
 			<li><a onClick="loadView('about')"><img class="menu_icon" src="images/about.png"> About</a></li>
 		</ul>
+		-->
 	</div>
 
 	<div id="about">

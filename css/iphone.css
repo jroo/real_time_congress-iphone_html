@@ -8,12 +8,12 @@ body {
 }
 
 #header {
-	background-color: #000000;
+	background-color: #333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#444), to(#000));
 }
 
 #header h1 {
 	color: #FFFFFF;
-	background-color: #000000;
     font-size: 20px;
     font-weight: bold;
     margin: 0 auto;
@@ -29,6 +29,23 @@ body {
 #main_menu {
 	margin: 0px;
 }
+#main_menu ul {
+	list-style: none;
+	margin: 10px;
+	padding: 0;
+}
+#main_menu ul.menu li a {
+	background-position: 10px 12px;
+	background-repeat: no-repeat;
+	padding: 18px 0 18px 50px;
+}
+#main_menu ul.menu li.floor-updates a { background-image: url(../images/updates.png); }
+#main_menu ul.menu li.whip-notices a { background-image: url(../images/notices.png); }
+#main_menu ul.menu li.hearings a { background-image: url(../images/hearings.png); }
+#main_menu ul.menu li.documents a { background-image: url(../images/docs.png); }
+#main_menu ul.menu li.news a { background-image: url(../images/news.png); }
+#main_menu ul.menu li.about a { background-image: url(../images/about.png); }
+
 
 .menu {
     list-style: none;
