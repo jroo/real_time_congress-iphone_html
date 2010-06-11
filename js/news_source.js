@@ -85,8 +85,9 @@ function renderRow(row, dest_list) {
     var anchor = document.createElement("a");
     anchor.href = row.url;
 	$(anchor).click(function() {
-		window.location = 'external.html#' + this.href;
-		return false;
+		//window.location = 'external.html#' + this.href;
+		//return false;
+		return true;
 	});
     
     var titleDiv = document.createElement("div");
