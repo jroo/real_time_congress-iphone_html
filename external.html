@@ -9,7 +9,6 @@
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
 	<script type="text/javascript" src="js/date_utils.js"></script>
-	<script type="text/javascript" src="js/news_source.js"></script>
 </head>
 <body>
 	<div id="header">
@@ -18,12 +17,24 @@
 		<h1 id="title_text">News</h1>
 	</div>
 	<div id="wrapper">
-		<iframe frameborder="0" width="320px" height="200px"></iframe>
 	</div>
 	<script>
 		var hash = window.location.hash.substr(1);
-		var mobilizerUrl = 'http://www.google.com/gwt/x?u=' + hash;
-		$('iframe').attr('src', mobilizerUrl);
+		var url = 'http://www.google.com/gwt/x?u=' + hash;
+		//var url = hash;
+		alert(decodeURIComponent(encodeURIComponent(url)));
+		var query = "select%20*%20from%20html%20where%20url%3D%22" + url + "%22";
+		var yql = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20html%20where%20url%3D%22" +
+					encodeURIComponent(url) +
+					"%22&format=xml'&callback=?";
+		$.getJSON(yql, function(data) {
+			if(data.results && data.results[0]){
+				$('#wrapper').html(data.results[0]);
+			} else {
+				var errormsg = '<p>Error: could not load the page.</p>';
+				$('#wrapper').html(errormsg);
+			}
+		});
 	</script>
 </body>
 </html>
