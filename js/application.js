@@ -15,8 +15,8 @@ $(document).ready(function() {
 
 });
 
-RTC_DOMAIN = 'eleventy6.com:8000'; //realtimecongress.org
-DOCSERVER_DOMAIN = 'eleventy6.com:8080';  //docserver.org
+RTC_DOMAIN = 'realtimecongress.org'; //realtimecongress.org
+DOCSERVER_DOMAIN = 'docserver.org';  //docserver.org
 LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
 
 function markViewed(view_name) {

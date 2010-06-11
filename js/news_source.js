@@ -1,13 +1,8 @@
 $(document).ready(function() {
     DEST_LIST = document.getElementById('news_list');
     $('#title_text').html(localStorage.getItem("current_news_title"));
-    loadNews(localStorage.getItem("current_news_source"));    
+    loadNews(localStorage.getItem("current_news_source"));  
 });
-
-function loaded() {
-	document.addEventListener('touchmove', function(e){ e.preventDefault(); });
-}
-document.addEventListener('DOMContentLoaded', loaded);
 
 function loadNews(news_source) {
     dbGetLatest(news_source);

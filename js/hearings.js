@@ -9,13 +9,14 @@ CURRENT_CHAMBER = 'Senate';
 function loadChamber(chamber) {
     CURRENT_CHAMBER = chamber;
     $('#title_text').html(chamber + " Hearings");
+    /*
     if (chamber == 'House') {
         $('senate_link').removeClass('active');
         $('house_link').addClass('active');
     } else {
         $('senate_link').addClass('active');
         $('house_link').removeClass('active');   
-    }     
+    }   */  
     dbGetLatest(chamber);
     if (!isViewed('hearings_' + chamber)) {
         serverGetLatest(chamber);
