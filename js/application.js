@@ -7,6 +7,11 @@ $(document).ready(function() {
 		window.location = this.href;
 		return false;
 	});
+	
+	$('ul.selector a').click(function() {
+		$(this).parent().parent().find('a').removeClass('active');
+		$(this).addClass('active');
+	});
 
 });
 

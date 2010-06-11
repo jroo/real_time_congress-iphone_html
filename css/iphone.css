@@ -270,7 +270,7 @@ body {
 }
 
 #senate_select a.active{
-	background: url('/images/house-active.png') top left no-repeat;
+	background: url('/images/senate-active.png') top left no-repeat;
 }
 
 .clear {
