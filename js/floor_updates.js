@@ -46,6 +46,7 @@ function localToList(results) {
 function serverGetLatest(chamber) {
     $('body').append('<div id="progress">Loading...</div>');
 
+    testReachable();
     //fetch floor updates from server
     jsonUrl = "http://" + RTC_DOMAIN + "/floor_recent.json?chamber=" + chamber;
     $.ajax({

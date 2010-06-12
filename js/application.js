@@ -19,6 +19,14 @@ RTC_DOMAIN = 'realtimecongress.org'; //realtimecongress.org
 DOCSERVER_DOMAIN = 'docserver.org';  //docserver.org
 LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
 
+function testReachable() {
+    navigator.network.isReachable(RTC_DOMAIN, testReachable_callback);
+}
+
+function testReachable_callback(reachability) {
+    alert(reachability. internetConnectionStatus);
+}
+
 function markViewed(view_name) {
     sessionStorage.setItem(view_name + '_viewed', true);
 }
