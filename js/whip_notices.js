@@ -63,31 +63,6 @@ function addToLocal(row, doc_type) {
     );
 }
 
-/*
-function updateWhipNotices() {
-    $('body').append('<div id="progress">Loading...</div>');
-    
-    //fetch dates and urls for most current reports
-    jsonUrl = "http://" + RTC_DOMAIN + "/whip_dates.json";
-    $.ajax({
-        type: "GET",
-        url: jsonUrl, 
-        dataType: "jsonp",
-        success: function(data){
-            $('#dww_link').attr("href", data[0]['dww'].url)
-            $('#dww_date').html(leadershipFormat(data[0]['dww'].date));
-            $('#dwd_link').click(function() { window.open(data[0]['dwd'].url, '_blank') });
-            $('#dwd_date').html(leadershipFormat(data[0]['dwd'].date));
-            $('#rwd_link').attr("href", data[0]['rwd'].url)
-            $('#rwd_date').html(leadershipFormat(data[0]['rwd'].date));
-            $('#rww_link').attr("href", data[0]['rww'].url)
-            $('#rww_date').html(leadershipFormat(data[0]['rww'].date));
-            $('#progress').remove();
-        }
-    });
-}
-*/
-
 function leadershipFormat(orig_date) {
     try {
         var date_str = sqlDateToDate(orig_date).format("dddd, mmmm d");
