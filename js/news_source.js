@@ -79,7 +79,10 @@ function renderRow(row, dest_list) {
     }
     
     var newItem = document.createElement("li");
-    
+
+    var result = document.createElement("div");
+    result.className = 'result_body';
+
     var anchor = document.createElement("a");
     anchor.href = row.url;
 	$(anchor).click(function() {
@@ -98,7 +101,8 @@ function renderRow(row, dest_list) {
     
     anchor.appendChild(titleDiv);
     anchor.appendChild(subDiv);
-    newItem.appendChild(anchor);
+    result.appendChild(anchor);
+    newItem.appendChild(result);
     dest_list.appendChild(newItem);
 }
 
