@@ -2,8 +2,6 @@ $(document).ready(function() {
     initializeDb(LOCAL_DB);
 
 	$('a.view').click(function() {
-		//$('a.loading').removeClass('loading');
-		//$(this).addClass('loading');
 		window.location = this.href;
 		return false;
 	});
@@ -12,20 +10,12 @@ $(document).ready(function() {
 		$(this).parent().parent().find('a').removeClass('active');
 		$(this).addClass('active');
 	});
-
 });
 
-RTC_DOMAIN = 'realtimecongress.org'; //realtimecongress.org
-DOCSERVER_DOMAIN = 'docserver.org';  //docserver.org
+RTC_DOMAIN = 'realtimecongress.org';
+DOCSERVER_DOMAIN = 'docserver.org';
 LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
-
-function testReachable() {
-    navigator.network.isReachable(RTC_DOMAIN, testReachable_callback);
-}
-
-function testReachable_callback(reachability) {
-    alert(reachability. internetConnectionStatus);
-}
+AJAX_TIMEOUT = 5000;
 
 function markViewed(view_name) {
     sessionStorage.setItem(view_name + '_viewed', true);

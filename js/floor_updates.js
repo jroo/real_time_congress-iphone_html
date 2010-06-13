@@ -46,13 +46,12 @@ function localToList(results) {
 function serverGetLatest(chamber) {
     $('body').append('<div id="progress">Loading...</div>');
 
-    testReachable();
     //fetch floor updates from server
     jsonUrl = "http://" + RTC_DOMAIN + "/floor_recent.json?chamber=" + chamber;
-    $.ajax({
-        type: "GET",
-        url: jsonUrl, 
-        dataType: "jsonp",
+    $.jsonp({
+        url: jsonUrl,
+        callbackParameter: "callback",
+        timeout: AJAX_TIMEOUT,
         success: function(data){
             for (i in data) {
                 addToLocal(data[i], chamber);
@@ -60,7 +59,11 @@ function serverGetLatest(chamber) {
             markViewed('floor_' + chamber);
             dbGetLatest(chamber);
             $('#progress').remove();
-        }
+        },
+        error: function(d, msg) {
+            $('#progress').remove();
+            navigator.notification.alert("Can't connect to server", "Network Error");
+        },
     });
 }
 

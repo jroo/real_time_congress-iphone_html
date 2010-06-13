@@ -30,11 +30,10 @@ function serverGetLatest() {
 
     //fetch updates from server
     jsonUrl = 'http://' + RTC_DOMAIN + '/whip_dates.json';
-
-    $.ajax({
-        type: "GET",
-        url: jsonUrl, 
-        dataType: "jsonp",
+    $.jsonp({
+        url: jsonUrl,
+        callbackParameter: "callback",
+        timeout: AJAX_TIMEOUT,
         success: function(data){
             LOCAL_DB.transaction(
                 function(transaction) {
@@ -48,7 +47,11 @@ function serverGetLatest() {
             markViewed('whip_notices');
             dbGetLatest();
             $('#progress').remove();
-        }
+        },
+        error: function(d, msg) {
+            $('#progress').remove();
+            navigator.notification.alert("Can't connect to server", "Network Error");
+        },
     });
 }
 

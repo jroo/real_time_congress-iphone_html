@@ -32,11 +32,10 @@ function serverGetLatest(news_source) {
 
     //fetch updates from server
     jsonUrl = 'http://' + RTC_DOMAIN + '/feed/' + news_source + '.json';
-
-    $.ajax({
-        type: "GET",
-        url: jsonUrl, 
-        dataType: "jsonp",
+    $.jsonp({
+        url: jsonUrl,
+        callbackParameter: "callback",
+        timeout: AJAX_TIMEOUT,
         success: function(data){
             for (i in data) {
                 addToLocal(data[i], news_source);
@@ -44,7 +43,11 @@ function serverGetLatest(news_source) {
             markViewed('news_' + news_source);
             dbGetLatest(news_source);
             $('#progress').remove();
-        }
+        },
+        error: function(d, msg) {
+            $('#progress').remove();
+            navigator.notification.alert("Can't connect to server", "Network Error");
+        },
     });
 }
 

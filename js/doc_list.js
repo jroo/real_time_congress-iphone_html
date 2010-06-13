@@ -29,10 +29,10 @@ function serverGetLatest(doc_type) {
 
     //fetch updates from server
     jsonUrl = "http://" + DOCSERVER_DOMAIN + "/" + doc_type + "/list.json";
-    $.ajax({
-        type: "GET",
-        url: jsonUrl, 
-        dataType: "jsonp",
+    $.jsonp({
+        url: jsonUrl,
+        callbackParameter: "callback",
+        timeout: AJAX_TIMEOUT,
         success: function(data){
             for (i in data[0].doc_list) {
                 addToLocal(data[0].doc_list[i], doc_type);
@@ -40,7 +40,11 @@ function serverGetLatest(doc_type) {
             markViewed('docs_' + doc_type);
             dbGetLatest(doc_type);
             $('#progress').remove();
-        }
+        },
+        error: function(d, msg) {
+            $('#progress').remove();
+            navigator.notification.alert("Can't connect to server", "Network Error");
+        },
     });
 }
 
