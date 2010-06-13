@@ -1,3 +1,14 @@
+APP_TITLE = "Real Time Congress";
+APP_VERSION = "1.60";
+APP_AUTHOR = "Joshua Ruihley, Sunlight Foundation";
+APP_COPYRIGHT = "Copyright 2010, Sunlight Foundation";
+APP_URL = "http://realtimecongress.org";
+
+RTC_DOMAIN = 'realtimecongress.org';
+DOCSERVER_DOMAIN = 'docserver.org';
+LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
+AJAX_TIMEOUT = 5000;
+
 $(document).ready(function() {
     initializeDb(LOCAL_DB);
 
@@ -11,11 +22,6 @@ $(document).ready(function() {
 		$(this).addClass('active');
 	});
 });
-
-RTC_DOMAIN = 'realtimecongress.org';
-DOCSERVER_DOMAIN = 'docserver.org';
-LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
-AJAX_TIMEOUT = 5000;
 
 function markViewed(view_name) {
     sessionStorage.setItem(view_name + '_viewed', true);
@@ -54,7 +60,6 @@ function openDb(short_name, version, display_name) {
 function initializeDb(db) {    
     db.transaction(
         function(transaction) {
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS LastView (id TEXT PRIMARY KEY, view_name TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS News (id TEXT PRIMARY KEY, title TEXT, description TEXT, url TEXT, date DATETIME, doc_type TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS FloorUpdates (id INTEGER PRIMARY KEY, date DATETIME, description TEXT, chamber TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LeadershipNotices (id INTEGER PRIMARY KEY, date DATETIME, doc_type TEXT, url TEXT)');
@@ -63,16 +68,6 @@ function initializeDb(db) {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
         }
     );
-}
-
-function setLastView(view_name, db) {
-    db.transaction(
-        function(transaction) {
-           transaction.executeSql("DELETE FROM LastView");
-           transaction.executeSql("INSERT INTO LastView (view_name) VALUES (?)", [view_name]);
-        }
-    );
-    alert("ok");
 }
 
 function dbErrorHandler(transaction, error)
