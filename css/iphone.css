@@ -139,11 +139,12 @@ body {
 
 .classic_link_list {
 	list-style-type: none;
-	padding: 0; 
+	padding: 0px;
 	margin: 0px;
 }
 
 .classic_link_list li {
+    padding-right: 10px;
     border-top-style:solid;
     border-bottom-style:solid;
     border-bottom-width:1px;
@@ -275,4 +276,11 @@ body {
 
 .clear {
 	clear: both;
+}
+
+.info_content {
+    margin-left:10px;
+    margin-right:10px;
+    margin-top:10px;
+    font-size:16px;
 }
