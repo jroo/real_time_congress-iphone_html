@@ -7,7 +7,7 @@ APP_URL = "http://realtimecongress.org";
 RTC_DOMAIN = 'realtimecongress.org';
 DOCSERVER_DOMAIN = 'docserver.org';
 LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
-AJAX_TIMEOUT = 5000;
+AJAX_TIMEOUT = 10000;
 
 $(document).ready(function() {
     initializeDb(LOCAL_DB);
