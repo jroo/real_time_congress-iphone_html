@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).bind("deviceready", function() { 
     DEST_LIST = document.getElementById('hearing_list');
     loadChamber(CURRENT_CHAMBER);
     $('#hearings').show();
