@@ -86,7 +86,7 @@ body {
     text-shadow: rgba(0,0,0,0.6) 0px -1px 0px;
     line-height: 28px;
     border-width: 0 8px 0 8px;
-    -webkit-border-image: url('../images/button.png') 0 8 0 8;
+    -webkit-border-image: url('../images/button.svg') 0 8 0 8;
 }
 
 #header img.rightButton {
@@ -198,7 +198,7 @@ body {
 }
 
 .result_body {
-    background-image: url('../images/child_next.png');
+    background-image: url('../images/child_next.svg');
     background-repeat: no-repeat;
     background-position: right;
 }
@@ -213,7 +213,7 @@ body {
 }
 
 .standard_menu_body {
-    background-image: url('../images/child_next.png');
+    background-image: url('../images/child_next.svg');
     background-repeat: no-repeat;
     background-position: right;
 	font-size: 17px;
@@ -251,27 +251,27 @@ body {
 #house_select a{
 	float:left;
 	display: block;
-	background: url('../images/house-inactive.png') top left no-repeat;
+	background: url('../images/house-inactive.svg') top left no-repeat;
 	width: 152px;
 	height: 31px;
 	text-indent: -9999em;
 }
 
 #house_select a.active{
-	background: url('../images/house-active.png') top left no-repeat;
+	background: url('../images/house-active.svg') top left no-repeat;
 }
 
 #senate_select a{
 	float: right;
 	display: block;
-	background: url('../images/senate-inactive.png') top left no-repeat;
+	background: url('../images/senate-inactive.svg') top left no-repeat;
 	width: 152px;
 	height: 31px;
 	text-indent: -9999em;
 }
 
 #senate_select a.active{
-	background: url('../images/senate-active.png') top left no-repeat;
+	background: url('../images/senate-active.svg') top left no-repeat;
 }
 
 .clear {
