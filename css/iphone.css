@@ -39,12 +39,12 @@ body {
 	background-repeat: no-repeat;
 	padding: 18px 0 18px 50px;
 }
-#main_menu ul.menu li.floor-updates a { background-image: url(../images/updates.png); }
-#main_menu ul.menu li.whip-notices a { background-image: url(../images/notices.png); }
-#main_menu ul.menu li.hearings a { background-image: url(../images/hearings.png); }
-#main_menu ul.menu li.documents a { background-image: url(../images/docs.png); }
-#main_menu ul.menu li.news a { background-image: url(../images/news.png); }
-#main_menu ul.menu li.about a { background-image: url(../images/about.png); }
+#main_menu ul.menu li.floor-updates a { background-image: url(../images/updates.svg); }
+#main_menu ul.menu li.whip-notices a { background-image: url(../images/notices.svg); }
+#main_menu ul.menu li.hearings a { background-image: url(../images/hearings.svg); }
+#main_menu ul.menu li.documents a { background-image: url(../images/docs.svg); }
+#main_menu ul.menu li.news a { background-image: url(../images/news.svg); }
+#main_menu ul.menu li.about a { background-image: url(../images/about.svg); }
 
 
 .menu {
