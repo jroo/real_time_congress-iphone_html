@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).bind("deviceready", function() { 
     DEST_LIST = document.getElementById('update_list');
     loadChamber(CURRENT_CHAMBER);
     $('#floor_updates').show();

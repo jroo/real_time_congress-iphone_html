@@ -1,5 +1,5 @@
 APP_TITLE = "Real Time Congress";
-APP_VERSION = "1.60";
+APP_VERSION = "1.70";
 APP_AUTHOR = "Joshua Ruihley, Sunlight Foundation";
 APP_COPYRIGHT = "Copyright 2010, Sunlight Foundation";
 APP_URL = "http://realtimecongress.org";
@@ -9,7 +9,7 @@ DOCSERVER_DOMAIN = 'docserver.org';
 LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
 AJAX_TIMEOUT = 10000;
 
-$(document).ready(function() {
+$(document).bind("deviceready", function() { 
     initializeDb(LOCAL_DB);
 
 	$('a.view').click(function() {

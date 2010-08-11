@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).bind("deviceready", function() { 
     DEST_LIST = document.getElementById('doc_list');
     loadDocs(localStorage.getItem("current_doc_list"));
     $('#title_text').html(localStorage.getItem("current_doc_title"));

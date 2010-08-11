@@ -1,5 +1,5 @@
-$(document).ready(function() {
-   loadWhipNotices();
+$(document).bind("deviceready", function() { 
+    loadWhipNotices();
 });
 
 function loadWhipNotices() {
@@ -43,7 +43,7 @@ function serverGetLatest() {
                    transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rwd', data[0]['rwd'].date, data[0]['rwd'].url]);
                    transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rww', data[0]['rww'].date, data[0]['rww'].url]);
                 }
-            );
+            ); 
             markViewed('whip_notices');
             dbGetLatest();
             $('#progress').remove();

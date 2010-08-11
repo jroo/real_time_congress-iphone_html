@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).bind("deviceready", function() { 
     DEST_LIST = document.getElementById('news_list');
     $('#title_text').html(localStorage.getItem("current_news_title"));
-    loadNews(localStorage.getItem("current_news_source"));  
+    loadNews(localStorage.getItem("current_news_source"));
 });
 
 function loadNews(news_source) {
