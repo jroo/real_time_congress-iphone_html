@@ -91,8 +91,7 @@ function renderRow(row, dest_list) {
 
 function documentFormat(orig_date) {
     try {
-        return sqlDateToDate(orig_date);
-        //sqlDateToDate(orig_date).format("mmmm d, yyyy");
+        sqlDateToDate(orig_date).format("mmmm d, yyyy");
     } catch(e) {
         return orig_date;
     }
