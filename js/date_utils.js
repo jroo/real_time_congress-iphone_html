@@ -124,7 +124,6 @@ Date.prototype.format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
 
-
 //convert sql formatted date string to date object
 function sqlDateToDate(datestring) {
     if (typeof datestring == "undefined") {
@@ -133,16 +132,16 @@ function sqlDateToDate(datestring) {
         try {
             dt_array = datestring.split(' ');
             date = dt_array[0];
-                date_array = date.split('-');
-                month = parseInt(date_array[1]) - 1;
-                day = date_array[2];
-                year = date_array[0];
+            date_array = date.split('-');             
+            month = parseInt(date_array[1].replace(/^0+/, '')) - 1;
+            day = parseInt(date_array[2].replace(/^0+/, ''));
+            year = date_array[0];
             try {
                 time = dt_array[1];
-                    time_array = time.split(':');
-                    hour = time_array[0];
-                    minute = time_array[1];
-                    second = time_array[2];
+                time_array = time.split(':');
+                hour = time_array[0];
+                minute = time_array[1];
+                second = time_array[2];
             } catch(e) {
                 hour = 0;
                 minute = 0;

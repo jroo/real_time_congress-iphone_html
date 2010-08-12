@@ -1,4 +1,3 @@
-$(document).ready(function() {
-    window.uicontrols.createToolBar();
-    window.uicontrols.setToolBarTitle("A Title");
+$(document).bind("deviceready", function() {
+    initializeDb(LOCAL_DB);
 });

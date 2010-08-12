@@ -4,10 +4,8 @@
 	<title>RtCongress</title>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<link rel="stylesheet" type="text/css" href="css/iphone.css" />
-	<link rel="stylesheet" type="text/css"  href="css/ext-touch-debug.css" />
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="phonegap.js" charset="utf-8"></script>
-	<script type="text/javascript" src="js/ext-touch-debug.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
 	<script type="text/javascript" src="js/date_utils.js"></script>
 	<script type="text/javascript" src="js/index.js"></script>
@@ -19,28 +17,13 @@
 	</div>
 	<div id="main_menu">
 		<ul class="menu">
-			<li class="floor-updates">
-				<a href="floor_updates.html" class="view">Floor Updates</a>
-			</li>
-			<li class="whip-notices">
-				<a href="whip_notices.html" class="view">Whip Notices</a>
-			</li>
-			<li class="hearings">
-				<a href="hearings.html" class="view">Hearings</a>
-			</li>
-			<li class="documents">
-				<a href="documents.html" class="view">Documents</a>
-			</li>
-			<li class="news">
-				<a href="news.html" class="view">News</a>
-			</li>
-			<li class="about">
-				<a href="about.html" class="view">About</a>
-			</li>
+			<li onClick="loadView('floor_updates')" class="floor-updates">Floor Updates</li>
+			<li onClick="loadView('whip_notices')" class="whip-notices">Whip Notices</li>
+			<li onClick="loadView('hearings')" class="hearings">Hearings</li>
+			<li onClick="loadView('documents')" class="documents">Documents</li>
+			<li onClick="loadView('news')" class="news">News</li>
+			<li onClick="loadView('about')" class="about">About</li>
 		</ul>
-	</div>
-
-	<div id="about">
 	</div>
 </body>
 </html>

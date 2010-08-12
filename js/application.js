@@ -10,8 +10,6 @@ LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
 AJAX_TIMEOUT = 10000;
 
 $(document).bind("deviceready", function() { 
-    initializeDb(LOCAL_DB);
-
 	$('a.view').click(function() {
 		window.location = this.href;
 		return false;
