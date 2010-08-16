@@ -1,115 +1,137 @@
-$(document).bind("deviceready", function() { 
-    DEST_LIST = document.getElementById('news_list');
-    $('#title_text').html(localStorage.getItem("current_news_title"));
-    loadNews(localStorage.getItem("current_news_source"));
-});
+NewsSourceView.prototype = new View();
+function NewsSourceView() {
+    var self = this;
+    this.containerDiv = 'news_source_body';
+    this.destinationList = document.getElementById('news_list');
+    this.titleString = 'News';
 
-function loadNews(news_source) {
-    dbGetLatest(news_source);
-    if (!isViewed('news_' + news_source)) {
-        serverGetLatest(news_source);
+    this.render = function() {
+        this.loadNews(localStorage.getItem("current_news_source"));
     }
-}
-
-function localToList(results) {
-    latest_list = [];
-    last_date = null;
-    for (var i=0; i<results.rows.length; i++) {
-        var row = results.rows.item(i);
-        this_date = sqlDateToDate(row.date).format("mm/dd/yyyy")
-        if (this_date != last_date) {
-            friendly_date = sqlDateToDate(row.date).format("dddd, mmmm d")
-            latest_list.push({row_type:'header', title:friendly_date, subtitle:'subby'});
-            last_date = this_date;
+    
+    this.loadNews = function(news_source) {
+        this.dbGetLatest(news_source);
+        if (!application.isViewed('news_' + news_source)) {
+            this.serverGetLatest(news_source);
         }
-        latest_list.push({row_type:'content', title:row.title, description:row.description, url:row.url, date:row.date, doc_type:row.doc_type});        
     }
-    return latest_list;
-}
 
-function serverGetLatest(news_source) {
-    $('body').append('<div id="progress">Loading...</div>');
-
-    //fetch updates from server
-    jsonUrl = 'http://' + RTC_DOMAIN + '/feed/' + news_source + '.json';
-    $.jsonp({
-        url: jsonUrl,
-        callbackParameter: "callback",
-        timeout: AJAX_TIMEOUT,
-        success: function(data){
-            for (i in data) {
-                addToLocal(data[i], news_source);
+    this.localToList = function(results) {
+        latest_list = [];
+        last_date = null;
+        for (var i=0; i<results.rows.length; i++) {
+            var row = results.rows.item(i);
+            this_date = sqlDateToDate(row.date).format("mm/dd/yyyy")
+            if (this_date != last_date) {
+                friendly_date = sqlDateToDate(row.date).format("dddd, mmmm d")
+                latest_list.push({row_type:'header', title:friendly_date, subtitle:'subby'});
+                last_date = this_date;
             }
-            markViewed('news_' + news_source);
-            dbGetLatest(news_source);
-            $('#progress').remove();
-        },
-        error: function(d, msg) {
-            $('#progress').remove();
-            navigator.notification.alert("Can't connect to server", "Network Error");
-        },
-    });
-}
-
-function addToLocal(row, news_source) {
-    LOCAL_DB.transaction(
-        function(transaction) {
-           transaction.executeSql("INSERT INTO News (id, date, title, url, doc_type) VALUES (?, ?, ?, ?, ?)", [row.id, row.date, row.title, row.url, news_source]);
+            latest_list.push({row_type:'content', title:row.title, description:row.description, url:row.url, date:row.date, doc_type:row.doc_type});        
         }
-    );
-}
+        return latest_list;
+    }
 
-function dataHandler(transaction, results) {
-    renderList(localToList(results), DEST_LIST);
-}
+    this.serverGetLatest = function(news_source) {
+        self.showProgress();
 
-function dbGetLatest(news_source) {
-    LOCAL_DB.transaction(
-        function(transaction) {
-           transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], dataHandler);
+        //fetch updates from server
+        jsonUrl = 'http://' + application.rtcDomain + '/feed/' + news_source + '.json';
+        $.jsonp({
+            url: jsonUrl,
+            callbackParameter: "callback",
+            timeout: application.ajaxTimeout,
+            success: function(data){
+                for (i in data) {
+                    self.addToLocal(data[i], news_source);
+                }
+                application.markViewed('news_' + news_source);
+                self.dbGetLatest(news_source);
+                self.hideProgress();
+            },
+            error: function(d, msg) {
+                self.hideProgress();
+                navigator.notification.alert("Can't connect to server", "Network Error");
+            },
+        });
+    }
+
+    this.addToLocal = function(row, news_source) {
+        application.localDb.transaction(
+            function(transaction) {
+               transaction.executeSql("INSERT INTO News (id, date, title, url, doc_type) VALUES (?, ?, ?, ?, ?)", [row.id, row.date, row.title, row.url, news_source]);
+            }
+        );
+    }
+
+    this.dataHandler = function(transaction, results) {
+        self.renderList(self.localToList(results), self.destinationList);
+        self.show();
+    }
+
+    this.dbGetLatest = function(news_source) {
+        application.localDb.transaction(
+            function(transaction) {
+               transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
+            }
+        );
+    }
+
+    this.renderRow = function(row, dest_list) {    
+        if (row.date != 'None') {
+            date_str = self.newsFormat(row.date);
+        } else {
+            date_str = "";
         }
-    );
-}
 
-function renderRow(row, dest_list) {    
-    if (row.date != 'None') {
-        date_str = newsFormat(row.date);
-    } else {
-        date_str = "";
+        var newItem = document.createElement("li");
+
+        var result = document.createElement("div");
+        result.className = 'result_body';
+
+        var anchor = document.createElement("a");
+        anchor.href = row.url;
+    	$(anchor).click(function() {
+    		//window.location = 'external.html#' + this.href;
+    		//return false;
+    		return true;
+    	});
+
+        var titleDiv = document.createElement("div");
+        titleDiv.className = 'result_title';
+        titleDiv.innerHTML = row.title;
+
+        var subDiv = document.createElement("div");
+        subDiv.className = 'result_subtitle';
+        subDiv.innerHTML = date_str;
+
+        anchor.appendChild(titleDiv);
+        anchor.appendChild(subDiv);
+        result.appendChild(anchor);
+        newItem.appendChild(result);
+        dest_list.appendChild(newItem);
+    }
+
+    this.newsFormat = function(orig_date) {
+        try {
+            return sqlDateToDate(orig_date).format("h:MM TT");
+        } catch(e) {
+            return orig_date;
+        }
     }
     
-    var newItem = document.createElement("li");
-
-    var result = document.createElement("div");
-    result.className = 'result_body';
-
-    var anchor = document.createElement("a");
-    anchor.href = row.url;
-	$(anchor).click(function() {
-		//window.location = 'external.html#' + this.href;
-		//return false;
-		return true;
-	});
+    this.reload = function() {
+        self.serverGetLatest(localStorage.getItem("current_news_source"));
+    }
     
-    var titleDiv = document.createElement("div");
-    titleDiv.className = 'result_title';
-    titleDiv.innerHTML = row.title;
+    this.show = function() {
+        this.setTitle(localStorage.getItem("current_news_title"));
+        this.setLeftButton('back', 'news');
+        this.setRightButton('reload');
+        $('#'+this.containerDiv).show();
+    }
     
-    var subDiv = document.createElement("div");
-    subDiv.className = 'result_subtitle';
-    subDiv.innerHTML = date_str;
-    
-    anchor.appendChild(titleDiv);
-    anchor.appendChild(subDiv);
-    result.appendChild(anchor);
-    newItem.appendChild(result);
-    dest_list.appendChild(newItem);
-}
-
-function newsFormat(orig_date) {
-    try {
-        return sqlDateToDate(orig_date).format("h:MM TT");
-    } catch(e) {
-        return orig_date;
+    this.hide = function() {
+        $('#'+this.containerDiv).hide();
     }
 }

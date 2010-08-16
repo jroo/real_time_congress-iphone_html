@@ -26,26 +26,26 @@ body {
     text-overflow: ellipsis;
 }
 
-#main_menu {
+#main_menu_body {
 	margin: 0px;
 }
-#main_menu ul {
+#main_menu_body ul {
 	list-style: none;
 	margin: 10px;
 	padding: 0;
 }
-#main_menu ul.menu li  {
+#main_menu_body ul.menu li  {
 	background-position: 10px 12px;
 	background-repeat: no-repeat;
 	padding: 18px 0 18px 50px;
 }
 
-#main_menu ul.menu li.floor-updates  { background-image: url(../images/updates.svg); }
-#main_menu ul.menu li.whip-notices  { background-image: url(../images/notices.svg); }
-#main_menu ul.menu li.hearings  { background-image: url(../images/hearings.svg); }
-#main_menu ul.menu li.documents  { background-image: url(../images/docs.svg); }
-#main_menu ul.menu li.news  { background-image: url(../images/news.svg); }
-#main_menu ul.menu li.about  { background-image: url(../images/about.svg); }
+#main_menu_body ul.menu li.floor-updates  { background-image: url(../images/updates.svg); }
+#main_menu_body ul.menu li.whip-notices  { background-image: url(../images/notices.svg); }
+#main_menu_body ul.menu li.hearings  { background-image: url(../images/hearings.svg); }
+#main_menu_body ul.menu li.documents  { background-image: url(../images/docs.svg); }
+#main_menu_body ul.menu li.news  { background-image: url(../images/news.svg); }
+#main_menu_body ul.menu li.about  { background-image: url(../images/about.svg); }
 
 
 .menu {
@@ -76,20 +76,22 @@ body {
     -webkit-border-bottom-right-radius: 8px;
 }
 
-#header img.leftButton {
+#header img#leftButton {
     position: absolute;
     top: 7px;
     left: 6px;
     height: 30px;
     border-width: 0 8px 0 8px;
+    display:none;
 }
 
-#header img.rightButton {
+#header img#rightButton {
 	position: absolute;
 	top: 7px;
 	right: 6px;
 	width: 30px;
     border-width: 0 8px 0 8px;
+    display:none;
 }
 
 #progress {
@@ -106,6 +108,7 @@ body {
     text-align: center;
     top: 120px;
     width: 200px;
+    display:none;
 }
 
 .classic_list {
@@ -283,3 +286,14 @@ body {
 .content {
     padding-bottom:40px;
 }
+
+#about_body { display:none }
+#doc_list_body { display:none }
+#documents_body { display:none }
+#floor_updates_body { display:none }
+#hearings_body { display:none }
+#news_body { display:none }
+#news_source_body { display:none }
+#whip_notices_body { display:none }
+
+#preload { display:none }
