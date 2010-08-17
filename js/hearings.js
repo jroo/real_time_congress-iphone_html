@@ -1,31 +1,34 @@
 HearingsView.prototype = new View();
 function HearingsView() {
     var self = this;
-    this.containerDiv = 'hearings_body';
-    this.currentChamber = 'Senate';
-    this.destinationList = document.getElementById('hearing_list');
-    this.titleString = 'Hearings';
+    self.containerDiv = 'hearings_body';
+    self.currentChamber = 'Senate';
+    self.destinationList = document.getElementById('hearing_list');
+    self.titleString = 'Hearings';
 
-    this.render = function() {
+    self.render = function() {
+        self.setTitle(self.titleString);
+        self.setLeftButton('menu', 'main_menu');
+        self.setRightButton('reload');
         application.initializeChamberSelect();
-        this.loadChamber(this.currentChamber);
-        this.show();
+        self.loadChamber(self.currentChamber);
+        self.show();
     }
     
-    this.loadChamber = function(chamber) {
-        this.currentChamber = chamber;
-        this.setTitle(chamber + " Hearings");
-        this.dbGetLatest(chamber);
+    self.loadChamber = function(chamber) {
+        self.currentChamber = chamber;
+        self.setTitle(chamber + " Hearings");
+        self.dbGetLatest(chamber);
         if (!application.isViewed('hearings_' + chamber)) {
-            this.serverGetLatest(chamber);
+            self.serverGetLatest(chamber);
         }
     }
 
-    this.dataHandler = function(transaction, results) {
+    self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
     }
 
-    this.dbGetLatest = function(chamber) {
+    self.dbGetLatest = function(chamber) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT * FROM Hearings WHERE chamber = ? AND date > date('now') ORDER BY Date ASC LIMIT 30", [chamber,], self.dataHandler);
@@ -33,11 +36,11 @@ function HearingsView() {
         );
     }
 
-    this.reload = function() {
+    self.reload = function() {
         self.serverGetLatest(self.currentChamber);
     }
 
-    this.localToList = function(results) {
+    self.localToList = function(results) {
         latest_list = [];
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
@@ -56,7 +59,7 @@ function HearingsView() {
         return latest_list;
     }
 
-    this.serverGetLatest = function(chamber) {
+    self.serverGetLatest = function(chamber) {
         self.showProgress();
 
         //fetch hearing schedules from server
@@ -80,7 +83,7 @@ function HearingsView() {
         });
     }
 
-    this.addToLocal = function(row, chamber) {
+    self.addToLocal = function(row, chamber) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("INSERT INTO Hearings (id, date, chamber, committee, committee_code, matter, room) VALUES (?, ?, ?, ?, ?, ?, ?)", [row.id, row.meeting_date, chamber, row.committee, row.committee_code, row.matter, row.room]);
@@ -88,7 +91,7 @@ function HearingsView() {
         );
     }
 
-    this.renderRow = function(row, dest_list) {
+    self.renderRow = function(row, dest_list) {
         room_txt = '';
         if (row.room !='None') {
             room_txt = " (" + row.room + ")";
@@ -115,22 +118,11 @@ function HearingsView() {
 
     }
 
-    this.hearingFormat = function(orig_date) {
+    self.hearingFormat = function(orig_date) {
         try {
             return sqlDateToDate(orig_date).format("h:MM TT");
         } catch(e) {
             return orig_date;
         }
-    }
-    
-    this.show = function() {
-        this.setTitle(this.titleString);
-        this.setLeftButton('menu', 'main_menu');
-        this.setRightButton('reload');
-        $('#'+this.containerDiv).show();
-    }
-    
-    this.hide = function() {
-        $('#'+this.containerDiv).hide();
     }
 }

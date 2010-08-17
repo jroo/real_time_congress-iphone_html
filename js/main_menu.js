@@ -1,21 +1,14 @@
 MainMenuView.prototype = new View();
 
 function MainMenuView() {
-    this.containerDiv = 'main_menu_body';
-    this.titleString = 'Menu';
+    var self = this;
+    self.containerDiv = 'main_menu_body';
+    self.titleString = 'Menu';
 
-    this.render = function() {
-        this.show();
-    }
-    
-    this.show = function() {
-        this.setTitle(this.titleString);
-        this.setLeftButton();
-        this.setRightButton();
-        $('#'+this.containerDiv).show();
-    }
-    
-    this.hide = function() {
-        $('#'+this.containerDiv).hide();
+    self.render = function() {
+        self.setTitle(self.titleString);
+        self.setLeftButton();
+        self.setRightButton();
+        self.show();
     }
 }

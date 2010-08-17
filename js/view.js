@@ -14,6 +14,9 @@ View.prototype.renderList = function(list, dest_list) {
     }
 }
 
+View.prototype.reload = function() {
+}
+
 View.prototype.renderHeader = function(title, dest_list) {
     var newItem = document.createElement("li")
     newItem.className = 'header_row';
@@ -24,6 +27,7 @@ View.prototype.renderHeader = function(title, dest_list) {
 View.prototype.setLeftButton = function(button_type, destination) {
     if (typeof button_type != "undefined") {
         $('#leftButton').attr("src", "images/" + button_type + ".svg");
+        $('#leftButton').unbind();
         $('#leftButton').click(function() { application.loadView( destination ) } );
         $('#leftButton').show();
     } else {
@@ -41,7 +45,7 @@ View.prototype.setRightButton = function(button_type, destination) {
         $('#rightButton').show();
     } else {
         $('#rightButton').hide();
-    }       
+    }    
 }
 
 View.prototype.setTitle = function(title) {
@@ -54,4 +58,12 @@ View.prototype.showProgress = function() {
 
 View.prototype.hideProgress = function() {
     $('#progress').hide();
+}
+
+View.prototype.show = function() {
+    $('#'+this.containerDiv).show();
+}
+
+View.prototype.hide = function() {
+    $('#'+this.containerDiv).hide();
 }

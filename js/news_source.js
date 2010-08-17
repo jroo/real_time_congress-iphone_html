@@ -1,22 +1,26 @@
 NewsSourceView.prototype = new View();
 function NewsSourceView() {
     var self = this;
-    this.containerDiv = 'news_source_body';
-    this.destinationList = document.getElementById('news_list');
-    this.titleString = 'News';
+    self.containerDiv = 'news_source_body';
+    self.destinationList = document.getElementById('news_list');
+    self.titleString = 'News';
 
-    this.render = function() {
-        this.loadNews(localStorage.getItem("current_news_source"));
+    self.render = function() {
+        self.setTitle(localStorage.getItem("current_news_title"));
+        self.setLeftButton('back', 'news');
+        self.setRightButton('reload');
+        self.loadNews(localStorage.getItem("current_news_source"));
+        self.show();
     }
     
-    this.loadNews = function(news_source) {
-        this.dbGetLatest(news_source);
+    self.loadNews = function(news_source) {
+        self.dbGetLatest(news_source);
         if (!application.isViewed('news_' + news_source)) {
-            this.serverGetLatest(news_source);
+            self.serverGetLatest(news_source);
         }
     }
 
-    this.localToList = function(results) {
+    self.localToList = function(results) {
         latest_list = [];
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
@@ -32,7 +36,7 @@ function NewsSourceView() {
         return latest_list;
     }
 
-    this.serverGetLatest = function(news_source) {
+    self.serverGetLatest = function(news_source) {
         self.showProgress();
 
         //fetch updates from server
@@ -56,7 +60,7 @@ function NewsSourceView() {
         });
     }
 
-    this.addToLocal = function(row, news_source) {
+    self.addToLocal = function(row, news_source) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("INSERT INTO News (id, date, title, url, doc_type) VALUES (?, ?, ?, ?, ?)", [row.id, row.date, row.title, row.url, news_source]);
@@ -64,12 +68,11 @@ function NewsSourceView() {
         );
     }
 
-    this.dataHandler = function(transaction, results) {
+    self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
-        self.show();
     }
 
-    this.dbGetLatest = function(news_source) {
+    self.dbGetLatest = function(news_source) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
@@ -77,7 +80,7 @@ function NewsSourceView() {
         );
     }
 
-    this.renderRow = function(row, dest_list) {    
+    self.renderRow = function(row, dest_list) {    
         if (row.date != 'None') {
             date_str = self.newsFormat(row.date);
         } else {
@@ -92,7 +95,7 @@ function NewsSourceView() {
         var anchor = document.createElement("a");
         anchor.href = row.url;
     	$(anchor).click(function() {
-    		//window.location = 'external.html#' + this.href;
+    		//window.location = 'external.html#' + self.href;
     		//return false;
     		return true;
     	});
@@ -112,7 +115,7 @@ function NewsSourceView() {
         dest_list.appendChild(newItem);
     }
 
-    this.newsFormat = function(orig_date) {
+    self.newsFormat = function(orig_date) {
         try {
             return sqlDateToDate(orig_date).format("h:MM TT");
         } catch(e) {
@@ -120,18 +123,7 @@ function NewsSourceView() {
         }
     }
     
-    this.reload = function() {
+    self.reload = function() {
         self.serverGetLatest(localStorage.getItem("current_news_source"));
-    }
-    
-    this.show = function() {
-        this.setTitle(localStorage.getItem("current_news_title"));
-        this.setLeftButton('back', 'news');
-        this.setRightButton('reload');
-        $('#'+this.containerDiv).show();
-    }
-    
-    this.hide = function() {
-        $('#'+this.containerDiv).hide();
     }
 }

@@ -1,26 +1,29 @@
 WhipNoticesView.prototype = new View();
 function WhipNoticesView() {
     self = this;
-    this.containerDiv = 'whip_notices_body';
-    this.titleString = 'Whip Notices';
+    self.containerDiv = 'whip_notices_body';
+    self.titleString = 'Whip Notices';
 
-    this.render = function() {
-        this.loadWhipNotices();
-        this.show();
+    self.render = function() {
+        self.setTitle(self.titleString);
+        self.setLeftButton('menu', 'main_menu');
+        self.setRightButton('reload');
+        self.loadWhipNotices();
+        self.show();
     }
     
-    this.reload = function() {
+    self.reload = function() {
         self.serverGetLatest();
     }
     
-    this.loadWhipNotices = function() {
-        this.dbGetLatest();
+    self.loadWhipNotices = function() {
+        self.dbGetLatest();
         if (!application.isViewed('whip_notices')) {
-            this.serverGetLatest();
+            self.serverGetLatest();
         }
     }
 
-    this.dataHandler = function(transaction, results) {
+    self.dataHandler = function(transaction, results) {
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);    
             $('#'+row.doc_type+'_link').attr("href", row.url)
@@ -28,7 +31,7 @@ function WhipNoticesView() {
         }
     }
 
-    this.dbGetLatest = function() {
+    self.dbGetLatest = function() {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT * FROM LeadershipNotices", [], self.dataHandler);
@@ -36,7 +39,7 @@ function WhipNoticesView() {
         );
     }
 
-    this.serverGetLatest = function() {
+    self.serverGetLatest = function() {
         self.showProgress();
 
         //fetch updates from server
@@ -61,12 +64,12 @@ function WhipNoticesView() {
             },
             error: function(d, msg) {
                 self.hideProgress();
-                navigator.notification.alert("Can't connect to server", "Network Error");
+                navigator.notification.alert("Can't connect to server " + msg, "Network Error");
             },
         });
     }
 
-    this.addToLocal = function(row, doc_type) {
+    self.addToLocal = function(row, doc_type) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", [doc_type, row.date, row.url]);
@@ -74,7 +77,7 @@ function WhipNoticesView() {
         );
     }
 
-    this.leadershipFormat = function(orig_date) {
+    self.leadershipFormat = function(orig_date) {
         try {
             var date_str = sqlDateToDate(orig_date).format("dddd, mmmm d");
             if (date_str != null) {
@@ -85,16 +88,5 @@ function WhipNoticesView() {
         } catch(e) {
             return orig_date;
         }
-    }
-    
-    this.show = function() {
-        this.setTitle(this.titleString);
-        this.setLeftButton('menu', 'main_menu');
-        this.setRightButton('reload');
-        $('#'+this.containerDiv).show();
-    }
-    
-    this.hide = function() {
-        $('#'+this.containerDiv).hide();
     }
 }

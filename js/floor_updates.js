@@ -1,46 +1,38 @@
 FloorUpdatesView.prototype = new View();
 function FloorUpdatesView() {
     var self = this;
-    this.containerDiv = 'floor_updates_body';
-    this.currentChamber = 'House';
-    this.titleString = 'Floor Updates';
-    this.destinationList = document.getElementById('update_list'); 
+    self.containerDiv = 'floor_updates_body';
+    self.currentChamber = 'House';
+    self.titleString = 'Floor Updates';
+    self.destinationList = document.getElementById('update_list'); 
 
-    this.loadChamber = function(chamber) {
-        this.currentChamber = chamber;
-        this.setTitle(chamber + " Floor");
-        this.dbGetLatest(chamber);
+    self.loadChamber = function(chamber) {
+        self.currentChamber = chamber;
+        self.setTitle(chamber + " Floor");
+        self.dbGetLatest(chamber);
         if (!application.isViewed('floor_' + chamber)) {
-            this.serverGetLatest(chamber);
+            self.serverGetLatest(chamber);
         }
     }
 
-    this.render = function() {
+    self.render = function() {
+        self.setTitle(self.titleString);
+        self.setLeftButton('menu', 'main_menu');
+        self.setRightButton('reload');
         application.initializeChamberSelect();
-        this.loadChamber(this.currentChamber);
-        this.show();
+        self.loadChamber(self.currentChamber);
+        self.show();
     }
     
-    this.reload = function() {
+    self.reload = function() {
         self.serverGetLatest(self.currentChamber);
     }
     
-    this.show = function() {
-        this.setTitle(this.titleString);
-        this.setLeftButton('menu', 'main_menu');
-        this.setRightButton('reload');
-        $('#'+this.containerDiv).show();
-    }
-    
-    this.hide = function() {
-        $('#'+this.containerDiv).hide();
-    }
-    
-    this.dataHandler = function(transaction, results) {
+    self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
     }
 
-    this.dbGetLatest = function(chamber) {
+    self.dbGetLatest = function(chamber) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT * FROM FloorUpdates WHERE chamber = ? ORDER BY Date DESC LIMIT 20", [chamber,], self.dataHandler);
@@ -48,7 +40,7 @@ function FloorUpdatesView() {
         );
     }
 
-    this.localToList = function(results) {
+    self.localToList = function(results) {
         latest_list = [];
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
@@ -64,7 +56,7 @@ function FloorUpdatesView() {
         return latest_list;
     }
 
-    this.serverGetLatest = function (chamber) {
+    self.serverGetLatest = function (chamber) {
         self.showProgress();
         //fetch floor updates from server
         jsonUrl = "http://" + application.rtcDomain + "/floor_recent.json?chamber=" + chamber;
@@ -83,12 +75,11 @@ function FloorUpdatesView() {
             error: function(d, msg) {
                 self.hideProgress();
                 navigator.notification.alert("Can't connect to server", "Network Error");
-                break;
             },
         });
     }
 
-    this.addToLocal = function(row, chamber) {
+    self.addToLocal = function(row, chamber) {
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("INSERT INTO FloorUpdates (id,date,description,chamber) VALUES (?,?,?,?)", [row.id, row.event_date, row.description, chamber]);
@@ -96,14 +87,14 @@ function FloorUpdatesView() {
         );
     }
 
-    this.renderRow = function (row, dest_list) {
+    self.renderRow = function (row, dest_list) {
         var newItem = document.createElement("li");
 
         var descSpan = document.createElement("span");
         descSpan.innerHTML = row.description + ' ';
 
         var timeSpan = document.createElement("span");
-        timeSpan.innerHTML = this.floorFormat(row.event_date);
+        timeSpan.innerHTML = self.floorFormat(row.event_date);
         timeSpan.className = 'time_span';
 
         newItem.appendChild(descSpan);
@@ -111,7 +102,7 @@ function FloorUpdatesView() {
         dest_list.appendChild(newItem);
     }
 
-    this.floorFormat = function(orig_date) {
+    self.floorFormat = function(orig_date) {
         try {
             return sqlDateToDate(orig_date).format("h:MM TT");
         } catch(e) {
