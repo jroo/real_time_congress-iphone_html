@@ -8,11 +8,10 @@ function HearingsView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('menu', 'main_menu');
+        self.setLeftButton('back', 'main_menu');
         self.setRightButton('reload');
         application.initializeChamberSelect();
         self.loadChamber(self.currentChamber);
-        self.show();
     }
     
     self.loadChamber = function(chamber) {
@@ -26,6 +25,7 @@ function HearingsView() {
 
     self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
+        self.show();
     }
 
     self.dbGetLatest = function(chamber) {

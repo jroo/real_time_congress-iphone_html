@@ -4,13 +4,25 @@ function NewsSourceView() {
     self.containerDiv = 'news_source_body';
     self.destinationList = document.getElementById('news_list');
     self.titleString = 'News';
-
+    self.sourceTitle = { 
+        'govtrackinsider':'GovTrack Insider',
+        'thehill':'The Hill',
+        'hotline':'Hotline on Call',
+        'nyt':'New York Times',
+        'thenote':'The Note',
+        'opencongress':'Open Congress',
+        'thepage':'The Page',
+        'plumline':'The Plum Line',
+        'politico':'Politico',
+        'politicalwire':'Teagan Goddard\'s Political Wire',
+        'washpost':'Washington Post'
+    }
+    
     self.render = function() {
         self.setTitle(localStorage.getItem("current_news_title"));
         self.setLeftButton('back', 'news');
         self.setRightButton('reload');
         self.loadNews(localStorage.getItem("current_news_source"));
-        self.show();
     }
     
     self.loadNews = function(news_source) {
@@ -63,19 +75,24 @@ function NewsSourceView() {
     self.addToLocal = function(row, news_source) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("INSERT INTO News (id, date, title, url, doc_type) VALUES (?, ?, ?, ?, ?)", [row.id, row.date, row.title, row.url, news_source]);
+               transaction.executeSql("INSERT INTO News (id, date, title, url, doc_type) VALUES (?, ?, ?, ?, ?)", [row.id, row.date, row.title, row.url, row.source]);
             }
         );
     }
 
     self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
+        self.show();
     }
 
     self.dbGetLatest = function(news_source) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
+                if (news_source == "all") {
+                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News ORDER BY date DESC, url DESC LIMIT 30", [], self.dataHandler);
+                } else {
+                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
+                }
             }
         );
     }
@@ -107,7 +124,13 @@ function NewsSourceView() {
         var subDiv = document.createElement("div");
         subDiv.className = 'result_subtitle';
         subDiv.innerHTML = date_str;
-
+        
+        if (localStorage.getItem("current_news_source") == "all") {
+            var subDiv2 = document.createElement("div");
+            subDiv2.className = 'result_subtitle';
+            subDiv2.innerHTML = self.sourceTitle[row.doc_type];
+            anchor.appendChild(subDiv2);
+        }
         anchor.appendChild(titleDiv);
         anchor.appendChild(subDiv);
         result.appendChild(anchor);

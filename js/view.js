@@ -41,6 +41,7 @@ View.prototype.setRightButton = function(button_type, destination) {
     }
     if (typeof button_type != "undefined") {
         $('#rightButton').attr("src", "images/" + button_type + ".svg");
+        $('#rightButton').unbind();
         $('#rightButton').click(function() { func(); } );
         $('#rightButton').show();
     } else {

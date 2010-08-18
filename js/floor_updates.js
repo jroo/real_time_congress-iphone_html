@@ -17,11 +17,10 @@ function FloorUpdatesView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('menu', 'main_menu');
+        self.setLeftButton('back', 'main_menu');
         self.setRightButton('reload');
         application.initializeChamberSelect();
         self.loadChamber(self.currentChamber);
-        self.show();
     }
     
     self.reload = function() {
@@ -30,6 +29,7 @@ function FloorUpdatesView() {
     
     self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
+        self.show();
     }
 
     self.dbGetLatest = function(chamber) {

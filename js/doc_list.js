@@ -15,6 +15,7 @@ function DocListView() {
     
     self.dataHandler = function(transaction, results) {
         self.renderList(self.localToList(results), self.destinationList);
+        self.show();
     }
     
     self.dbGetLatest = function(doc_type) {
@@ -38,7 +39,6 @@ function DocListView() {
         self.setLeftButton('back', 'documents');
         self.setRightButton('reload');
         self.loadDocs(localStorage.getItem("current_doc_list"));
-        self.show();
     }
     
     self.serverGetLatest = function(doc_type) {
@@ -66,7 +66,6 @@ function DocListView() {
     }
     
     self.reload = function() {
-        alert(localStorage.getItem("current_doc_list"));
         self.serverGetLatest(localStorage.getItem("current_doc_list"));
     }
     

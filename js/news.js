@@ -12,7 +12,7 @@ function NewsView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('menu', 'main_menu');
+        self.setLeftButton('back', 'main_menu');
         self.setRightButton();
         self.show();
     }

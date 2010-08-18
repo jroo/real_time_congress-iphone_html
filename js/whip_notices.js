@@ -6,10 +6,9 @@ function WhipNoticesView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('menu', 'main_menu');
+        self.setLeftButton('back', 'main_menu');
         self.setRightButton('reload');
         self.loadWhipNotices();
-        self.show();
     }
     
     self.reload = function() {
@@ -29,6 +28,7 @@ function WhipNoticesView() {
             $('#'+row.doc_type+'_link').attr("href", row.url)
             $('#'+row.doc_type+'_date').html(self.leadershipFormat(row.date));
         }
+        self.show();
     }
 
     self.dbGetLatest = function() {
