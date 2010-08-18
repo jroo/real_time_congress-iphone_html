@@ -295,5 +295,6 @@ body {
 #news_body { display:none }
 #news_source_body { display:none }
 #whip_notices_body { display:none }
+#empty_result { display:none; text-align: center; }
 
 #preload { display:none }

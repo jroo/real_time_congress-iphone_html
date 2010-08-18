@@ -10,7 +10,7 @@ function FloorUpdatesView() {
         self.currentChamber = chamber;
         self.setTitle(chamber + " Floor");
         self.dbGetLatest(chamber);
-        if (!application.isViewed('floor_' + chamber)) {
+        if (!application.isViewed('floor')) {
             self.serverGetLatest(chamber);
         }
     }
@@ -59,16 +59,16 @@ function FloorUpdatesView() {
     self.serverGetLatest = function (chamber) {
         self.showProgress();
         //fetch floor updates from server
-        jsonUrl = "http://" + application.rtcDomain + "/floor_recent.json?chamber=" + chamber;
+        jsonUrl = "http://" + application.rtcDomain + "/floor_recent.json";
         $.jsonp({
             url: jsonUrl,
             callbackParameter: "callback",
             timeout: application.ajaxTimeout,
             success: function(data){
                 for (i in data) {
-                    self.addToLocal(data[i], chamber);
+                    self.addToLocal(data[i]);
                 }
-                application.markViewed('floor_' + chamber);
+                application.markViewed('floor');
                 self.dbGetLatest(chamber);
                 self.hideProgress();
             },
@@ -79,10 +79,10 @@ function FloorUpdatesView() {
         });
     }
 
-    self.addToLocal = function(row, chamber) {
+    self.addToLocal = function(row) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("INSERT INTO FloorUpdates (id,date,description,chamber) VALUES (?,?,?,?)", [row.id, row.event_date, row.description, chamber]);
+               transaction.executeSql("INSERT INTO FloorUpdates (id,date,description,chamber) VALUES (?,?,?,?)", [row.id, row.event_date, row.description, row.chamber]);
             }
         );
     }

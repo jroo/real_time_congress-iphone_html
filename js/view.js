@@ -49,6 +49,15 @@ View.prototype.setRightButton = function(button_type, destination) {
     }    
 }
 
+View.prototype.showEmptyResult = function(msg) {
+    $('#empty_message').html(msg);
+    $('#empty_result').show();
+}
+
+View.prototype.hideEmptyResult = function() {
+    $('#empty_result').hide();
+}
+
 View.prototype.setTitle = function(title) {
     $('#title_text').html(title);
 }

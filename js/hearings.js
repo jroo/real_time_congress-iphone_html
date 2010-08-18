@@ -18,13 +18,19 @@ function HearingsView() {
         self.currentChamber = chamber;
         self.setTitle(chamber + " Hearings");
         self.dbGetLatest(chamber);
-        if (!application.isViewed('hearings_' + chamber)) {
+        if (!application.isViewed('hearings')) {
             self.serverGetLatest(chamber);
         }
     }
 
     self.dataHandler = function(transaction, results) {
-        self.renderList(self.localToList(results), self.destinationList);
+        resultsList = self.localToList(results);
+        if (application.isViewed('hearings') && resultsList.length == 0) {
+            self.showEmptyResult('There are no hearings scheduled.');
+        } else {
+            self.hideEmptyResult();
+        }
+        self.renderList(resultsList, self.destinationList);
         self.show();
     }
 
@@ -45,7 +51,7 @@ function HearingsView() {
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);
-            this_date = sqlDateToDate(row.date).format("mm/dd/yyyy")
+            this_date = sqlDateToDate(row.date).format("mm/dd/yyyy");
             if (this_date != last_date) {
                 friendly_date = sqlDateToDate(row.date).format("dddd, mmmm d")
                 latest_list.push({row_type:'header', title:friendly_date, subtitle:'subby'});
@@ -63,16 +69,16 @@ function HearingsView() {
         self.showProgress();
 
         //fetch hearing schedules from server
-        jsonUrl = "http://" + application.rtcDomain + "/hearings_upcoming.json?chamber=" + chamber;
+        jsonUrl = "http://" + application.rtcDomain + "/hearings_upcoming.json";
         $.jsonp({
             url: jsonUrl,
             callbackParameter: "callback",
             timeout: application.ajaxTimeout,
             success: function(data){
                 for (i in data) {
-                    self.addToLocal(data[i], chamber);
+                    self.addToLocal(data[i]);
                 }
-                application.markViewed('hearings_' + chamber);
+                application.markViewed('hearings');
                 self.dbGetLatest(chamber);
                 self.hideProgress();
             },
@@ -83,10 +89,10 @@ function HearingsView() {
         });
     }
 
-    self.addToLocal = function(row, chamber) {
+    self.addToLocal = function(row) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("INSERT INTO Hearings (id, date, chamber, committee, committee_code, matter, room) VALUES (?, ?, ?, ?, ?, ?, ?)", [row.id, row.meeting_date, chamber, row.committee, row.committee_code, row.matter, row.room]);
+               transaction.executeSql("INSERT INTO Hearings (id, date, chamber, committee, committee_code, matter, room) VALUES (?, ?, ?, ?, ?, ?, ?)", [row.id, row.meeting_date, row.chamber, row.committee, row.committee_code, row.matter, row.room]);
             }
         );
     }
