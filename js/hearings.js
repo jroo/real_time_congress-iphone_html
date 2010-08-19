@@ -26,7 +26,7 @@ function HearingsView() {
     self.dataHandler = function(transaction, results) {
         resultsList = self.localToList(results);
         if (application.isViewed('hearings') && resultsList.length == 0) {
-            self.showEmptyResult('There are no hearings scheduled.');
+            self.showEmptyResult('No hearings scheduled.');
         } else {
             self.hideEmptyResult();
         }

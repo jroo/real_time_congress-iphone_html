@@ -84,6 +84,8 @@ Application.prototype.hideAll = function() {
     for (var i  in this.views) {
         $("#" + this.views[i] + "_body").hide();
     }
+    $('#empty_result').hide();
+    $('#progress').hide();
 }
 
 Application.prototype.loadView = function(view_name) {
