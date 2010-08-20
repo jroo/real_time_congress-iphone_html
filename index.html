@@ -3,52 +3,232 @@
 <head>
 	<title>RtCongress</title>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<link rel="stylesheet" type="text/css"  href="css/iphone.css" />
+	<link rel="stylesheet" type="text/css" href="css/iphone.css" />
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.jsonp-2.0.2.min.js"></script>
 	<script type="text/javascript" src="phonegap.js" charset="utf-8"></script>
-	<script type="text/javascript" src="js/application.js"></script>
 	<script type="text/javascript" src="js/date_utils.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/application.js"></script>
+	<script type="text/javascript" src="js/view.js"></script>
+	<script type="text/javascript" src="js/about.js"></script>
+	<script type="text/javascript" src="js/documents.js"></script>
+	<script type="text/javascript" src="js/doc_list.js"></script>
+	<script type="text/javascript" src="js/hearings.js"></script>
+	<script type="text/javascript" src="js/floor_updates.js"></script>
+	<script type="text/javascript" src="js/main_menu.js"></script>
+	<script type="text/javascript" src="js/news.js"></script>
+	<script type="text/javascript" src="js/news_source.js"></script>
+	<script type="text/javascript" src="js/whip_notices.js"></script>
 </head>
 
 <body>
 	<div id="header">
+		<img id="leftButton">
+		<img id="rightButton">
 		<h1 id="title_text">Menu</h1>
 	</div>
-	<div id="main_menu">
+	
+	<div id="main_menu_body">
 		<ul class="menu">
-			<li class="floor-updates">
-				<a href="floor_updates.html" class="view">Floor Updates</a>
-			</li>
-			<li class="whip-notices">
-				<a href="whip_notices.html" class="view">Whip Notices</a>
-			</li>
-			<li class="hearings">
-				<a href="hearings.html" class="view">Hearings</a>
-			</li>
-			<li class="documents">
-				<a href="documents.html" class="view">Documents</a>
-			</li>
-			<li class="news">
-				<a href="news.html" class="view">News</a>
-			</li>
-			<li class="about">
-				<a href="about.html" class="view">About</a>
-			</li>
+			<li onClick="application.loadView('floor_updates')" class="floor-updates">Floor Updates</li>
+			<li onClick="application.loadView('whip_notices')" class="whip-notices">Whip Notices</li>
+			<li onClick="application.loadView('hearings')" class="hearings">Hearings</li>
+			<li onClick="application.loadView('documents')" class="documents">Documents</li>
+			<li onClick="application.loadView('news')" class="news">News</li>
+			<li onClick="application.loadView('about')" class="about">About</li>
 		</ul>
-		<!--
-		<ul class="menu">
-			<li><a onClick="loadView('floor_updates')"><img class="menu_icon" src=""> Floor Updates</a></li>
-			<li><a onClick="loadView('whip_notices')"><img class="menu_icon" src="images/notices.png"> Whip Notices</a></li>
-			<li><a onClick="loadView('hearings')"><img class="menu_icon" src="images/hearings.png"> Hearings</a></li>
-			<li><a onClick="loadView('documents')"><img class="menu_icon" src="images/docs.png"> Documents</a></li>
-			<li><a onClick="loadView('news')"><img class="menu_icon" src="images/news.png"> News</a></li>
-			<li><a onClick="loadView('about')"><img class="menu_icon" src="images/about.png"> About</a></li>
-		</ul>
-		-->
 	</div>
 
-	<div id="about">
+	<div id="documents_body" class="content">
+		<ul id="document_menu" class="classic_list">
+			<li onClick="application.documentsView.loadList('cbo', 'CBO Cost Estimates')"><div class="standard_menu_body">CBO Cost Estimates</div></li>
+			<li onClick="application.documentsView.loadList('crs', 'CRS Reports')"><div class="standard_menu_body">CRS Reports</div></li>
+			<li onClick="application.documentsView.loadList('dpc', 'Democratic Policy Committee')"><div class="standard_menu_body">Democratic Policy Committee</div></li>
+			<li onClick="application.documentsView.loadList('gao', 'GAO Reports')"><div class="standard_menu_body">GAO Reports</div></li>
+			<li onClick="application.documentsView.loadList('jct', 'Joint Committee on Taxation')"><div class="standard_menu_body">Joint Committee on Taxation</div></li>
+			<li onClick="application.documentsView.loadList('omb', 'OMB Memos')"><div class="standard_menu_body">OMB Memos</div></li>
+			<li onClick="application.documentsView.loadList('srp', 'Republican Cloak Room')"><div class="standard_menu_body">Republican Cloak Room</div></li>
+			<li onClick="application.documentsView.loadList('sap', 'White House Policy Statements')"><div class="standard_menu_body">White House Policy Statements</div></li>
+		</ul>
 	</div>
+	
+	<div id="doc_list_body" class="content">
+		<ul id="doc_list" class="classic_link_list">
+		</ul>
+	</div>
+	
+	<div id="floor_updates_body" class="content">
+		<div class="chamber_container">
+			<ul class="chamber_select selector">
+				<li id="house_select"><a onClick="application.floorUpdatesView.loadChamber('House')" class="active">House</a></li>
+				<li id="senate_select"><a onClick="application.floorUpdatesView.loadChamber('Senate')">Senate</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<ul id="update_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="hearings_body" class="content">
+		<div class="chamber_container">
+			<ul class="chamber_select selector">
+				<li id="house_select"><a id="house_link"  onClick="application.hearingsView.loadChamber('House')">House</a></li>
+				<li id="senate_select"><a id="senate_link" class="active" onClick="application.hearingsView.loadChamber('Senate')">Senate</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>	
+		<ul id="hearing_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="news_body" class="content">
+		<ul id="news_menu" class="classic_list">
+			<li onClick="application.newsView.loadList('all', 'All News')"><div class="standard_menu_body">All News</div></li>
+			<li onClick="application.newsView.loadList('govtrackinsider', 'GovTrack Insider')"><div class="standard_menu_body">GovTrack Insider</div></li>
+			<li onClick="application.newsView.loadList('thehill', 'The Hill')"><div class="standard_menu_body">The Hill</div></li>
+			<li onClick="application.newsView.loadList('hotline', 'Hotline on Call')"><div class="standard_menu_body">Hotline on Call</div></li>
+			<li onClick="application.newsView.loadList('nyt', 'New York Times')"><div class="standard_menu_body">New York Times</div></li>
+			<li onClick="application.newsView.loadList('thenote', 'The Note')"><div class="standard_menu_body">The Note</div></li>
+			<li onClick="application.newsView.loadList('opencongress', 'Open Congress')"><div class="standard_menu_body">Open Congress</div></li>
+			<li onClick="application.newsView.loadList('thepage', 'The Page')"><div class="standard_menu_body">The Page</div></li>
+			<li onClick="application.newsView.loadList('plumline', 'The Plum Line')"><div class="standard_menu_body">The Plum Line</div></li>
+			<li onClick="application.newsView.loadList('politico', 'Politico')"><div class="standard_menu_body">Politico</div></li>
+			<li onClick="application.newsView.loadList('politicalwire', 'Teagan Goddard\'s Political Wire')"><div class="standard_menu_body">Teagan Goddard's Political Wire</div></li>
+			<li onClick="application.newsView.loadList('washpost', 'Washington Post')"><div class="standard_menu_body">Washington Post</div></li>
+		</ul>
+	</div>
+	
+	<div id="news_source_body" class="content">
+		<ul id="news_list" class="classic_link_list">
+		</ul>
+	</div>
+	
+	<div id="whip_notices_body" class="content">
+		<ul id="whip_menu" class="classic_link_list">
+			<li>
+				<a id="dwd_link">
+				<div class="result_body">
+					<div class="whip_title">Democratic Daily Whipline</div>
+					<div id="dwd_date" class="whip_date">&nbsp;</div>
+				</div>
+				</a>
+			</li>
+			<li>
+				<a id="dww_link">
+					<div class="result_body">
+						<div class="whip_title">Democratic Weekly Whip Pack</div>
+						<div id="dww_date" class="whip_date">&nbsp;</div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a id="rwd_link">
+					<div class="result_body">
+						<div class="whip_title">Republican Daily Whipping Post</div>
+						<div id="rwd_date" class="whip_date">&nbsp;</div>
+					</div>
+				</a>
+			</li>
+			<li>
+				<a id="rww_link">
+					<div class="result_body">
+						<div class="whip_title">Republican Weekly Whip Notice</div>
+						<div id="rww_date" class="whip_date">&nbsp;</div>
+					</div>
+				</a>
+			</li>
+		</ul>
+	</div>
+	
+	<div id="about_body" class="content">
+		<div class="info_content">
+			<p>
+				The <a href="http://sunlightfoundation.com">Sunlight Foundation</a> is a non-partisan non-profit that uses cutting-edge technology and ideas to make government transparent and accountable.
+			</p>
+		</div>
+		<h3 class="header_row">Data Sources</h3>
+		<div class="info_content">
+			<h4>Floor Updates</h4>
+			<p>
+				House floor updates are pulled from the <a href="http://clerk.house.gov/floorsummary/floor.html">House of Representatives Office of the Clerk</a>
+			</p>
+			<p>
+				Senate floor updates are provided by <a href="http://republican.senate.gov/public/index.cfm?FuseAction=FloorUpdates.Home">Republicans.Senate.Gov</a>
+			
+			</p>
+			<h4>Leadership Notices</h4>
+			<ul>
+				<li>House Majority Whip <a href="http://majoritywhip.house.gov/index.cfm?p=WhipPack">Weekly Whip Pack</a></li>
+				<li>House Majority Whip <a href="http://majoritywhip.house.gov/index.cfm?p=DailyWhipline">Daily Whipline</a></li>
+				<li>Office of the Republican Whip <a href="http://republicanwhip.house.gov/FLOOR/">Daily Whipping Post and Weekly Whip Notice</a></li>
+			</ul>
+			<h4>News</h4>
+			<p>Links to news stories are provided by the RSS feeds of the following publications:</p>
+			<ul>
+				<li>The Hill</li>
+				<li>Hotline On Call</li>
+				<li>The Note</li>
+				<li>Open Congress</li>
+				<li>The Page</li>
+				<li>Politico</li>
+				<li>Washington Post</li>
+			</ul>
+			<h4>Upcoming Hearings</h4>
+			<p>
+				Upcoming hearings for the House of Representatives are provided by <a href="http://govtrack.us">GovTrack.us</a>
+			</p>
+			<p>
+				Hearing schedules for the Senate are made available on the official website of the <a href="http://www.senate.gov/pagelayout/committees/b_three_sections_with_teasers/committee_hearings.htm">U.S. Senate</a>
+			</p>
+			<h4>Documents</h4>
+			<p>
+				Other than Congressional Research Service reports, which are made available by the Center for Democracy &amp;
+				Technology's <a href="http://opencrs.com">Open CRS</a> project, reports are obtained from the official 
+				websites of the following offices:
+			</p>
+			<ul>
+				<li>Congressional Budget Office</li>
+				<li>Democratic Policy Committee</li>
+				<li>Government Accountability Office</li>
+				<li>Republican Policy Committee</li>
+				<li>Joint Committee on Taxation</li>
+				<li>Office of Management and Budget</li>
+				<li>Republican Cloakroom</li>
+				<li>White House/OMB</li>
+			</ul>
+		</div>
+		<h3 class="header_row">Support</h3>
+		<div class="info_content">
+			For support, please visit our <a href="http://getsatisfaction.com/sunlightfoundation/products/sunlightfoundation_real_time_congress_mobile">Get Satisfaction</a> page.
+		</div>
+		<h3 class="header_row">Application Information</h3>
+		<div class="info_content">
+			<div id="title"></div>
+			<div id="version"></div>
+			<div id="description"></div>
+			<div id="copyright"></div>
+			<div ><a id="url" href=""></a></div>
+		</div>
+	</div>
+	
+	<div id="empty_result">
+		<h2 id="empty_message"></h2>
+	</div>
+	
+	<div id="preload">
+		<img src="images/back.svg">
+		<img src="images/back_active.svg">
+		<img src="images/menu.svg">
+		<img src="images/menu_active.svg">
+		<img src="images/child_next.svg">
+		<img src="images/house-active.svg">
+		<img src="images/house-inactive.svg">
+		<img src="images/reload.svg">
+		<img src="images/reload_active.svg">
+		<img src="images/senate-active.svg">
+		<img src="images/senate-inactive.svg">
+	</div>
+	
+	<div id="progress">Loading...</div>
 </body>
 </html>

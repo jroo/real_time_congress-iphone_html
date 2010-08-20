@@ -1,64 +1,43 @@
-APP_TITLE = "Real Time Congress";
-APP_VERSION = "1.60";
-APP_AUTHOR = "Joshua Ruihley, Sunlight Foundation";
-APP_COPYRIGHT = "Copyright 2010, Sunlight Foundation";
-APP_URL = "http://realtimecongress.org";
+function Application() {
+    this.title = "Real Time Congress";
+    this.version = "1.90";
+    this.author = "Joshua Ruihley, Sunlight Foundation";
+    this.copyright = "Copyright 2010, Sunlight Foundation";
+    this.url = "http://realtimecongress.org";
 
-RTC_DOMAIN = 'realtimecongress.org';
-DOCSERVER_DOMAIN = 'docserver.org';
-LOCAL_DB = openDb('rtc', '1.0', 'Real Time Congress');
-AJAX_TIMEOUT = 10000;
+    this.rtcDomain = 'realtimecongress.org';
+    this.docserverDomain = 'docserver.org';
+    this.ajaxTimeout = 10000;
+    this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
+    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'news', 'news_source', 'whip_notices'];
 
-$(document).bind("deviceready", function() { 
-    initializeDb(LOCAL_DB);
+    this.aboutView = new AboutView();
+    this.documentsView = new DocumentsView();
+    this.docListView = new DocListView();
+    this.floorUpdatesView = new FloorUpdatesView();
+    this.hearingsView = new HearingsView();
+    this.mainMenuView = new MainMenuView();
+    this.newsView = new NewsView();
+    this.newsSourceView = new NewsSourceView();
+    this.whipNoticesView = new WhipNoticesView();
+}
 
-	$('a.view').click(function() {
-		window.location = this.href;
-		return false;
-	});
-	
-	$('ul.selector a').click(function() {
-		$(this).parent().parent().find('a').removeClass('active');
-		$(this).addClass('active');
-	});
-});
-
-function markViewed(view_name) {
+Application.prototype.markViewed = function(view_name) {
     sessionStorage.setItem(view_name + '_viewed', true);
 }
 
-function isViewed(view_name) {
+Application.prototype.isViewed = function(view_name) {
     return (sessionStorage.getItem(view_name + '_viewed'));
 }
 
-function renderList(list, dest_list) {
-    dest_list.innerHTML = '';
-    if (list.length > 0) {
-        for (i in list) {
-            if (list[i].row_type == 'content') {
-                renderRow(list[i], dest_list);
-            } else if (list[i].row_type == 'header') {
-                renderHeader(list[i].title, dest_list);
-            }
-        }
-    }
-}
-
-function renderHeader(title, dest_list) {
-    var newItem = document.createElement("li")
-    newItem.className = 'header_row';
-    newItem.innerHTML = title;
-    dest_list.appendChild(newItem);
-}
-
-function openDb(short_name, version, display_name) {
+Application.prototype.openDb = function(short_name, version, display_name) {
     var max_size = 655360;
     var db = openDatabase(short_name, version, display_name, max_size);
     return db
 }
 
-function initializeDb(db) {    
-    db.transaction(
+Application.prototype.initializeDb = function() {    
+    this.localDb.transaction(
         function(transaction) {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS News (id TEXT PRIMARY KEY, title TEXT, description TEXT, url TEXT, date DATETIME, doc_type TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS FloorUpdates (id INTEGER PRIMARY KEY, date DATETIME, description TEXT, chamber TEXT)');
@@ -70,11 +49,80 @@ function initializeDb(db) {
     );
 }
 
-function dbErrorHandler(transaction, error)
+Application.prototype.startOver = function () {
+    this.localDb.transaction(
+        function(transaction) {
+            transaction.executeSql('DROP TABLE News');
+            transaction.executeSql('DROP TABLE FloorUpdates');
+            transaction.executeSql('DROP TABLE LeadershipNotices');
+            transaction.executeSql('DROP TABLE Hearings');
+            transaction.executeSql('DROP TABLE LastUpdate');
+            transaction.executeSql('DROP TABLE Documents');    
+            }
+        );
+}
+
+Application.prototype.dbErrorHandler = function(transaction, error)
 {
     alert('Oops.  Error was '+error.message+' (Code '+error.code+')');
 }
 
-function loadView(view_name) {
-    window.location = view_name + ".html";
+Application.prototype.initializeChamberSelect = function() {
+	$('a.view').click(function() {
+		window.location = this.href;
+		return false;
+	});
+
+	$('ul.selector a').click(function() {
+		$(this).parent().parent().find('a').removeClass('active');
+		$(this).addClass('active');
+	});
 }
+
+Application.prototype.hideAll = function() {
+    for (var i  in this.views) {
+        $("#" + this.views[i] + "_body").hide();
+    }
+    $('#empty_result').hide();
+}
+
+Application.prototype.loadView = function(view_name) {
+    this.hideAll();
+    switch(view_name) {
+        case 'about':
+            this.aboutView.render();
+            break;
+        case 'documents':
+            this.documentsView.render();
+            break;
+        case 'doc_list':
+            this.docListView.render();
+            break;
+        case 'floor_updates':
+            this.floorUpdatesView.render();
+            break;
+        case 'hearings':
+            this.hearingsView.render();
+            break;
+        case 'main_menu':
+            this.mainMenuView.render();
+            break;
+        case 'news':
+            this.newsView.render();
+            break;
+        case 'news_source':
+            this.newsSourceView.render();
+            break;
+        case 'whip_notices':
+            this.whipNoticesView.render();
+            break;
+        default:
+            break;
+    }
+}
+
+$(document).ready(function() { 
+    application = new Application();
+    //application.startOver();
+    application.initializeDb();
+});
