@@ -49,6 +49,19 @@ Application.prototype.initializeDb = function() {
     );
 }
 
+Application.prototype.dbPurgeOld = function () {
+    this.localDb.transaction(
+        function(transaction) {
+            transaction.executeSql('DELETE FROM News ORDER BY date DESC LIMIT 100, 1000');
+            transaction.executeSql('DELETE FROM FloorUpdates ORDER BY date DESC LIMIT 50, 1000');
+            transaction.executeSql('DELETE FROM LeadershipNotices ORDER BY date DESC LIMIT 10, 1000');
+            transaction.executeSql('DELETE FROM Hearings ORDER BY date DESC LIMIT 50, 1000');
+            transaction.executeSql('DELETE FROM LastUpdate ORDER BY date DESC LIMIT 30, 1000');
+            transaction.executeSql('DELETE FROM Documents ORDER BY date DESC LIMIT 100, 1000');
+        }
+    );    
+}
+
 Application.prototype.startOver = function () {
     this.localDb.transaction(
         function(transaction) {
@@ -123,6 +136,6 @@ Application.prototype.loadView = function(view_name) {
 
 $(document).ready(function() { 
     application = new Application();
-    //application.startOver();
     application.initializeDb();
+    application.dbPurgeOld();
 });
