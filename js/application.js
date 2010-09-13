@@ -1,6 +1,6 @@
 function Application() {
     this.title = "Real Time Congress";
-    this.version = "1.95";
+    this.version = "2.0a1";
     this.author = "Joshua Ruihley, Sunlight Foundation";
     this.copyright = "Copyright 2010, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
@@ -9,17 +9,17 @@ function Application() {
     this.docserverDomain = 'docserver.org';
     this.ajaxTimeout = 10000;
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
-    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'news', 'news_source', 'whip_notices'];
-
+    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 'news', 'news_source'];
+        
     this.aboutView = new AboutView();
     this.documentsView = new DocumentsView();
     this.docListView = new DocListView();
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
+    this.legislatorsView = new LegislatorsView();
     this.mainMenuView = new MainMenuView();
     this.newsView = new NewsView();
     this.newsSourceView = new NewsSourceView();
-    this.whipNoticesView = new WhipNoticesView();
 }
 
 Application.prototype.markViewed = function(view_name) {
@@ -41,10 +41,10 @@ Application.prototype.initializeDb = function() {
         function(transaction) {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS News (id TEXT PRIMARY KEY, title TEXT, description TEXT, url TEXT, date DATETIME, doc_type TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS FloorUpdates (id INTEGER PRIMARY KEY, date DATETIME, description TEXT, chamber TEXT)');
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS LeadershipNotices (id INTEGER PRIMARY KEY, date DATETIME, doc_type TEXT, url TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Hearings (id INTEGER PRIMARY KEY, date DATETIME, chamber TEXT, committee TEXT, committee_code TEXT, matter TEXT, room TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LastUpdate (view_name TEXT PRIMARY KEY, date DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, bioguide_id TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
         }
     );
 }
@@ -54,7 +54,6 @@ Application.prototype.dbPurgeOld = function () {
         function(transaction) {
             transaction.executeSql('DELETE FROM News ORDER BY date DESC LIMIT 100, 1000');
             transaction.executeSql('DELETE FROM FloorUpdates ORDER BY date DESC LIMIT 50, 1000');
-            transaction.executeSql('DELETE FROM LeadershipNotices ORDER BY date DESC LIMIT 10, 1000');
             transaction.executeSql('DELETE FROM Hearings ORDER BY date DESC LIMIT 50, 1000');
             transaction.executeSql('DELETE FROM LastUpdate ORDER BY date DESC LIMIT 30, 1000');
             transaction.executeSql('DELETE FROM Documents ORDER BY date DESC LIMIT 100, 1000');
@@ -70,6 +69,7 @@ Application.prototype.startOver = function () {
             transaction.executeSql('DROP TABLE LeadershipNotices');
             transaction.executeSql('DROP TABLE Hearings');
             transaction.executeSql('DROP TABLE LastUpdate');
+            transaction.executeSql('DROP TABLE Legislators');
             transaction.executeSql('DROP TABLE Documents');    
             }
         );
@@ -117,6 +117,9 @@ Application.prototype.loadView = function(view_name) {
         case 'hearings':
             this.hearingsView.render();
             break;
+        case 'legislators':
+            this.legislatorsView.render();
+            break;
         case 'main_menu':
             this.mainMenuView.render();
             break;
@@ -126,9 +129,6 @@ Application.prototype.loadView = function(view_name) {
         case 'news_source':
             this.newsSourceView.render();
             break;
-        case 'whip_notices':
-            this.whipNoticesView.render();
-            break;
         default:
             break;
     }
@@ -136,6 +136,8 @@ Application.prototype.loadView = function(view_name) {
 
 $(document).ready(function() { 
     application = new Application();
+    settings = new Settings();
+    
     application.initializeDb();
     application.dbPurgeOld();
 });

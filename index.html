@@ -9,16 +9,17 @@
 	<script type="text/javascript" src="phonegap.js" charset="utf-8"></script>
 	<script type="text/javascript" src="js/date_utils.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
+	<script type="text/javascript" src="js/local_settings.js"></script>
 	<script type="text/javascript" src="js/view.js"></script>
 	<script type="text/javascript" src="js/about.js"></script>
 	<script type="text/javascript" src="js/documents.js"></script>
 	<script type="text/javascript" src="js/doc_list.js"></script>
 	<script type="text/javascript" src="js/hearings.js"></script>
 	<script type="text/javascript" src="js/floor_updates.js"></script>
+	<script type="text/javascript" src="js/legislators.js"></script>
 	<script type="text/javascript" src="js/main_menu.js"></script>
 	<script type="text/javascript" src="js/news.js"></script>
 	<script type="text/javascript" src="js/news_source.js"></script>
-	<script type="text/javascript" src="js/whip_notices.js"></script>
 </head>
 
 <body>
@@ -30,8 +31,8 @@
 	
 	<div id="main_menu_body">
 		<ul class="menu">
+			<li onClick="application.loadView('legislators')" class="legislators">Legislators</li>
 			<li onClick="application.loadView('floor_updates')" class="floor-updates">Floor Updates</li>
-			<li onClick="application.loadView('whip_notices')" class="whip-notices">Whip Notices</li>
 			<li onClick="application.loadView('hearings')" class="hearings">Hearings</li>
 			<li onClick="application.loadView('documents')" class="documents">Documents</li>
 			<li onClick="application.loadView('news')" class="news">News</li>
@@ -81,6 +82,9 @@
 		</ul>
 	</div>
 	
+	<div id="legislators_body" class="content">
+	</div>
+	
 	<div id="news_body" class="content">
 		<ul id="news_menu" class="classic_list">
 			<li onClick="application.newsView.loadList('all', 'All News')"><div class="standard_menu_body">All News</div></li>
@@ -100,43 +104,6 @@
 	
 	<div id="news_source_body" class="content">
 		<ul id="news_list" class="classic_link_list">
-		</ul>
-	</div>
-	
-	<div id="whip_notices_body" class="content">
-		<ul id="whip_menu" class="classic_link_list">
-			<li>
-				<a id="dwd_link">
-				<div class="result_body">
-					<div class="whip_title">Democratic Daily Whipline</div>
-					<div id="dwd_date" class="whip_date">&nbsp;</div>
-				</div>
-				</a>
-			</li>
-			<li>
-				<a id="dww_link">
-					<div class="result_body">
-						<div class="whip_title">Democratic Weekly Whip Pack</div>
-						<div id="dww_date" class="whip_date">&nbsp;</div>
-					</div>
-				</a>
-			</li>
-			<li>
-				<a id="rwd_link">
-					<div class="result_body">
-						<div class="whip_title">Republican Daily Whipping Post</div>
-						<div id="rwd_date" class="whip_date">&nbsp;</div>
-					</div>
-				</a>
-			</li>
-			<li>
-				<a id="rww_link">
-					<div class="result_body">
-						<div class="whip_title">Republican Weekly Whip Notice</div>
-						<div id="rww_date" class="whip_date">&nbsp;</div>
-					</div>
-				</a>
-			</li>
 		</ul>
 	</div>
 	
