@@ -7,16 +7,26 @@ function Application() {
 
     this.rtcDomain = 'realtimecongress.org';
     this.docserverDomain = 'docserver.org';
+    this.sunlightServicesDomain = 'services.sunlightlabs.com';
+    
     this.ajaxTimeout = 10000;
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
-    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 'news', 'news_source'];
+    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
+        'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
+        'legislators_last_name', 'legislators_zip'];
         
     this.aboutView = new AboutView();
     this.documentsView = new DocumentsView();
     this.docListView = new DocListView();
+    this.favoriteLegislatorsView = new FavoriteLegislatorsView();
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
     this.legislatorsView = new LegislatorsView();
+    this.legislatorsCommitteesView = new LegislatorsCommitteesView();
+    this.legislatorsLastNameView = new LegislatorsLastNameView();
+    this.legislatorsLocationView = new LegislatorsLocationView();
+    this.legislatorsStateView = new LegislatorsStateView();
+    this.legislatorsZipView = new LegislatorsZipView();
     this.mainMenuView = new MainMenuView();
     this.newsView = new NewsView();
     this.newsSourceView = new NewsSourceView();
@@ -44,7 +54,7 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Hearings (id INTEGER PRIMARY KEY, date DATETIME, chamber TEXT, committee TEXT, committee_code TEXT, matter TEXT, room TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LastUpdate (view_name TEXT PRIMARY KEY, date DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, bioguide_id TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite INTEGER, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
         }
     );
 }
@@ -120,6 +130,24 @@ Application.prototype.loadView = function(view_name) {
         case 'legislators':
             this.legislatorsView.render();
             break;
+        case 'legislators_committees':
+            this.legislatorsCommitteesView.render();
+            break;
+        case 'legislators_favorites':
+            this.favoriteLegislatorsView.render();
+            break;
+        case 'legislators_last_name':
+            this.legislatorsLastNameView.render();
+            break;
+        case 'legislators_location':
+            this.legislatorsLocationView.render();
+            break;
+        case 'legislators_state':
+            this.legislatorsStateView.render();
+            break;
+        case 'legislators_zip':
+            this.legislatorsZipView.render();
+            break;
         case 'main_menu':
             this.mainMenuView.render();
             break;
@@ -131,6 +159,14 @@ Application.prototype.loadView = function(view_name) {
             break;
         default:
             break;
+    }
+}
+
+Application.prototype.navAlert = function(message, title) {
+    try {
+        navigator.notification.alert(message, title);
+    } catch(err) {
+        alert(message);
     }
 }
 

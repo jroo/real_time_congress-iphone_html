@@ -4,8 +4,10 @@
 	<title>RtCongress</title>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<link rel="stylesheet" type="text/css" href="css/iphone.css" />
+	<!--<link rel="stylesheet" type="text/css" href="jqtouch/jqtouch.min.css" />-->
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="js/jquery.jsonp-2.0.2.min.js"></script>
+	<script type="text/javascript" src="jqtouch/jqtouch.min.js"</script>
 	<script type="text/javascript" src="phonegap.js" charset="utf-8"></script>
 	<script type="text/javascript" src="js/date_utils.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
@@ -16,7 +18,13 @@
 	<script type="text/javascript" src="js/doc_list.js"></script>
 	<script type="text/javascript" src="js/hearings.js"></script>
 	<script type="text/javascript" src="js/floor_updates.js"></script>
-	<script type="text/javascript" src="js/legislators.js"></script>
+	<script type="text/javascript" src="js/legislators/committees.js"></script>
+	<script type="text/javascript" src="js/legislators/legislators.js"></script>
+	<script type="text/javascript" src="js/legislators/favorites.js"></script>
+	<script type="text/javascript" src="js/legislators/last_name.js"></script>
+	<script type="text/javascript" src="js/legislators/location.js"></script>
+	<script type="text/javascript" src="js/legislators/state.js"></script>
+	<script type="text/javascript" src="js/legislators/zip.js"></script>
 	<script type="text/javascript" src="js/main_menu.js"></script>
 	<script type="text/javascript" src="js/news.js"></script>
 	<script type="text/javascript" src="js/news_source.js"></script>
@@ -29,7 +37,7 @@
 		<h1 id="title_text">Menu</h1>
 	</div>
 	
-	<div id="main_menu_body">
+	<div id="main_menu_body" class="menu_page">
 		<ul class="menu">
 			<li onClick="application.loadView('legislators')" class="legislators">Legislators</li>
 			<li onClick="application.loadView('floor_updates')" class="floor-updates">Floor Updates</li>
@@ -83,6 +91,46 @@
 	</div>
 	
 	<div id="legislators_body" class="content">
+	    <ul id="legislators_menu" class="classic_list">
+			<li onClick="application.loadView('legislators_favorites')"><div class="standard_menu_body">Favorites</div></li>
+	        <li onClick="application.loadView('legislators_location')"><div class="standard_menu_body">My Location</div></li>
+			<li onClick="application.loadView('legislators_state')"><div class="standard_menu_body">State</div></li>
+			<li onClick="application.loadView('legislators_last_name')"><div class="standard_menu_body">Last Name</div></li>
+			<li onClick="application.loadView('legislators_zip')"><div class="standard_menu_body">ZIP Code</div></li>
+			<li onClick="application.loadView('legislators_committees')"><div class="standard_menu_body">Committees</div></li>
+	    </ul>
+	</div>
+	
+	<div id="legislators_committees_body" class="content">
+		<div class="chamber_container">
+			<ul class="chamber_select selector">
+				<li id="house_select"><a onClick="application.legislatorsCommitteesView.loadChamber('House')" class="active">House</a></li>
+				<li id="senate_select"><a onClick="application.legislatorsCommitteesView.loadChamber('Senate')">Senate</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<ul id="committees_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="legislators_favorites_body" class="content">
+		favorites
+	</div>
+	
+	<div id="legislators_last_name_body" class="content">
+		last name
+	</div>
+	
+	<div id="legislators_location_body" class="content">
+		location
+	</div>
+	
+	<div id="legislators_state_body" class="content">
+		state
+	</div>
+	
+	<div id="legislators_zip_body" class="content">
+		zip
 	</div>
 	
 	<div id="news_body" class="content">

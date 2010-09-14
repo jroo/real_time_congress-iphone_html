@@ -26,27 +26,47 @@ body {
     text-overflow: ellipsis;
 }
 
+#header h1#main_title_text {
+	color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 10px 0;
+    text-align: center;
+    text-shadow: 0px 1px 0px #666666;
+    max-width: 240px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 #main_menu_body {
 	margin: 0px;
 }
-#main_menu_body ul {
+.menu_page {
 	list-style: none;
 	margin: 10px;
 	padding: 0;
 }
-#main_menu_body ul.menu li  {
+.menu_page ul.menu li  {
 	background-position: 10px 12px;
 	background-repeat: no-repeat;
 	padding: 18px 0 18px 50px;
 }
 
-#main_menu_body ul.menu li.floor-updates  { background-image: url(../images/updates.svg); }
-#main_menu_body ul.menu li.whip-notices  { background-image: url(../images/notices.svg); }
-#main_menu_body ul.menu li.hearings  { background-image: url(../images/hearings.svg); }
-#main_menu_body ul.menu li.documents  { background-image: url(../images/docs.svg); }
-#main_menu_body ul.menu li.news  { background-image: url(../images/news.svg); }
-#main_menu_body ul.menu li.about  { background-image: url(../images/about.svg); }
+.menu_page ul.menu li.floor-updates  { background-image: url(../images/updates.svg); }
+.menu_page ul.menu li.legislators  { background-image: url(../images/legislators.svg); }
+.menu_page ul.menu li.hearings  { background-image: url(../images/hearings.svg); }
+.menu_page ul.menu li.documents  { background-image: url(../images/docs.svg); }
+.menu_page ul.menu li.news  { background-image: url(../images/news.svg); }
+.menu_page ul.menu li.about  { background-image: url(../images/about.svg); }
 
+.menu_page ul.menu li.favorites  { background-image: url(../images/favorites.svg); }
+.menu_page ul.menu li.committees  { background-image: url(../images/notices.svg); }
+.menu_page ul.menu li.location  { background-image: url(../images/location.svg); }
+.menu_page ul.menu li.state { background-image: url(../images/state.svg); }
+.menu_page ul.menu li.last_name  { background-image: url(../images/last_name.svg); }
+.menu_page ul.menu li.zip_code  { background-image: url(../images/zip_code.svg); }
 
 .menu {
     list-style: none;
@@ -293,6 +313,12 @@ body {
 #floor_updates_body { display:none }
 #hearings_body { display:none }
 #legislators_body { display:none }
+#legislators_committees_body { display:none }
+#legislators_favorites_body { display:none }
+#legislators_last_name_body { display:none }
+#legislators_location_body { display:none }
+#legislators_state_body { display:none }
+#legislators_zip_body { display:none }
 #news_body { display:none }
 #news_source_body { display:none }
 #whip_notices_body { display:none }

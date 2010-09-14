@@ -7,8 +7,6 @@ function LegislatorsView() {
     self.render = function() {
         self.setTitle(self.titleString);
         self.setLeftButton('back', 'main_menu');
-        self.setRightButton('reload');
         self.show();
     }
-     
 }
