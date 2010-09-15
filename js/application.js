@@ -11,11 +11,12 @@ function Application() {
     
     this.ajaxTimeout = 10000;
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
-    this.views = ['main_menu', 'about', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
+    this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_last_name', 'legislators_zip'];
         
     this.aboutView = new AboutView();
+    this.committeeView = new CommitteeView();
     this.documentsView = new DocumentsView();
     this.docListView = new DocListView();
     this.favoriteLegislatorsView = new FavoriteLegislatorsView();
@@ -115,6 +116,9 @@ Application.prototype.loadView = function(view_name) {
     switch(view_name) {
         case 'about':
             this.aboutView.render();
+            break;
+        case 'committee':
+            this.committeeView.render();
             break;
         case 'documents':
             this.documentsView.render();

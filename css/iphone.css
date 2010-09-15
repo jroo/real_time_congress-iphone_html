@@ -308,6 +308,7 @@ body {
 }
 
 #about_body { display:none }
+#committee_body { display:none }
 #doc_list_body { display:none }
 #documents_body { display:none }
 #floor_updates_body { display:none }

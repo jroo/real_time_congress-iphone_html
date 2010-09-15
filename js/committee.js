@@ -1,32 +1,28 @@
-LegislatorsCommitteesView.prototype = new View();
-function LegislatorsCommitteesView() {
+CommitteeView.prototype = new View();
+function CommitteeView() {
     var self = this;
-    self.containerDiv = 'legislators_committees_body';
-    self.currentChamber = 'House';
-    self.destinationList = document.getElementById('committees_list');
-    self.titleString = 'Committees';
+    self.containerDiv = 'committee_body';
+    self.destinationList = document.getElementById('subcommittees_list');
+    self.titleString = 'Committee';
 
     self.render = function() {
-        self.setTitle(self.titleString);
-        self.setLeftButton('back', 'legislators');
+        self.setTitle(localStorage.getItem("current_committee_title"));
+        self.setLeftButton('back', 'legislators_committees');
         self.setRightButton('reload');
-        //application.initializeTriChamberSelect();
-        self.loadChamber(self.currentChamber);
+        self.loadSubcommittees(localStorage.getItem("current_committee"));
     }
     
-    self.loadChamber = function(chamber) {
-        self.currentChamber = chamber;
-        self.setTitle("Committees");
-        self.dbGetLatest(chamber);
-        if (!application.isViewed('legislators_committees_' + chamber)) {
-            self.serverGetLatest(chamber);
+    self.loadSubcommittees = function(id) {
+        self.dbGetLatest(id);
+        if (!application.isViewed('committee_' + id)) {
+            self.serverGetLatest(id);
         }
     }
 
     self.dataHandler = function(transaction, results) {
         resultsList = self.localToList(results);
-        if (application.isViewed('legislators_committees_' + self.currentChamber) && resultsList.length == 0) {
-            self.showEmptyResult('No Committees');
+        if (application.isViewed('committee_' + localStorage.getItem("current_committee")) && resultsList.length == 0) {
+            self.showEmptyResult('No Subcommittees');
         } else {
             self.hideEmptyResult();
         }
@@ -34,21 +30,22 @@ function LegislatorsCommitteesView() {
         self.show();
     }
 
-    self.dbGetLatest = function(chamber) {
+    self.dbGetLatest = function(id) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("SELECT * FROM Committees WHERE chamber = ? ORDER BY name ASC", [chamber,], self.dataHandler);
+               transaction.executeSql("SELECT * FROM Committees WHERE parent = ? ORDER BY name ASC", [id,], self.dataHandler);
             }
         );
     }
 
     self.reload = function() {
-        self.serverGetLatest(self.currentChamber);
+        self.serverGetLatest(localStorage.getItem("current_committee"));
     }
 
     self.localToList = function(results) {
         latest_list = [];
         last_date = null;
+        latest_list.push({row_type:'content', id:localStorage.getItem("current_committee"), name:'Full Committee'});
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);
             latest_list.push({row_type:'content', id:row.id, name:row.name});
@@ -56,21 +53,21 @@ function LegislatorsCommitteesView() {
         return latest_list;
     }
 
-    self.serverGetLatest = function(chamber) {
+    self.serverGetLatest = function(id) {
         self.showProgress();
         //fetch committees from server
-        jsonUrl = "http://" + application.sunlightServicesDomain + "/api/committees.getList.json?chamber=" + chamber + "&apikey=" + settings.sunlightServicesKey + "&jsonp=_jqjsp";
+        jsonUrl = "http://" + application.sunlightServicesDomain + "/api/committees.get.json?id=" + id + "&apikey=" + settings.sunlightServicesKey + "&jsonp=_jqjsp";
         
         $.jsonp({
             url: jsonUrl,
             cache: true,
             timeout: application.ajaxTimeout,
             success: function(data){
-                for (i in data.response.committees) {
-                    self.addToLocal(data.response.committees[i]);
+                for (i in data.response.committee.subcommittees) {
+                    self.addToLocal(data.response.committee.subcommittees[i], id);
                 }
-                application.markViewed('legislators_committees_' + chamber);
-                self.dbGetLatest(chamber);
+                application.markViewed('committee_' + id);
+                self.dbGetLatest(id);
                 self.hideProgress();
             },
             error: function(d, msg) {
@@ -80,18 +77,18 @@ function LegislatorsCommitteesView() {
         });
     }
 
-    self.addToLocal = function(row) {
+    self.addToLocal = function(row, id) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("INSERT INTO Committees (id, name, chamber, parent) VALUES (?, ?, ?, ?)", [row.committee.id, row.committee.name, row.committee.chamber, row.committee.parent]);
+               transaction.executeSql("INSERT INTO Committees (id, name, chamber, parent) VALUES (?, ?, ?, ?)", [row.committee.id, row.committee.name, row.committee.chamber, id]);
             }
         );
     }
     
-    self.loadCommittee = function(id, name) {
-        localStorage.setItem("current_committee", id);
-        localStorage.setItem("current_committee_title", name);
-        application.loadView('committee');
+    self.loadSubcommittee = function(id, name) {
+        localStorage.setItem("current_subcommittee", id);
+        localStorage.setItem("current_subcommittee_title", name);
+        application.loadView('subcommittee');
     }
 
     self.renderRow = function(row, dest_list) {
@@ -107,7 +104,7 @@ function LegislatorsCommitteesView() {
         
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
-    		self.loadCommittee(row.id, row.name);
+    		self.loadSubcommittee(row.id, row.name);
     	});
 
         anchor.appendChild(titleDiv);

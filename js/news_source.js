@@ -112,8 +112,6 @@ function NewsSourceView() {
         var anchor = document.createElement("a");
         anchor.href = row.url;
     	$(anchor).click(function() {
-    		//window.location = 'external.html#' + self.href;
-    		//return false;
     		return true;
     	});
 
