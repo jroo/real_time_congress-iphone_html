@@ -13,7 +13,7 @@ function Application() {
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
-        'legislators_last_name', 'legislators_zip'];
+        'legislators_last_name', 'legislators_zip', 'subcommittee'];
         
     this.aboutView = new AboutView();
     this.committeeView = new CommitteeView();
@@ -31,6 +31,7 @@ function Application() {
     this.mainMenuView = new MainMenuView();
     this.newsView = new NewsView();
     this.newsSourceView = new NewsSourceView();
+    this.subcommitteeView = new SubcommitteeView();
 }
 
 Application.prototype.markViewed = function(view_name) {
@@ -162,6 +163,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'news_source':
             this.newsSourceView.render();
+            break;
+        case 'subcommittee':
+            this.subcommitteeView.render();
             break;
         default:
             break;

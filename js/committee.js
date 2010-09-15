@@ -102,13 +102,12 @@ function CommitteeView() {
         titleDiv.className = 'result_body';
         titleDiv.innerHTML = row.name;
         
-        var anchor = document.createElement("a");
-    	$(anchor).click(function() {
+        $(result).unbind();
+    	$(result).click(function() {
     		self.loadSubcommittee(row.id, row.name);
     	});
 
-        anchor.appendChild(titleDiv);
-        result.appendChild(anchor);
+        result.appendChild(titleDiv);
         newItem.appendChild(result);
         dest_list.appendChild(newItem);
 
