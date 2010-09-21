@@ -2,6 +2,7 @@ function View() {
 }
 
 View.prototype.renderList = function(list, dest_list) {
+    alert(list);
     dest_list.innerHTML = '';
     if (list.length > 0) {
         for (i in list) {

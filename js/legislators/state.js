@@ -94,6 +94,7 @@ function LegislatorsStateView() {
             timeout: application.ajaxTimeout,
             success: function(data){
                 for (i in data.response.legislators) {
+                    self.updateLegislator(data.response.legislators[i].legislator);
                     self.addToLocal(data.response.legislators[i].legislator);
                 }
                 application.markViewed('state_' + state);
@@ -105,5 +106,13 @@ function LegislatorsStateView() {
                 application.navAlert("Can't connect to server", "Network Error");
             },
         });
+    }
+    
+    self.updateLegislator = function(row) {
+        application.localDb.transaction(
+            function(transaction) {
+                transaction.executeSql("UPDATE Legislators SET bioguide_id=?, website=?, firstname=?, lastname=?, congress_office=?, phone=?, webform=?, youtube_url=?, nickname=?, congresspedia_url=?, district=?, title=?, in_office=?, senate_class=?, name_suffix=?, twitter_id=?, birthdate=?, fec_id=?, state=?, crp_id=?, official_rss=?, gender=?, party=?, email=?, votesmart_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [row.bioguide_id, row.website, row.firstname, row.lastname, row.congress_office, row.phone, row.webform, row.youtube_url, row.nickname, row.congresspedia_url, row.district, row.title, row.in_office, row.senate_class, row.name_suffix, row.twitter_id, row.birthdate, row.fec_id, row.state, row.crp_id, row.official_rss, row.gender, row.party, row.email, row.votesmart_id]);
+            }
+        );
     }
 }

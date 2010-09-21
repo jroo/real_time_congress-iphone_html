@@ -37,7 +37,7 @@ function LegislatorsCommitteesView() {
     self.dbGetLatest = function(chamber) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("SELECT * FROM Committees WHERE chamber = ? ORDER BY name ASC", [chamber,], self.dataHandler);
+               transaction.executeSql("SELECT * FROM Committees WHERE chamber = ? AND parent == 'undefined' ORDER BY name ASC", [chamber,], self.dataHandler);
             }
         );
     }
