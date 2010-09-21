@@ -72,7 +72,7 @@ function CommitteeView() {
             },
             error: function(d, msg) {
                 self.hideProgress();
-                navigator.notification.alert("Can't connect to server", "Network Error");
+                application.navAlert("Can't connect to server", "Network Error");
             },
         });
     }

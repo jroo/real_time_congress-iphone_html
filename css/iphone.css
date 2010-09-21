@@ -319,6 +319,7 @@ body {
 #legislators_last_name_body { display:none }
 #legislators_location_body { display:none }
 #legislators_state_body { display:none }
+#legislators_states_body { display:none }
 #legislators_zip_body { display:none }
 #news_body { display:none }
 #news_source_body { display:none }

@@ -13,7 +13,7 @@ function Application() {
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
-        'legislators_last_name', 'legislators_zip', 'subcommittee'];
+        'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee'];
         
     this.aboutView = new AboutView();
     this.committeeView = new CommitteeView();
@@ -27,6 +27,7 @@ function Application() {
     this.legislatorsLastNameView = new LegislatorsLastNameView();
     this.legislatorsLocationView = new LegislatorsLocationView();
     this.legislatorsStateView = new LegislatorsStateView();
+    this.legislatorsStatesView = new LegislatorsStatesView();
     this.legislatorsZipView = new LegislatorsZipView();
     this.mainMenuView = new MainMenuView();
     this.newsView = new NewsView();
@@ -56,7 +57,7 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Hearings (id INTEGER PRIMARY KEY, date DATETIME, chamber TEXT, committee TEXT, committee_code TEXT, matter TEXT, room TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LastUpdate (view_name TEXT PRIMARY KEY, date DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite INTEGER, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite TEXT, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS CommitteesLegislators (committee_id TEXT, legislator_id TEXT, FOREIGN KEY(committee_id) REFERENCES Committees(id), FOREIGN KEY(legislator_id) REFERENCES Legislators(bioguide_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Committees (id TEXT PRIMARY KEY, name TEXT, chamber TEXT, parent TEXT)');
         }
@@ -151,6 +152,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'legislators_state':
             this.legislatorsStateView.render();
+            break;
+        case 'legislators_states':
+            this.legislatorsStatesView.render();
             break;
         case 'legislators_zip':
             this.legislatorsZipView.render();
