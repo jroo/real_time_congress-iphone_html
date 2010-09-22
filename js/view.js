@@ -2,7 +2,6 @@ function View() {
 }
 
 View.prototype.renderList = function(list, dest_list) {
-    alert(list);
     dest_list.innerHTML = '';
     if (list.length > 0) {
         for (i in list) {
@@ -65,6 +64,15 @@ View.prototype.hideEmptyResult = function() {
 
 View.prototype.setTitle = function(title) {
     $('#title_text').html(title);
+}
+
+View.prototype.setSubtitle = function(subtitle) {
+    if (subtitle != '') {
+        $('#subtitle_text').html(subtitle);
+        $('#subheader').show();
+    } else {
+        $('#subheader').hide();
+    }
 }
 
 View.prototype.showProgress = function() {

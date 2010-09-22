@@ -40,6 +40,31 @@ body {
     text-overflow: ellipsis;
 }
 
+#subheader {
+	background-color: #FF3333;
+	background: -webkit-gradient(linear, left top, left bottom, from(#777), to(#000));
+}
+
+#subheader h1 {
+	color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 10px 0;
+    text-align: center;
+    text-shadow: 0px 1px 0px #666666;
+}
+
+#subheader h1#subtitle_text {
+	color: #FFFFFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 auto;
+    padding: 10px 0;
+    text-align: center;
+    text-shadow: 0px 1px 0px #666666;
+}
+
 #main_menu_body {
 	margin: 0px;
 }
@@ -292,6 +317,7 @@ body {
 	background: url('../images/senate-active.svg') top left no-repeat;
 }
 
+
 .clear {
 	clear: both;
 }
@@ -324,6 +350,7 @@ body {
 #news_body { display:none }
 #news_source_body { display:none }
 #subcommittee_body { display:none }
+#subheader { display:none }
 #whip_notices_body { display:none }
 #empty_result { display:none; text-align: center; }
 

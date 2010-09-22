@@ -3,10 +3,12 @@ function SubcommitteeView() {
     var self = this;
     self.containerDiv = 'subcommittee_body';
     self.destinationList = document.getElementById('subcommittee_list');
-    self.titleString = 'Subcommittee';
+    self.titleString = 'Legislators';
+    self.subtitleString = 'Subcommittee';
 
     self.render = function() {
-        self.setTitle(localStorage.getItem("current_subcommittee_title"));
+        self.setTitle(self.titleString);
+        self.setSubtitle(localStorage.getItem("current_subcommittee_title"));
         self.setLeftButton('back', 'committee');
         self.setRightButton('reload');
         this.load(localStorage.getItem("current_subcommittee"));
@@ -20,14 +22,12 @@ function SubcommitteeView() {
     }
 
     self.dataHandler = function(transaction, results) {
-        alert("datahandler");
         resultsList = self.localToList(results);
         self.renderList(resultsList, self.destinationList);
         self.show();
     }
 
     self.dbGetLatest = function(id) {
-        alert("dbgetlatest");
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT Legislators.firstname, Legislators.lastname, Legislators.nickname, Legislators.bioguide_id FROM CommitteesLegislators, Legislators WHERE CommitteesLegislators.committee_id = ? AND Legislators.bioguide_id = CommitteesLegislators.legislator_id ORDER BY lastname ASC", [id,], self.dataHandler);
@@ -40,7 +40,6 @@ function SubcommitteeView() {
     }
 
     self.localToList = function(results) {
-        alert("localToList");
         latest_list = [];
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
@@ -75,21 +74,20 @@ function SubcommitteeView() {
     }
     
     self.addListToLocal = function(data, id) {
-        alert(id);
         for (i in data) {
             row = data[i].legislator;
+            alert(row.lastname);
             application.localDb.transaction(
                 function(transaction) {
                     transaction.executeSql("DELETE FROM CommitteesLegislators WHERE committee_id = ?", [id,]); 
                     transaction.executeSql("INSERT INTO Legislators (bioguide_id, is_favorite, website, firstname, lastname, congress_office, phone, webform, youtube_url, nickname, congresspedia_url, district, title, in_office, senate_class, name_suffix, twitter_id, birthdate, fec_id, state, crp_id, official_rss, gender, party, email, votesmart_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [row.bioguide_id, row.is_favorite, row.website, row.firstname, row.lastname, row.congress_office, row.phone, row.webform, row.youtube_url, row.nickname, row.congresspedia_url, row.district, row.title, row.in_office, row.senate_class, row.name_suffix, row.twitter_id, row.birthdate, row.fec_id, row.state, row.crp_id, row.official_rss, row.gender, row.party, row.email, row.votesmart_id]);
                     transaction.executeSql("INSERT INTO CommitteesLegislators (committee_id, legislator_id) VALUES (?, ?)", [id, row.bioguide_id]); 
-                    }
                 }
             );  
+        }
     }  
 
     self.renderRow = function(row, dest_list) {
-        alert("render");
 
         var newItem = document.createElement("li");
         

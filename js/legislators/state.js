@@ -3,11 +3,13 @@ function LegislatorsStateView() {
     var self = this;
     self.containerDiv = 'legislators_state_body';
     self.destinationList = document.getElementById('state_list');
-    self.titleString = 'State';
+    self.titleString = 'Legislators';
+    self.subtitleString = 'State';
     self.currentState = null;
 
     self.render = function() {
-        self.setTitle(localStorage.getItem("current_state_title"));
+        self.setTitle(self.titleString);
+        self.setSubtitle(localStorage.getItem("current_state_title"));
         self.setLeftButton('back', 'legislators_states');
         self.setRightButton('reload');
         self.loadThisState(localStorage.getItem("current_state"));

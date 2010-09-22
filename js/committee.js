@@ -3,10 +3,11 @@ function CommitteeView() {
     var self = this;
     self.containerDiv = 'committee_body';
     self.destinationList = document.getElementById('subcommittees_list');
-    self.titleString = 'Committee';
+    self.titleString = 'Legislators';
 
     self.render = function() {
-        self.setTitle(localStorage.getItem("current_committee_title"));
+        self.setTitle(self.titleString);
+        self.setSubtitle(localStorage.getItem("current_committee_title"));
         self.setLeftButton('back', 'legislators_committees');
         self.setRightButton('reload');
         self.loadSubcommittees(localStorage.getItem("current_committee"));

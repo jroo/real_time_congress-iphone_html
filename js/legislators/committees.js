@@ -5,9 +5,11 @@ function LegislatorsCommitteesView() {
     self.currentChamber = 'House';
     self.destinationList = document.getElementById('committees_list');
     self.titleString = 'Committees';
+    self.subtitleString = '';
 
     self.render = function() {
         self.setTitle(self.titleString);
+        self.setSubtitle(self.subtitleString);
         self.setLeftButton('back', 'legislators');
         self.setRightButton('reload');
         //application.initializeTriChamberSelect();
@@ -17,6 +19,8 @@ function LegislatorsCommitteesView() {
     self.loadChamber = function(chamber) {
         self.currentChamber = chamber;
         self.setTitle("Committees");
+        self.setSubtitle('');
+
         self.dbGetLatest(chamber);
         if (!application.isViewed('legislators_committees_' + chamber)) {
             self.serverGetLatest(chamber);
