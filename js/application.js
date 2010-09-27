@@ -22,6 +22,7 @@ function Application() {
     this.favoriteLegislatorsView = new FavoriteLegislatorsView();
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
+    this.legislatorView = new LegislatorView();
     this.legislatorsView = new LegislatorsView();
     this.legislatorsCommitteesView = new LegislatorsCommitteesView();
     this.legislatorsLastNameView = new LegislatorsLastNameView();
@@ -114,7 +115,7 @@ Application.prototype.hideAll = function() {
     $('#empty_result').hide();
 }
 
-Application.prototype.loadView = function(view_name) {
+Application.prototype.loadView = function(view_name, previous_view) {
     this.hideAll();
     switch(view_name) {
         case 'about':
@@ -134,6 +135,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'hearings':
             this.hearingsView.render();
+            break;
+        case 'legislator':
+            this.legislatorView.render(previous_view);
             break;
         case 'legislators':
             this.legislatorsView.render();
