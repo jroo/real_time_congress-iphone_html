@@ -61,6 +61,7 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite TEXT, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS CommitteesLegislators (committee_id TEXT, legislator_id TEXT, FOREIGN KEY(committee_id) REFERENCES Committees(id), FOREIGN KEY(legislator_id) REFERENCES Legislators(bioguide_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Committees (id TEXT PRIMARY KEY, name TEXT, chamber TEXT, parent TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS Location (timestamp DATETIME, latitude TEXT, longitude TEXT)');
         }
     );
 }
@@ -191,6 +192,7 @@ Application.prototype.navAlert = function(message, title) {
 $(document).ready(function() { 
     application = new Application();
     settings = new Settings();
+    geo = new Geo();
     
     application.initializeDb();
     application.dbPurgeOld();

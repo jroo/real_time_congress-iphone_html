@@ -76,11 +76,19 @@ View.prototype.setSubtitle = function(subtitle) {
 }
 
 View.prototype.showProgress = function() {
-    $('#progress').show();
+    $('#load_progress').show();
+}
+
+View.prototype.showLocateProgress = function() {
+    $('#locate_progress').show();
 }
 
 View.prototype.hideProgress = function() {
-    $('#progress').hide();
+    $('#load_progress').hide();
+}
+
+View.prototype.hideLocateProgress = function() {
+    $('#locate_progress').hide();
 }
 
 View.prototype.show = function() {

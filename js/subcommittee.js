@@ -54,7 +54,6 @@ function SubcommitteeView() {
         self.showProgress();
         //fetch committees from server
         jsonUrl = "http://" + application.sunlightServicesDomain + "/api/committees.get.json?id=" + id + "&apikey=" + settings.sunlightServicesKey + "&jsonp=_jqjsp";
-        alert(jsonUrl);
         
         $.jsonp({
             url: jsonUrl,
@@ -76,7 +75,6 @@ function SubcommitteeView() {
     self.addListToLocal = function(data, id) {
         for (i in data) {
             row = data[i].legislator;
-            alert(row.lastname);
             application.localDb.transaction(
                 function(transaction) {
                     transaction.executeSql("DELETE FROM CommitteesLegislators WHERE committee_id = ?", [id,]); 

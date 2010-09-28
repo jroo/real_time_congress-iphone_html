@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/date_utils.js"></script>
 	<script type="text/javascript" src="js/application.js"></script>
 	<script type="text/javascript" src="js/local_settings.js"></script>
+	<script type="text/javascript" src="js/geo.js"></script>
 	<script type="text/javascript" src="js/view.js"></script>
 	<script type="text/javascript" src="js/legislator_list_view.js"></script>
 	
@@ -142,7 +143,8 @@
 	</div>
 	
 	<div id="legislators_location_body" class="content">
-		location
+		<ul id="legislators_location_list" class="classic_list">
+		</ul>
 	</div>
 	
 	<div id="legislators_state_body" class="content">
@@ -295,6 +297,7 @@
 		<img src="images/senate-inactive.svg">
 	</div>
 	
-	<div id="progress">Loading...</div>
+	<div class="progress" id="load_progress">Loading...</div>
+	<div class="progress" id="locate_progress">Locating...</div>
 </body>
 </html>
