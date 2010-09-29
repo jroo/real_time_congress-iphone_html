@@ -1,4 +1,4 @@
-LegislatorsLocationView.prototype = new View();
+LegislatorsLocationView.prototype = new LegislatorListView();
 function LegislatorsLocationView() {
     var self = this;
     self.containerDiv = 'legislators_location_body';
@@ -12,17 +12,17 @@ function LegislatorsLocationView() {
         self.loadLegislators();
     }
     
-    self.geoFail = function() {
-        alert("fail");
+    self.geoFail = function(position) {
         //application.navAlert(e);
     }
 
     self.gpsGetLatest = function() {
         self.showLocateProgress();
         try {
-            navigator.geolocation.getCurrentPosition(self.serverGetLegislators, self.geoFail);
+            navigator.geolocation.getCurrentPosition(self.serverGetLegislators);
         } catch(e) {
-            self.geoFail();
+            position = {'coords':{'latitude':null, 'longitude':null}};
+            self.geoFail(position);
         }
     }
 
@@ -45,7 +45,6 @@ function LegislatorsLocationView() {
             cache: true,
             timeout: application.ajaxTimeout,
             success: function(data){
-                alert("success");
                 legislatorList = [];
                 for (i in data.response.legislators) {
                     row = data.response.legislators[i].legislator;
@@ -56,6 +55,7 @@ function LegislatorsLocationView() {
                 self.setLatest(lat, lon);
                 self.renderList(legislatorList, self.destinationList);
                 self.hideProgress();
+                self.show();
             },
             error: function(d, msg) {
                 alert("fail");

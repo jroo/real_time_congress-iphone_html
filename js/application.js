@@ -192,7 +192,6 @@ Application.prototype.navAlert = function(message, title) {
 $(document).ready(function() { 
     application = new Application();
     settings = new Settings();
-    geo = new Geo();
     
     application.initializeDb();
     application.dbPurgeOld();
