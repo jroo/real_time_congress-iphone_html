@@ -12,10 +12,9 @@ LegislatorListView.prototype.addToLocal = function(row) {
     }
     
 LegislatorListView.prototype.loadLegislator = function(id, title, previous_view) {
-        alert(previous_view);
         localStorage.setItem("current_legislator", id);
         localStorage.setItem("current_legislator_title", title);
-        application.loadView('legislator', previous_view);
+        application.viewStack.forwardTo('legislator');
     }
     
 LegislatorListView.prototype.localToList = function(results) {
@@ -40,7 +39,7 @@ LegislatorListView.prototype.renderRow = function(row, dest_list) {
         
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
-            self.loadLegislator(row.id, row.title + '. ' + row.firstname + ' ' + row.lastname, this.view_name);
+            LegislatorListView.prototype.loadLegislator(row.id, row.title + '. ' + row.firstname + ' ' + row.lastname, this.view_name);
     	});
     	
         anchor.appendChild(titleDiv);

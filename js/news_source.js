@@ -20,7 +20,7 @@ function NewsSourceView() {
     
     self.render = function() {
         self.setTitle(localStorage.getItem("current_news_title"));
-        self.setLeftButton('back', 'news');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         self.loadNews(localStorage.getItem("current_news_source"));
     }

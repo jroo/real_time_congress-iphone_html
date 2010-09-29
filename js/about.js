@@ -11,7 +11,7 @@ function AboutView() {
         $("#url").html(application.url);
         $("#url").attr("href", application.url);
         self.setTitle(self.titleString);
-        self.setLeftButton('back', 'main_menu');
+        self.setLeftButton('back');
         self.setRightButton();
         self.show();
     }

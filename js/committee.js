@@ -8,7 +8,7 @@ function CommitteeView() {
     self.render = function() {
         self.setTitle(self.titleString);
         self.setSubtitle(localStorage.getItem("current_committee_title"));
-        self.setLeftButton('back', 'legislators_committees');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         self.loadSubcommittees(localStorage.getItem("current_committee"));
     }
@@ -89,7 +89,7 @@ function CommitteeView() {
     self.loadSubcommittee = function(id, name) {
         localStorage.setItem("current_subcommittee", id);
         localStorage.setItem("current_subcommittee_title", name);
-        application.loadView('subcommittee');
+        application.viewStack.forwardTo('subcommittee');
     }
 
     self.renderRow = function(row, dest_list) {

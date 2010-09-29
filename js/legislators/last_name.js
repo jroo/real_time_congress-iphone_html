@@ -6,7 +6,7 @@ function LegislatorsLastNameView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('back', 'legislators');
+        self.setLeftButton('back');
         self.show();
     }
 }

@@ -13,6 +13,7 @@
 	<script type="text/javascript" src="js/application.js"></script>
 	<script type="text/javascript" src="js/local_settings.js"></script>
 	<script type="text/javascript" src="js/view.js"></script>
+	<script type="text/javascript" src="js/viewstack.js"></script>
 	<script type="text/javascript" src="js/legislator_list_view.js"></script>
 	
 	<script type="text/javascript" src="js/about.js"></script>
@@ -48,12 +49,12 @@
 	
 	<div id="main_menu_body" class="menu_page">
 		<ul class="menu">
-			<li onClick="application.loadView('legislators')" class="legislators">Legislators</li>
-			<li onClick="application.loadView('floor_updates')" class="floor-updates">Floor Updates</li>
-			<li onClick="application.loadView('hearings')" class="hearings">Hearings</li>
-			<li onClick="application.loadView('documents')" class="documents">Documents</li>
-			<li onClick="application.loadView('news')" class="news">News</li>
-			<li onClick="application.loadView('about')" class="about">About</li>
+			<li onClick="application.viewStack.forwardTo('legislators')" class="legislators">Legislators</li>
+			<li onClick="application.viewStack.forwardTo('floor_updates')" class="floor-updates">Floor Updates</li>
+			<li onClick="application.viewStack.forwardTo('hearings')" class="hearings">Hearings</li>
+			<li onClick="application.viewStack.forwardTo('documents')" class="documents">Documents</li>
+			<li onClick="application.viewStack.forwardTo('news')" class="news">News</li>
+			<li onClick="application.viewStack.forwardTo('about')" class="about">About</li>
 		</ul>
 	</div>
 
@@ -101,12 +102,12 @@
 	
 	<div id="legislators_body" class="content">
 	    <ul id="legislators_menu" class="classic_list">
-			<li onClick="application.loadView('legislators_favorites')"><div class="standard_menu_body">Favorites</div></li>
-	        <li onClick="application.loadView('legislators_location')"><div class="standard_menu_body">My Location</div></li>
-			<li onClick="application.loadView('legislators_states')"><div class="standard_menu_body">State</div></li>
-			<li onClick="application.loadView('legislators_last_name')"><div class="standard_menu_body">Last Name</div></li>
-			<li onClick="application.loadView('legislators_zip')"><div class="standard_menu_body">ZIP Code</div></li>
-			<li onClick="application.loadView('legislators_committees')"><div class="standard_menu_body">Committees</div></li>
+			<li onClick="application.viewStack.forwardTo('legislators_favorites')"><div class="standard_menu_body">Favorites</div></li>
+	        <li onClick="application.viewStack.forwardTo('legislators_location')"><div class="standard_menu_body">My Location</div></li>
+			<li onClick="application.viewStack.forwardTo('legislators_states')"><div class="standard_menu_body">State</div></li>
+			<li onClick="application.viewStack.forwardTo('legislators_last_name')"><div class="standard_menu_body">Last Name</div></li>
+			<li onClick="application.viewStack.forwardTo('legislators_zip')"><div class="standard_menu_body">ZIP Code</div></li>
+			<li onClick="application.viewStack.forwardTo('legislators_committees')"><div class="standard_menu_body">Committees</div></li>
 	    </ul>
 	</div>
 	
@@ -164,8 +165,13 @@
 		<div id="legislator_tabs"></div>
 		<div id="legislator_profile">
 	 		<div id="legislator_bio"> 
-		    	<img id="legislator_photo">
+		    	<img id="legislator_photo"></img>
 				<div id="legislator_info">
+					<div id="legislator_party"></div>
+					<div id="legislator_state"></div>
+					<div id="legislator_district"></div>
+					<div id="legislator_office"></div>
+					<div id="legislator_site"></div>
 				</div>
 		    </div>
 	 		<div id="legislator_links"></div>

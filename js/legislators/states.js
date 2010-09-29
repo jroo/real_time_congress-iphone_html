@@ -35,6 +35,6 @@ function LegislatorsStatesView() {
     self.loadState = function(id, title) {
         localStorage.setItem("current_state", id);
         localStorage.setItem("current_state_title", title);
-        application.loadView('legislators_state');
+        application.viewStack.forwardTo('legislators_state');
     }
 }

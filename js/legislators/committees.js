@@ -10,7 +10,7 @@ function LegislatorsCommitteesView() {
     self.render = function() {
         self.setTitle(self.titleString);
         self.setSubtitle(self.subtitleString);
-        self.setLeftButton('back', 'legislators');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         //application.initializeTriChamberSelect();
         self.loadChamber(self.currentChamber);
@@ -95,7 +95,7 @@ function LegislatorsCommitteesView() {
     self.loadCommittee = function(id, name) {
         localStorage.setItem("current_committee", id);
         localStorage.setItem("current_committee_title", name);
-        application.loadView('committee');
+        application.viewStack.forwardTo('committee');
     }
 
     self.renderRow = function(row, dest_list) {

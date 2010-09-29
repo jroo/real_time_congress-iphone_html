@@ -11,9 +11,10 @@ function Application() {
     
     this.ajaxTimeout = 10000;
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
-    this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislators', 
+    this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee'];
+    this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
     this.committeeView = new CommitteeView();
@@ -116,7 +117,7 @@ Application.prototype.hideAll = function() {
     $('#empty_result').hide();
 }
 
-Application.prototype.loadView = function(view_name, previous_view) {
+Application.prototype.loadView = function(view_name) {
     this.hideAll();
     switch(view_name) {
         case 'about':
@@ -138,7 +139,7 @@ Application.prototype.loadView = function(view_name, previous_view) {
             this.hearingsView.render();
             break;
         case 'legislator':
-            this.legislatorView.render(previous_view);
+            this.legislatorView.render();
             break;
         case 'legislators':
             this.legislatorsView.render();
@@ -195,4 +196,6 @@ $(document).ready(function() {
     
     application.initializeDb();
     application.dbPurgeOld();
+    
+    application.viewStack.forwardTo('main_menu');
 });

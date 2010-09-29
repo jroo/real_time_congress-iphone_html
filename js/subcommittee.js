@@ -9,7 +9,7 @@ function SubcommitteeView() {
     self.render = function() {
         self.setTitle(self.titleString);
         self.setSubtitle(localStorage.getItem("current_subcommittee_title"));
-        self.setLeftButton('back', 'committee');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         this.load(localStorage.getItem("current_subcommittee"));
     }

@@ -36,7 +36,7 @@ function DocListView() {
     
     self.render = function() {
         self.setTitle(localStorage.getItem("current_doc_title"));
-        self.setLeftButton('back', 'documents');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         self.loadDocs(localStorage.getItem("current_doc_list"));
     }
@@ -60,7 +60,7 @@ function DocListView() {
             },
             error: function(d, msg) {
                 self.hideProgress();
-                navigator.notification.alert("Can't connect to server", "Network Error");
+                application.navAlert("Can't connect to server", "Network Error");
             },
         });
     }

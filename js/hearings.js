@@ -8,7 +8,7 @@ function HearingsView() {
 
     self.render = function() {
         self.setTitle(self.titleString);
-        self.setLeftButton('back', 'main_menu');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         application.initializeChamberSelect();
         self.loadChamber(self.currentChamber);

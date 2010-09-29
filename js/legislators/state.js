@@ -1,7 +1,6 @@
 LegislatorsStateView.prototype = new LegislatorListView();
 function LegislatorsStateView() {
     var self = this;
-    self.view_name = 'legislators_state';
     self.containerDiv = 'legislators_state_body';
     self.destinationList = document.getElementById('state_list');
     self.titleString = 'Legislators';
@@ -11,7 +10,7 @@ function LegislatorsStateView() {
     self.render = function() {
         self.setTitle(self.titleString);
         self.setSubtitle(localStorage.getItem("current_state_title"));
-        self.setLeftButton('back', 'legislators_states');
+        self.setLeftButton('back');
         self.setRightButton('reload');
         self.loadThisState(localStorage.getItem("current_state"));
     }
