@@ -16,6 +16,10 @@ function LegislatorsCommitteesView() {
         self.loadChamber(self.currentChamber);
     }
     
+    self.cleanName = function(name) {
+        return(name.replace('House ', '').replace('Senate ', '').replace('Committee on ', '').replace('Select ', '').replace('Permanent ', '').replace('the ', ''));
+    }
+    
     self.loadChamber = function(chamber) {
         self.currentChamber = chamber;
         self.setTitle("Committees");
@@ -55,7 +59,7 @@ function LegislatorsCommitteesView() {
         last_date = null;
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);
-            latest_list.push({row_type:'content', id:row.id, name:row.name});
+            latest_list.push({row_type:'content', id:row.id, name:self.cleanName(row.name)});
         }
         return latest_list;
     }
@@ -106,7 +110,7 @@ function LegislatorsCommitteesView() {
         result.className = 'result_body';
 
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_body';
+        titleDiv.className = 'standard_menu_body';
         titleDiv.innerHTML = row.name;
         
         var anchor = document.createElement("a");

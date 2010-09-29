@@ -27,10 +27,10 @@ function LegislatorsLocationView() {
     }
 
     self.loadLegislators = function() {
-        //self.dbGetLatest();
         if (!application.isViewed('legislators_location')) {
             self.gpsGetLatest();
         }
+        self.show();
     }
     
     self.serverGetLegislators = function(position) {
@@ -55,7 +55,6 @@ function LegislatorsLocationView() {
                 self.setLatest(lat, lon);
                 self.renderList(legislatorList, self.destinationList);
                 self.hideProgress();
-                self.show();
             },
             error: function(d, msg) {
                 alert("fail");

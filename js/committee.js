@@ -19,6 +19,10 @@ function CommitteeView() {
             self.serverGetLatest(id);
         }
     }
+    
+    self.cleanName = function(name) {
+        return(name.replace('House ', '').replace('Senate ', '').replace('Committee on ', '').replace('Select ', '').replace('Permanent ', ''));
+    }
 
     self.dataHandler = function(transaction, results) {
         resultsList = self.localToList(results);
@@ -49,7 +53,7 @@ function CommitteeView() {
         latest_list.push({row_type:'content', id:localStorage.getItem("current_committee"), name:'Full Committee'});
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);
-            latest_list.push({row_type:'content', id:row.id, name:row.name});
+            latest_list.push({row_type:'content', id:row.id, name:self.cleanName(row.name)});
         }
         return latest_list;
     }
@@ -100,7 +104,7 @@ function CommitteeView() {
         result.className = 'result_body';
 
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_body';
+        titleDiv.className = 'standard_menu_body';
         titleDiv.innerHTML = row.name;
         
         $(result).unbind();

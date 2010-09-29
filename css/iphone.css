@@ -245,6 +245,13 @@ body {
     background-position: right;
 }
 
+.legislator_result_body {
+    font-weight: bold;
+    background-image: url('../images/child_next.svg');
+    background-repeat: no-repeat;
+    background-position: right;
+}
+
 .whip_title {
 	color: #000000;
 	font-weight: bold;
@@ -330,6 +337,22 @@ body {
 
 .content {
     padding-bottom:40px;
+}
+
+#legislator_photo_contain {
+    margin-left:15px;
+    float: left;
+    width: 100px;
+}
+
+#legislator_photo {
+    height: 100px;
+}
+
+#legislator_info {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 25px;
 }
 
 #about_body { display:none }

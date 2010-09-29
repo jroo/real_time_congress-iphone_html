@@ -1,13 +1,18 @@
 LegislatorView.prototype = new View();
 function LegislatorView() {
     var self = this;
+    self.currentLegislator = null;
     self.containerDiv = 'legislator_body';
-    self.titleString = 'Legislator';
+    self.titleString = 'Legislators';
     self.subtitleString = '';
     
     self.partyToName = function(party) {
         lookup = {'R':'Republican', 'D':'Democrat', 'I':'Independent'};
         return lookup[party];
+    }
+    
+    self.cleanAddress = function(address) {
+        return(address.replace('House Office Building', 'H.O.B.').replace('Senate Office Building', 'S.O.B.'));
     }
     
     self.addToLocal = function(row) {
@@ -18,10 +23,35 @@ function LegislatorView() {
         );
     }
     
+    self.callOffice = function() {
+        cleanNum = self.currentLegislator.phone.replace(/-/g, '');
+        document.location.href = 'tel:' + cleanNum;
+    }
+    
     self.dataHandler = function(transaction, results) {
         legislator = results.rows.item(0);
+        self.currentLegislator = legislator;
         self.renderLegislator(legislator);
         self.show();
+    }
+    
+    self.districtName = function(district) {
+        if (district == '0') {
+            district = 'At-Large';
+        }
+        return district
+    }
+    
+    self.loadVotes = function() {
+        application.viewStack.forwardTo('legislator_votes');
+    }
+    
+    self.viewSite = function() {
+        document.location.href = self.currentLegislator.website;
+    }
+    
+    self.loadSponsored = function() {
+        application.viewStack.forwardTo('legislator_sponsored');
     }
     
     self.renderLegislator = function(legislator) {
@@ -30,9 +60,11 @@ function LegislatorView() {
         $('#legislator_photo').attr("src", './images/legislators/' + legislator.bioguide_id + '.jpg');
         $('#legislator_party').html(self.partyToName(legislator.party));
         $('#legislator_state').html(legislator.state);
-        $('#legislator_district').html(legislator.district);
-        $('#legislator_office').html(legislator.congress_office);        
+        $('#legislator_district').html(self.districtName(legislator.district));
+        $('#legislator_office').html(self.cleanAddress(legislator.congress_office));        
         $('#legislator_site').html('<a href="' + legislator.website + '">website</a>');
+        
+        //legislator_
     }
     
     self.dbGetLatest = function(id) {

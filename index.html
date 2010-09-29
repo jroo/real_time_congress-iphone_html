@@ -165,16 +165,27 @@
 		<div id="legislator_tabs"></div>
 		<div id="legislator_profile">
 	 		<div id="legislator_bio"> 
-		    	<img id="legislator_photo"></img>
-				<div id="legislator_info">
-					<div id="legislator_party"></div>
-					<div id="legislator_state"></div>
-					<div id="legislator_district"></div>
-					<div id="legislator_office"></div>
-					<div id="legislator_site"></div>
+		    	<div id="legislator_photo_contain">
+					<img id="legislator_photo"></img>
+				</div>
+				<div id="info_wrapper">
+					<div id="legislator_info">
+						<div id="legislator_party"></div>
+						<div id="legislator_state"></div>
+						<div id="legislator_district"></div>
+						<div id="legislator_office"></div>
+					</div>
 				</div>
 		    </div>
-	 		<div id="legislator_links"></div>
+			<div id="clear" class="clear"></div>
+			<div id="legislator_links">
+				<ul class="menu">
+					<li onClick="application.legislatorView.callOffice()">Call Office</a></li>
+					<li onClick="application.legislatorView.viewSite()">View Website</a></li>
+					<li onClick="application.legislatorView.loadVotes()">Recent Votes</li>
+					<li onClick="application.legislatorView.loadSponsored()">Sponsored Bills</li>
+				</ul>
+			</div>
 	 		<div id="legislator_committees"></div>
 		</div>
 		<div id="legislator_news"> 

@@ -34,7 +34,7 @@ LegislatorListView.prototype.renderRow = function(row, dest_list) {
         result.className = 'result_body';
         
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_body';
+        titleDiv.className = 'standard_menu_body';
         titleDiv.innerHTML = row.title + '. ' + row.lastname + ", " + row.firstname;
         
         var anchor = document.createElement("a");

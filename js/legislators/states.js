@@ -20,7 +20,7 @@ function LegislatorsStatesView() {
         var result = document.createElement("div");
         result.className = 'result_body';
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_body';
+        titleDiv.className = 'standard_menu_body';
         titleDiv.innerHTML = row.title;
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
