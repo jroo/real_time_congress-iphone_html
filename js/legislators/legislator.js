@@ -65,6 +65,7 @@ function LegislatorView() {
         $('#legislator_site').html('<a href="' + legislator.website + '">website</a>');
         
         //legislator_
+        self.renderStar();
     }
     
     self.dbGetLatest = function(id) {
@@ -79,8 +80,31 @@ function LegislatorView() {
         self.setSubtitle(localStorage.getItem("current_legislator_title"));
         self.setTitle(self.titleString);
         self.setLeftButton('back');
-        self.setRightButton('reload');
+        self.setRightButton();
         self.loadThisLegislator(localStorage.getItem("current_legislator"));
+    }
+    
+    self.renderStar = function() {
+        if (self.currentLegislator.is_favorite == 1) {
+            button_type = 'star_on';
+        } else {
+            button_type = 'star_off';
+        }
+        self.setRightButton(button_type);
+    }
+    
+    self.toggleFavorite = function() {
+        if (self.currentLegislator.is_favorite == 1) {
+            is_favorite = 0;
+        } else {
+            is_favorite = 1;
+        }
+        application.localDb.transaction(
+            function(transaction) {
+               transaction.executeSql("UPDATE Legislators SET is_favorite = ? WHERE bioguide_id = ?", [is_favorite, self.currentLegislator.bioguide_id,]);
+            }
+        );
+        self.dbGetLatest(self.currentLegislator.bioguide_id);
     }
     
     self.serverGetLatest = function(id) {

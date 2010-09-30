@@ -41,10 +41,17 @@ View.prototype.setLeftButton = function(button_type, destination) {
 
 View.prototype.setRightButton = function(button_type, destination) {
     if (button_type == 'reload') {
+        button_image = 'reload.svg';
         func = this.reload;
+    } else if (button_type == 'star_on') {
+        button_image = 'star_on.png';
+        func = this.toggleFavorite;
+    } else if (button_type == 'star_off') {
+        button_image = 'star_off.png';
+        func = this.toggleFavorite;
     }
     if (typeof button_type != "undefined") {
-        $('#rightButton').attr("src", "images/" + button_type + ".svg");
+        $('#rightButton').attr("src", "images/" + button_image);
         $('#rightButton').unbind();
         $('#rightButton').click(function() { func(); } );
         $('#rightButton').show();
