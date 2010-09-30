@@ -80,7 +80,7 @@ function LegislatorView() {
         self.setSubtitle(localStorage.getItem("current_legislator_title"));
         self.setTitle(self.titleString);
         self.setLeftButton('back');
-        self.setRightButton();
+        self.setRightButton('star_off');
         self.loadThisLegislator(localStorage.getItem("current_legislator"));
     }
     
