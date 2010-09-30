@@ -1,4 +1,4 @@
-SubcommitteeView.prototype = new View();
+SubcommitteeView.prototype = new LegislatorListView();
 function SubcommitteeView() {
     var self = this;
     self.containerDiv = 'subcommittee_body';
@@ -30,24 +30,13 @@ function SubcommitteeView() {
     self.dbGetLatest = function(id) {
         application.localDb.transaction(
             function(transaction) {
-               transaction.executeSql("SELECT Legislators.firstname, Legislators.lastname, Legislators.nickname, Legislators.bioguide_id FROM CommitteesLegislators, Legislators WHERE CommitteesLegislators.committee_id = ? AND Legislators.bioguide_id = CommitteesLegislators.legislator_id ORDER BY lastname ASC", [id,], self.dataHandler);
+               transaction.executeSql("SELECT Legislators.firstname, Legislators.lastname, Legislators.nickname, Legislators.bioguide_id, Legislators.title FROM CommitteesLegislators, Legislators WHERE CommitteesLegislators.committee_id = ? AND Legislators.bioguide_id = CommitteesLegislators.legislator_id ORDER BY lastname ASC", [id,], self.dataHandler);
             }
         );
     }
 
     self.reload = function() {
         self.serverGetLatest(localStorage.getItem("current_subcommittee"));
-    }
-
-    self.localToList = function(results) {
-        latest_list = [];
-        last_date = null;
-        for (var i=0; i<results.rows.length; i++) {
-            var row = results.rows.item(i);
-            (row.nickname == '') ? firstname=row.firstname : firstname=row.nickname;
-            latest_list.push({row_type:'content', title:row.lastname + ', ' + firstname});
-        }
-        return latest_list;
     }
 
     self.serverGetLatest = function(id) {
@@ -60,7 +49,7 @@ function SubcommitteeView() {
             cache: true,
             timeout: application.ajaxTimeout,
             success: function(data){
-                self.addListToLocal(data.response.committee.members, id);
+                self.addListToLocal(data, id);
                 application.markViewed('subcommittee_' + id);
                 self.dbGetLatest(id);
                 self.hideProgress();
@@ -72,37 +61,25 @@ function SubcommitteeView() {
         });
     }
     
-    self.addListToLocal = function(data, id) {
-        for (i in data) {
-            row = data[i].legislator;
-            application.localDb.transaction(
-                function(transaction) {
-                    transaction.executeSql("DELETE FROM CommitteesLegislators WHERE committee_id = ?", [id,]); 
-                    transaction.executeSql("INSERT INTO Legislators (bioguide_id, is_favorite, website, firstname, lastname, congress_office, phone, webform, youtube_url, nickname, congresspedia_url, district, title, in_office, senate_class, name_suffix, twitter_id, birthdate, fec_id, state, crp_id, official_rss, gender, party, email, votesmart_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [row.bioguide_id, row.is_favorite, row.website, row.firstname, row.lastname, row.congress_office, row.phone, row.webform, row.youtube_url, row.nickname, row.congresspedia_url, row.district, row.title, row.in_office, row.senate_class, row.name_suffix, row.twitter_id, row.birthdate, row.fec_id, row.state, row.crp_id, row.official_rss, row.gender, row.party, row.email, row.votesmart_id]);
-                    transaction.executeSql("INSERT INTO CommitteesLegislators (committee_id, legislator_id) VALUES (?, ?)", [id, row.bioguide_id]); 
-                }
-            );  
+    self.addListToLocal = function(data, committee_id) {
+        application.localDb.transaction(
+            function(transaction) {
+                transaction.executeSql("DELETE FROM CommitteesLegislators WHERE committee_id = ?", [committee_id,]); 
+            }
+        );  
+        for (i in data.response.committee.members) {
+            row = data.response.committee.members[i];
+            self.updateLegislator(row.legislator);
+            self.addToLocal(row.legislator, committee_id);
         }
-    }  
-
-    self.renderRow = function(row, dest_list) {
-
-        var newItem = document.createElement("li");
-        
-        var result = document.createElement("div");
-        result.className = 'result_body';
-
-        var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_body';
-        titleDiv.innerHTML = row.title;
-
-    	$(titleDiv).click(function() {
-    		//this.loadSubcommittee(row.id, row.title);
-    	});
-
-        result.appendChild(titleDiv);
-        newItem.appendChild(result);
-        dest_list.appendChild(newItem);
-
+    }
+    
+    self.addToLocal = function(row, committee_id) {
+        application.localDb.transaction(
+            function(transaction) {
+                transaction.executeSql("INSERT INTO Legislators (bioguide_id, is_favorite, website, firstname, lastname, congress_office, phone, webform, youtube_url, nickname, congresspedia_url, district, title, in_office, senate_class, name_suffix, twitter_id, birthdate, fec_id, state, crp_id, official_rss, gender, party, email, votesmart_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [row.bioguide_id, row.is_favorite, row.website, row.firstname, row.lastname, row.congress_office, row.phone, row.webform, row.youtube_url, row.nickname, row.congresspedia_url, row.district, row.title, row.in_office, row.senate_class, row.name_suffix, row.twitter_id, row.birthdate, row.fec_id, row.state, row.crp_id, row.official_rss, row.gender, row.party, row.email, row.votesmart_id]);
+                transaction.executeSql("INSERT INTO CommitteesLegislators (committee_id, legislator_id) VALUES (?, ?)", [committee_id, row.bioguide_id]); 
+            }
+        );  
     }
 }
