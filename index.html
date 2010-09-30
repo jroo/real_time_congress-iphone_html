@@ -29,6 +29,7 @@
 	<script type="text/javascript" src="js/legislators/favorites.js"></script>
 	<script type="text/javascript" src="js/legislators/last_name.js"></script>
 	<script type="text/javascript" src="js/legislators/location.js"></script>
+	<script type="text/javascript" src="js/legislators/search_results.js"></script>
 	<script type="text/javascript" src="js/legislators/state.js"></script>
 	<script type="text/javascript" src="js/legislators/states.js"></script>
 	<script type="text/javascript" src="js/legislators/zip.js"></script>
@@ -142,21 +143,26 @@
 	
 	<div id="legislators_last_name_body" class="content">
 		<div class="form_wrapper">
-		    <form class="panel" action="" method="" selected="true"> 
+		    <form id="last_name_search" class="panel" selected="true"> 
 		        <h4>Find Legislators by Last Name</h4> 
 		        <fieldset> 
 		            <div class="row"> 
 		                <label>Last Name</label> 
-		                <input type="search" name="legislator_last_name" value=""/> 
+		                <input id="last_name_field" type="search" name="legislator_last_name" value=""/> 
 		            </div> 
 		        </fieldset> 
-		        <a class="whiteButton" type="submit" href="#">Search</a> 
+		        <a id="last_name_search_button" class="whiteButton" type="submit" href="#">Search</a> 
 		    </form>
 		</div>
 	</div>
 	
 	<div id="legislators_location_body" class="content">
 		<ul id="legislators_location_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="legislator_search_results_body" class="content">
+		<ul id="legislator_search_results_list" class="classic_list">
 		</ul>
 	</div>
 	
@@ -172,15 +178,15 @@
 	
 	<div id="legislators_zip_body" class="content">
 		<div class="form_wrapper">
-		    <form class="panel" action="" method="" selected="true"> 
+		    <form id="zip_search" class="panel" selected="true"> 
 		        <h4>Find Legislators by ZIP Code</h4> 
 		        <fieldset> 
 		            <div class="row"> 
 		                <label>ZIP Code</label> 
-		                <input type="search" name="legislator_zip_code" value=""/> 
+		                <input id="legislator_zip_field" type="search" name="legislator_zip_code" value=""/> 
 		            </div> 
 		        </fieldset> 
-		        <a class="whiteButton" type="submit" href="#">Search</a> 
+		        <a id="zip_search_button" class="whiteButton" type="submit" href="#">Search</a> 
 		    </form> 
 		</div>
 	</div>

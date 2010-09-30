@@ -13,7 +13,7 @@ function Application() {
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
-        'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee'];
+        'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -23,6 +23,7 @@ function Application() {
     this.favoriteLegislatorsView = new FavoriteLegislatorsView();
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
+    this.legislatorSearchResultsView = new LegislatorSearchResultsView();
     this.legislatorView = new LegislatorView();
     this.legislatorsView = new LegislatorsView();
     this.legislatorsCommitteesView = new LegislatorsCommitteesView();
@@ -140,6 +141,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'legislator':
             this.legislatorView.render();
+            break;
+        case 'legislator_search_results':
+            this.legislatorSearchResultsView.render();
             break;
         case 'legislators':
             this.legislatorsView.render();
