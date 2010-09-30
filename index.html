@@ -4,7 +4,8 @@
 	<title>RtCongress</title>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<link rel="stylesheet" type="text/css" href="css/iphone.css" />
-	
+	<link rel="stylesheet" type="text/css" href="iui/iui.css" />
+
 	<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="js/jquery.jsonp-2.0.2.min.js"></script>
 	<script type="text/javascript" src="phonegap.js" charset="utf-8"></script>
@@ -140,7 +141,18 @@
 	</div>
 	
 	<div id="legislators_last_name_body" class="content">
-		last name
+		<div class="form_wrapper">
+		    <form class="panel" action="" method="" selected="true"> 
+		        <h4>Find Legislators by Last Name</h4> 
+		        <fieldset> 
+		            <div class="row"> 
+		                <label>Last Name</label> 
+		                <input type="search" name="legislator_last_name" value=""/> 
+		            </div> 
+		        </fieldset> 
+		        <a class="whiteButton" type="submit" href="#">Search</a> 
+		    </form>
+		</div>
 	</div>
 	
 	<div id="legislators_location_body" class="content">
@@ -159,7 +171,18 @@
 	</div>
 	
 	<div id="legislators_zip_body" class="content">
-		zip
+		<div class="form_wrapper">
+		    <form class="panel" action="" method="" selected="true"> 
+		        <h4>Find Legislators by ZIP Code</h4> 
+		        <fieldset> 
+		            <div class="row"> 
+		                <label>ZIP Code</label> 
+		                <input type="search" name="legislator_zip_code" value=""/> 
+		            </div> 
+		        </fieldset> 
+		        <a class="whiteButton" type="submit" href="#">Search</a> 
+		    </form> 
+		</div>
 	</div>
 	
 	<div id="legislator_body" class="content">

@@ -339,6 +339,10 @@ body {
     padding-bottom:40px;
 }
 
+.form_wrapper {
+    margin: 20px;
+}
+
 #legislator_photo_contain {
     margin-left:15px;
     float: left;
