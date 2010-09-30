@@ -85,7 +85,7 @@ function LegislatorView() {
     }
     
     self.renderStar = function() {
-        if (self.currentLegislator.is_favorite == 1) {
+        if (self.currentLegislator.is_favorite == 'true') {
             button_type = 'star_on';
         } else {
             button_type = 'star_off';
@@ -94,10 +94,10 @@ function LegislatorView() {
     }
     
     self.toggleFavorite = function() {
-        if (self.currentLegislator.is_favorite == 1) {
-            is_favorite = 0;
+        if (self.currentLegislator.is_favorite == 'true') {
+            is_favorite = 'false';
         } else {
-            is_favorite = 1;
+            is_favorite = 'true';
         }
         application.localDb.transaction(
             function(transaction) {
