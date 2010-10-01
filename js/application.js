@@ -188,9 +188,9 @@ Application.prototype.loadView = function(view_name) {
 
 Application.prototype.navAlert = function(message, title) {
     try {
-        navigator.notification.alert(message, title);
+        application.navAlert(message, title);
     } catch(err) {
-        navigator.notification.alert(message);
+        application.navAlert(message);
     }
 }
 
