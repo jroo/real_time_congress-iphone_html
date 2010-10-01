@@ -1,0 +1,16 @@
+Legislator Lists
+================
+Subcommittee lists incomplete
+Add State/District Info to menu item
+
+Legislator View
+===============
+Full State Name
+Find Solution for Broken Images (Donna Edwards)d
+Clean Address View
+News Tab
+Video Tab
+Twitter Tab
+Votes Link
+Bills Link
+
