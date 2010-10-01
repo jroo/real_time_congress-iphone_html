@@ -190,7 +190,7 @@ Application.prototype.navAlert = function(message, title) {
     try {
         navigator.notification.alert(message, title);
     } catch(err) {
-        alert(message);
+        navigator.notification.alert(message);
     }
 }
 
