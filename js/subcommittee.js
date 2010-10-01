@@ -43,6 +43,7 @@ function SubcommitteeView() {
         self.showProgress();
         //fetch committees from server
         jsonUrl = "http://" + application.sunlightServicesDomain + "/api/committees.get.json?id=" + id + "&apikey=" + settings.sunlightServicesKey + "&jsonp=_jqjsp";
+        alert(jsonUrl);
         
         $.jsonp({
             url: jsonUrl,

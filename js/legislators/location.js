@@ -48,6 +48,8 @@ function LegislatorsLocationView() {
                 legislatorList = [];
                 for (i in data.response.legislators) {
                     row = data.response.legislators[i].legislator;
+                    self.updateLegislator(row);
+                    self.addToLocal(row);
                     (row.nickname == '') ? firstname=row.firstname : firstname=row.nickname;
                     legislatorList.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname});
                 }

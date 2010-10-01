@@ -13,7 +13,9 @@ function LegislatorSearchResultsView() {
     }
     
     self.loadLegislators = function(type, term) {
-        self.serverGetLegislators(type, term)
+        if (!application.isViewed('legislators_search_' + type + '_' + term)) {
+            self.serverGetLegislators(type, term)
+        }
         self.show();
     }
     
@@ -44,6 +46,7 @@ function LegislatorSearchResultsView() {
                     legislatorList.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname});
                 }
                 self.renderList(legislatorList, self.destinationList);
+                application.markViewed('legislators_search_' + type + '_' + term)
                 self.hideProgress();
             },
             error: function(d, msg) {
