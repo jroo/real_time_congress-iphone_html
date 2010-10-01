@@ -1,9 +1,9 @@
-LegislatorsLocationView.prototype = new LegislatorListView();
+LegislatorSearchResultsView.prototype = new LegislatorListView();
 function LegislatorSearchResultsView() {
     var self = this;
-    self.containerDiv = 'legislators_search_results_body';
-    self.destinationList = document.getElementById('legislators_search_results_list');
-    self.titleString = 'Legislator';
+    self.containerDiv = 'legislator_search_results_body';
+    self.destinationList = document.getElementById('legislator_search_results_list');
+    self.titleString = 'Legislators';
 
     self.render = function() {
         self.setTitle(self.titleString);
@@ -13,19 +13,17 @@ function LegislatorSearchResultsView() {
     }
     
     self.loadLegislators = function(type, term) {
-        if (!application.isViewed('legislators_search_' + type + '_' + term)) {
-            self.serverGetLegislators(type, term)
-        }
+        self.serverGetLegislators(type, term)
         self.show();
     }
     
     self.serverGetLegislators = function(type, term) {
         self.showProgress();
         
-        if (term == 'zip') {
+        if (type == 'zip') {
             filename = 'legislators.allForZip.json';
             args = "zip=" + term;
-        } else if (term == 'last_name') {
+        } else if (type == 'last_name') {
             filename = 'legislators.getList.json';
             args = "lastname=" + term;
         }
@@ -43,8 +41,6 @@ function LegislatorSearchResultsView() {
                     (row.nickname == '') ? firstname=row.firstname : firstname=row.nickname;
                     legislatorList.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname});
                 }
-                application.markViewed('legislators_location');
-                self.setLatest(lat, lon);
                 self.renderList(legislatorList, self.destinationList);
                 self.hideProgress();
             },

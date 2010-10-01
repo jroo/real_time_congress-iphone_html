@@ -21,10 +21,10 @@ function LegislatorsLastNameView() {
     }
     
     self.searchHandler = function(event) {
-        alert("woop");
         event.preventDefault();
+        document.getElementById('last_name_field').blur();
         localStorage.setItem("legislator_search_type", "last_name");
-        localStorage.setItem("legislator_search_term", $('#legislator_last_name_field').val());
+        localStorage.setItem("legislator_search_term", $('#last_name_field').val());
         application.viewStack.forwardTo('legislator_search_results');
         return false;
     }

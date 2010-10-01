@@ -22,8 +22,10 @@ function LegislatorsZipView() {
     }
     
     self.searchHandler = function() {
+        event.preventDefault();
+        document.getElementById('zip_field').blur();
         localStorage.setItem("legislator_search_type", "zip");
-        localStorage.setItem("legislator_search_term", $('#legislator_zip_field').val());
+        localStorage.setItem("legislator_search_term", $('#zip_field').val());
         application.viewStack.forwardTo('legislator_search_results');
         return false;
     }

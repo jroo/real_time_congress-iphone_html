@@ -28,6 +28,7 @@ LegislatorListView.prototype.localToList = function(results) {
     }
     
 LegislatorListView.prototype.renderRow = function(row, dest_list) {
+        alert("row");
         var newItem = document.createElement("li");
         var result = document.createElement("div");
         
