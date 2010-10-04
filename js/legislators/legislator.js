@@ -6,6 +6,15 @@ function LegislatorView() {
     self.titleString = 'Legislators';
     self.subtitleString = '';
     
+    self.titleToChamber = function(title) {
+        if (title == 'Senior Seat' || title == 'Junior Seat') {
+            chamber = 'senate';
+        } else {
+            chamber = 'house';
+        }
+        return chamber;
+    }
+    
     self.partyToName = function(party) {
         lookup = {'R':'Republican', 'D':'Democrat', 'I':'Independent'};
         return lookup[party];
@@ -31,6 +40,7 @@ function LegislatorView() {
     self.dataHandler = function(transaction, results) {
         legislator = results.rows.item(0);
         self.currentLegislator = legislator;
+        localStorage.setItem("current_legislator_chamber", self.titleToChamber(legislator.title));
         self.renderLegislator(legislator);
         self.show();
     }
@@ -134,9 +144,6 @@ function LegislatorView() {
     
     self.loadThisLegislator = function(id) {
         self.dbGetLatest(id);
-        /*if (!application.isViewed('legislator_' + id)) {
-            self.serverGetLatest(id);
-        }*/
     }
     
     self.reload = function() {
