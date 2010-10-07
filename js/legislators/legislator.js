@@ -7,11 +7,12 @@ function LegislatorView() {
     self.subtitleString = '';
     
     self.titleToChamber = function(title) {
-        if (title == 'Senior Seat' || title == 'Junior Seat') {
+        if (title == 'Sen') {
             chamber = 'senate';
         } else {
             chamber = 'house';
         }
+        alert(title, chamber);
         return chamber;
     }
     

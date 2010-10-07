@@ -1,6 +1,6 @@
 function Application() {
     this.title = "Real Time Congress";
-    this.version = "2.0a20101004";
+    this.version = "2.0a20101005";
     this.author = "Joshua Ruihley, Sunlight Foundation";
     this.copyright = "Copyright 2010, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
@@ -64,7 +64,7 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LastUpdate (view_name TEXT PRIMARY KEY, date DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite TEXT, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsVotes (bioguide_id TEXT, roll_id TEXT, voted_at DATETIME, vote TEXT, FOREIGN KEY(bioguide_id) REFERENCES Legislators(bioguide_id))');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsVotes (bioguide_id TEXT, roll_id TEXT, voted_at DATETIME, question TEXT, vote TEXT, result TEXT, aye_votes INTEGER, nay_votes INTEGER, not_voting INTEGER, present_votes INTEGER, FOREIGN KEY(bioguide_id) REFERENCES Legislators(bioguide_id), PRIMARY KEY (bioguide_id, roll_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS CommitteesLegislators (committee_id TEXT, legislator_id TEXT, FOREIGN KEY(committee_id) REFERENCES Committees(id), FOREIGN KEY(legislator_id) REFERENCES Legislators(bioguide_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Committees (id TEXT PRIMARY KEY, name TEXT, chamber TEXT, parent TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Location (timestamp DATETIME, latitude TEXT, longitude TEXT)');
