@@ -12,7 +12,6 @@ function LegislatorView() {
         } else {
             chamber = 'house';
         }
-        alert(title, chamber);
         return chamber;
     }
     

@@ -15,7 +15,7 @@ function Application() {
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results',
-        'legislator_votes'];
+        'legislator_votes', 'roll'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -38,6 +38,7 @@ function Application() {
     this.mainMenuView = new MainMenuView();
     this.newsView = new NewsView();
     this.newsSourceView = new NewsSourceView();
+    this.rollView = new RollView();
     this.subcommitteeView = new SubcommitteeView();
 }
 
@@ -68,6 +69,7 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS CommitteesLegislators (committee_id TEXT, legislator_id TEXT, FOREIGN KEY(committee_id) REFERENCES Committees(id), FOREIGN KEY(legislator_id) REFERENCES Legislators(bioguide_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Committees (id TEXT PRIMARY KEY, name TEXT, chamber TEXT, parent TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Location (timestamp DATETIME, latitude TEXT, longitude TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS Roll (roll_id TEXT PRIMARY KEY, result TEXT, number INTEGER, required TEXT, session INTEGER, voted_at DATETIME, nay_votes INTEGER, aye_votes INTEGER, present_votes INTEGER, not_voting INTEGER, type TEXT, year INTEGER, last_updated DATETIME, question TEXT, chamber TEXT, bill_id TEXT)')
         }
     );
 }
@@ -184,6 +186,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'news_source':
             this.newsSourceView.render();
+            break;
+        case 'roll':
+            this.rollView.render();
             break;
         case 'subcommittee':
             this.subcommitteeView.render();

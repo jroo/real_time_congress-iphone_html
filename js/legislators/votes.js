@@ -31,6 +31,11 @@ function LegislatorVotesView() {
         this.loadVotes(localStorage.getItem("current_legislator"));
     }
     
+    self.loadRoll = function(roll_id) {
+        localStorage.setItem("current_roll", roll_id)
+        application.viewStack.forwardTo('roll');
+    }
+    
     self.loadVotes = function(id) {
         self.dbGetLatest(id);
         if (!application.isViewed('legislator_votes_' + id)) {
@@ -77,7 +82,7 @@ function LegislatorVotesView() {
         
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
-    		//self.loadCommittee(row.id, row.name);
+    		self.loadRoll(row.id);
     	});
     	
         var subTitleDiv = document.createElement("div");
