@@ -17,7 +17,6 @@ function LegislatorSponsorshipsView() {
     self.addToLocal = function(bill, id) {
         application.localDb.transaction(
             function(transaction) {
-                //alert("INSERT INTO LegislatorsSponsorships (bioguide_id, bill_id, bill_title, introduced_at) VALUES ('" + id + "', '" + bill.type + "-" + bill.number + "', '" + bill.official_title + "', '" + bill.introduced_at.replace(' +0000', '').replace(/\//g, '-') + "')");
                 transaction.executeSql("INSERT INTO LegislatorsSponsorships (bioguide_id, bill_id, bill_title, introduced_at) VALUES (?, ?, ?, ?)", [id, bill.type + '-' + bill.number, bill.official_title, bill.introduced_at.replace(' +0000', '').replace(/\//g, '-')]);
             }
         );        
