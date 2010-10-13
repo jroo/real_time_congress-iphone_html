@@ -45,13 +45,6 @@ function LegislatorView() {
         self.show();
     }
     
-    self.districtName = function(district) {
-        if (district == '0') {
-            district = 'At-Large';
-        }
-        return district
-    }
-    
     self.loadVotes = function() {
         application.viewStack.forwardTo('legislator_votes');
     }
@@ -69,8 +62,8 @@ function LegislatorView() {
         //legislator_info
         $('#legislator_photo').attr("src", './images/legislators/' + legislator.bioguide_id + '.jpg');
         $('#legislator_party').html(self.partyToName(legislator.party));
-        $('#legislator_state').html(legislator.state);
-        $('#legislator_district').html(self.districtName(legislator.district));
+        $('#legislator_state').html(application.utils.fullStateName(legislator.state));
+        $('#legislator_district').html(application.utils.districtToString(legislator.district));
         $('#legislator_office').html(self.cleanAddress(legislator.congress_office));        
         $('#legislator_site').html('<a href="' + legislator.website + '">website</a>');
         

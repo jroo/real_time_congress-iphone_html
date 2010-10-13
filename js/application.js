@@ -4,6 +4,8 @@ function Application() {
     this.author = "Joshua Ruihley, Sunlight Foundation";
     this.copyright = "Copyright 2010, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
+    
+    this.utils = new RTCUtils();
 
     this.rtcDomain = 'realtimecongress.org';
     this.docserverDomain = 'docserver.org';

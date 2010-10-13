@@ -22,7 +22,7 @@ LegislatorListView.prototype.localToList = function(results) {
         for (var i=0; i<results.rows.length; i++) {
             var row = results.rows.item(i);
             (row.nickname == '') ? firstname=row.firstname : firstname=row.nickname;
-            latest_list.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname});
+            latest_list.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname, state:row.state, district:row.district});
         }
         return latest_list;
     }
@@ -34,15 +34,20 @@ LegislatorListView.prototype.renderRow = function(row, dest_list) {
         result.className = 'result_body';
         
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'standard_menu_body';
+        titleDiv.className = 'result_title';
         titleDiv.innerHTML = row.title + '. ' + row.lastname + ", " + row.firstname;
         
+        var subTitleDiv = document.createElement("div");
+        subTitleDiv.className = 'result_subtitle';
+        subTitleDiv.innerHTML = application.utils.fullStateName(row.state) + ', ' + application.utils.districtToString(row.district);
+
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
             LegislatorListView.prototype.loadLegislator(row.id, row.title + '. ' + row.firstname + ' ' + row.lastname, this.view_name);
     	});
     	
         anchor.appendChild(titleDiv);
+        anchor.appendChild(subTitleDiv);
         result.appendChild(anchor);
         newItem.appendChild(result);
         dest_list.appendChild(newItem);

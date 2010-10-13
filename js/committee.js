@@ -113,6 +113,7 @@ function CommitteeView() {
     	});
 
         result.appendChild(titleDiv);
+        result.appendChild(subTitleDiv);
         newItem.appendChild(result);
         dest_list.appendChild(newItem);
 

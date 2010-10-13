@@ -43,7 +43,7 @@ function LegislatorSearchResultsView() {
                     self.updateLegislator(row);
                     self.addToLocal(row);
                     (row.nickname == '') ? firstname=row.firstname : firstname=row.nickname;
-                    legislatorList.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname});
+                    legislatorList.push({row_type:'content', id:row.bioguide_id, title:row.title, firstname:firstname, lastname:row.lastname, state:row.state, district:row.district});
                 }
                 self.renderList(legislatorList, self.destinationList);
                 application.markViewed('legislators_search_' + type + '_' + term)
