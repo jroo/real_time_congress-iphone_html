@@ -15,7 +15,7 @@ function Application() {
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results',
-        'legislator_votes', 'roll'];
+        'legislator_votes', 'legislator_sponsorships', 'roll'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -27,6 +27,7 @@ function Application() {
     this.hearingsView = new HearingsView();
     this.legislatorSearchResultsView = new LegislatorSearchResultsView();
     this.legislatorView = new LegislatorView();
+    this.legislatorSponsorshipsView = new LegislatorSponsorshipsView();
     this.legislatorVotesView = new LegislatorVotesView();
     this.legislatorsView = new LegislatorsView();
     this.legislatorsCommitteesView = new LegislatorsCommitteesView();
@@ -62,10 +63,10 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS News (id TEXT PRIMARY KEY, title TEXT, description TEXT, url TEXT, date DATETIME, doc_type TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS FloorUpdates (id INTEGER PRIMARY KEY, date DATETIME, description TEXT, chamber TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Hearings (id INTEGER PRIMARY KEY, date DATETIME, chamber TEXT, committee TEXT, committee_code TEXT, matter TEXT, room TEXT)');
-            transaction.executeSql('CREATE TABLE IF NOT EXISTS LastUpdate (view_name TEXT PRIMARY KEY, date DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite TEXT, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsVotes (bioguide_id TEXT, roll_id TEXT, voted_at DATETIME, question TEXT, vote TEXT, result TEXT, aye_votes INTEGER, nay_votes INTEGER, not_voting INTEGER, present_votes INTEGER, FOREIGN KEY(bioguide_id) REFERENCES Legislators(bioguide_id), PRIMARY KEY (bioguide_id, roll_id))');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsSponsorships (bioguide_id TEXT, bill_id TEXT, bill_title TEXT, introduced_at DATETIME, PRIMARY KEY(bioguide_id, bill_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS CommitteesLegislators (committee_id TEXT, legislator_id TEXT, FOREIGN KEY(committee_id) REFERENCES Committees(id), FOREIGN KEY(legislator_id) REFERENCES Legislators(bioguide_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Committees (id TEXT PRIMARY KEY, name TEXT, chamber TEXT, parent TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Location (timestamp DATETIME, latitude TEXT, longitude TEXT)');
@@ -77,11 +78,14 @@ Application.prototype.initializeDb = function() {
 Application.prototype.dbPurgeOld = function () {
     this.localDb.transaction(
         function(transaction) {
+            transaction.executeSql('DELETE FROM LegislatorsSponsorships');
+            transaction.executeSql('DELETE FROM LegislatorsVotes');
+            /*
             transaction.executeSql('DELETE FROM News ORDER BY date DESC LIMIT 100, 1000');
             transaction.executeSql('DELETE FROM FloorUpdates ORDER BY date DESC LIMIT 50, 1000');
             transaction.executeSql('DELETE FROM Hearings ORDER BY date DESC LIMIT 50, 1000');
-            transaction.executeSql('DELETE FROM LastUpdate ORDER BY date DESC LIMIT 30, 1000');
-            transaction.executeSql('DELETE FROM Documents ORDER BY date DESC LIMIT 100, 1000');
+            transaction.executeSql('DELETE FROM Documents ORDER BY date DESC LIMIT 100, 1000'); 
+            */
         }
     );    
 }
@@ -93,7 +97,6 @@ Application.prototype.startOver = function () {
             transaction.executeSql('DROP TABLE FloorUpdates');
             transaction.executeSql('DROP TABLE LeadershipNotices');
             transaction.executeSql('DROP TABLE Hearings');
-            transaction.executeSql('DROP TABLE LastUpdate');
             transaction.executeSql('DROP TABLE Legislators');
             transaction.executeSql('DROP TABLE Documents');    
             }
@@ -147,6 +150,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'legislator':
             this.legislatorView.render();
+            break;
+        case 'legislator_sponsorships':
+            this.legislatorSponsorshipsView.render();
             break;
         case 'legislator_votes':
             this.legislatorVotesView.render();

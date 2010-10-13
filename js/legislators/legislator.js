@@ -61,7 +61,7 @@ function LegislatorView() {
     }
     
     self.loadSponsored = function() {
-        application.viewStack.forwardTo('legislator_sponsored');
+        application.viewStack.forwardTo('legislator_sponsorships');
     }
     
     self.renderLegislator = function(legislator) {

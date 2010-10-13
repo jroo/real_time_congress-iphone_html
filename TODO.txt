@@ -11,11 +11,14 @@ Clean Address View
 News Tab
 Video Tab
 Twitter Tab
-Votes Link
-Bills Link
 
 
 Roll Call
 =========
 delete cache for roll view or add reload button
+
+Bugs
+====
+Norton vote type undefined
+delete order by
 
