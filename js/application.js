@@ -17,7 +17,8 @@ function Application() {
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results',
-        'legislator_votes', 'legislator_sponsorships', 'roll', 'legislation'];
+        'legislator_votes', 'legislator_sponsorships', 'roll', 'legislation', 'legislation_introduced', 'legislation_recent',
+        'legislation_bill_num'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -28,6 +29,9 @@ function Application() {
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
     this.legislationView = new LegislationView();
+    this.legislationIntroducedView = new LegislationIntroducedView();
+    this.legislationRecentView = new LegislationRecentView();
+    this.legislationBillNumView = new LegislationBillNumView();
     this.legislatorSearchResultsView = new LegislatorSearchResultsView();
     this.legislatorView = new LegislatorView();
     this.legislatorSponsorshipsView = new LegislatorSponsorshipsView();
@@ -67,6 +71,8 @@ Application.prototype.initializeDb = function() {
             transaction.executeSql('CREATE TABLE IF NOT EXISTS FloorUpdates (id INTEGER PRIMARY KEY, date DATETIME, description TEXT, chamber TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Hearings (id INTEGER PRIMARY KEY, date DATETIME, chamber TEXT, committee TEXT, committee_code TEXT, matter TEXT, room TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Documents (id TEXT PRIMARY KEY, doc_type TEXT, date DATETIME, title TEXT, description TEXT, url TEXT)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislationIntroduced (bill_id TEXT PRIMARY KEY, chamber TEXT, bill_title TEXT, introduced_at DATETIME)');
+            transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislationRecent (bill_id TEXT PRIMARY KEY, chamber TEXT, bill_title TEXT, last_action_at DATETIME)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS Legislators (bioguide_id TEXT PRIMARY KEY, is_favorite TEXT, website TEXT, firstname TEXT, lastname TEXT, congress_office TEXT, phone TEXT, webform TEXT, youtube_url TEXT, nickname TEXT, congresspedia_url TEXT, district TEXT, title TEXT, in_office TEXT, senate_class TEXT, name_suffix TEXT, twitter_id TEXT, birthdate TEXT, fec_id TEXT, state TEXT, crp_id TEXT, official_rss TEXT, gender TEXT, party TEXT, email TEXT, votesmart_id TEXT)');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsVotes (bioguide_id TEXT, roll_id TEXT, voted_at DATETIME, question TEXT, vote TEXT, result TEXT, aye_votes INTEGER, nay_votes INTEGER, not_voting INTEGER, present_votes INTEGER, FOREIGN KEY(bioguide_id) REFERENCES Legislators(bioguide_id), PRIMARY KEY (bioguide_id, roll_id))');
             transaction.executeSql('CREATE TABLE IF NOT EXISTS LegislatorsSponsorships (bioguide_id TEXT, bill_id TEXT, bill_title TEXT, introduced_at DATETIME, PRIMARY KEY(bioguide_id, bill_id))');
@@ -153,6 +159,15 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'legislation':
             this.legislationView.render();
+            break;
+        case 'legislation_bill_num':
+            this.legislationBillNumView.render();
+            break;
+        case 'legislation_introduced':
+            this.legislationIntroducedView.render();
+            break;
+        case 'legislation_recent':
+            this.legislationRecentView.render();
             break;
         case 'legislator':
             this.legislatorView.render();

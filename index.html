@@ -26,7 +26,10 @@
 	<script type="text/javascript" src="js/floor_updates.js"></script>
 	
 	<script type="text/javascript" src="js/legislation/legislation.js"></script>
-	
+	<script type="text/javascript" src="js/legislation/legislation_introduced.js"></script>
+	<script type="text/javascript" src="js/legislation/legislation_recent.js"></script>
+	<script type="text/javascript" src="js/legislation/legislation_bill_num.js"></script>
+
 	<script type="text/javascript" src="js/legislators/committees.js"></script>
 	<script type="text/javascript" src="js/legislators/legislator.js"></script>
 	<script type="text/javascript" src="js/legislators/legislators.js"></script>
@@ -152,6 +155,34 @@
 			<li onClick="application.viewStack.forwardTo('legislation_bill_num')"><div class="standard_menu_body">Search by Bill Number</div></li>
 	    </ul>
 	</div>
+	
+	<div id="legislation_introduced_body" class="content">
+		<div class="chamber_container">
+			<ul class="chamber_select selector">
+				<li id="house_select"><a onClick="application.legislationIntroducedView.loadChamber('House')" class="active">House</a></li>
+				<li id="senate_select"><a onClick="application.legislationIntroducedView.loadChamber('Senate')">Senate</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<ul id="legislation_introduced_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="legislation_recent_body" class="content">
+		<div class="chamber_container">
+			<ul class="chamber_select selector">
+				<li id="house_select"><a onClick="application.legislationRecentView.loadChamber('House')" class="active">House</a></li>
+				<li id="senate_select"><a onClick="application.legislationRecentView.loadChamber('Senate')">Senate</a></li>
+			</ul>
+			<div class="clear"></div>
+		</div>
+		<ul id="legislation_recent_list" class="classic_list">
+		</ul>
+	</div>
+	
+	<div id="legislation_bill_num_body" class="content">
+		bill_num
+	</div>	
 	
 	<div id="legislators_favorites_body" class="content">
 		<ul id="legislators_favorites_list" class="classic_list">

@@ -366,6 +366,9 @@ body {
 #floor_updates_body { display:none }
 #hearings_body { display:none }
 #legislation_body { display:none }
+#legislation_introduced_body { display:none }
+#legislation_recent_body { display:none }
+#legislation_bill_num_body { display:none }
 #legislators_body { display:none }
 #legislators_committees_body { display:none }
 #legislators_favorites_body { display:none }
