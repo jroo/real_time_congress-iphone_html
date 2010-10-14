@@ -17,7 +17,7 @@ function Application() {
     this.views = ['main_menu', 'about', 'committee', 'doc_list', 'documents', 'floor_updates', 'hearings', 'legislator', 'legislators', 
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results',
-        'legislator_votes', 'legislator_sponsorships', 'roll'];
+        'legislator_votes', 'legislator_sponsorships', 'roll', 'legislation'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -27,6 +27,7 @@ function Application() {
     this.favoriteLegislatorsView = new FavoriteLegislatorsView();
     this.floorUpdatesView = new FloorUpdatesView();
     this.hearingsView = new HearingsView();
+    this.legislationView = new LegislationView();
     this.legislatorSearchResultsView = new LegislatorSearchResultsView();
     this.legislatorView = new LegislatorView();
     this.legislatorSponsorshipsView = new LegislatorSponsorshipsView();
@@ -149,6 +150,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'hearings':
             this.hearingsView.render();
+            break;
+        case 'legislation':
+            this.legislationView.render();
             break;
         case 'legislator':
             this.legislatorView.render();

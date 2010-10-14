@@ -24,6 +24,9 @@
 	<script type="text/javascript" src="js/doc_list.js"></script>
 	<script type="text/javascript" src="js/hearings.js"></script>
 	<script type="text/javascript" src="js/floor_updates.js"></script>
+	
+	<script type="text/javascript" src="js/legislation/legislation.js"></script>
+	
 	<script type="text/javascript" src="js/legislators/committees.js"></script>
 	<script type="text/javascript" src="js/legislators/legislator.js"></script>
 	<script type="text/javascript" src="js/legislators/legislators.js"></script>
@@ -36,6 +39,7 @@
 	<script type="text/javascript" src="js/legislators/states.js"></script>
 	<script type="text/javascript" src="js/legislators/votes.js"></script>
 	<script type="text/javascript" src="js/legislators/zip.js"></script>
+	
 	<script type="text/javascript" src="js/main_menu.js"></script>
 	<script type="text/javascript" src="js/news.js"></script>
 	<script type="text/javascript" src="js/news_source.js"></script>
@@ -55,9 +59,10 @@
 	
 	<div id="main_menu_body" class="menu_page">
 		<ul class="menu">
-			<li onClick="application.viewStack.forwardTo('legislators')" class="legislators">Legislators</li>
 			<li onClick="application.viewStack.forwardTo('floor_updates')" class="floor-updates">Floor Updates</li>
 			<li onClick="application.viewStack.forwardTo('hearings')" class="hearings">Hearings</li>
+			<li onClick="application.viewStack.forwardTo('legislators')" class="legislators">Legislators</li>
+			<li onClick="application.viewStack.forwardTo('legislation')" class="legislation">Legislation</li>
 			<li onClick="application.viewStack.forwardTo('documents')" class="documents">Documents</li>
 			<li onClick="application.viewStack.forwardTo('news')" class="news">News</li>
 			<li onClick="application.viewStack.forwardTo('about')" class="about">About</li>
@@ -138,6 +143,14 @@
 	<div id="subcommittee_body" class="content">
 		<ul id="subcommittee_list" class="classic_list">
 		</ul>	
+	</div>
+	
+	<div id="legislation_body" class="content">
+		<ul id="legislation_menu" class="classic_list">
+			<li onClick="application.viewStack.forwardTo('legislation_recent')"><div class="standard_menu_body">Recent Activity</div></li>
+			<li onClick="application.viewStack.forwardTo('legislation_introduced')"><div class="standard_menu_body">Recently Introduced</div></li>
+			<li onClick="application.viewStack.forwardTo('legislation_bill_num')"><div class="standard_menu_body">Search by Bill Number</div></li>
+	    </ul>
 	</div>
 	
 	<div id="legislators_favorites_body" class="content">
