@@ -18,7 +18,7 @@ function Application() {
         'news', 'news_source', 'legislators_favorites', 'legislators_committees', 'legislators_location', 'legislators_state', 
         'legislators_states', 'legislators_last_name', 'legislators_zip', 'subcommittee', 'legislator_search_results',
         'legislator_votes', 'legislator_sponsorships', 'roll', 'legislation', 'legislation_introduced', 'legislation_recent',
-        'legislation_bill_num'];
+        'legislation_bill_num', 'legislation_search_results'];
     this.viewStack = new ViewStack();
         
     this.aboutView = new AboutView();
@@ -32,6 +32,7 @@ function Application() {
     this.legislationIntroducedView = new LegislationIntroducedView();
     this.legislationRecentView = new LegislationRecentView();
     this.legislationBillNumView = new LegislationBillNumView();
+    this.legislationSearchResultsView = new LegislationSearchResultsView();
     this.legislatorSearchResultsView = new LegislatorSearchResultsView();
     this.legislatorView = new LegislatorView();
     this.legislatorSponsorshipsView = new LegislatorSponsorshipsView();
@@ -168,6 +169,9 @@ Application.prototype.loadView = function(view_name) {
             break;
         case 'legislation_recent':
             this.legislationRecentView.render();
+            break;
+        case 'legislation_search_results':
+            this.legislationSearchResultsView.render();
             break;
         case 'legislator':
             this.legislatorView.render();

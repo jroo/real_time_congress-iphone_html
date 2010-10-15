@@ -9,7 +9,7 @@ function LegislationIntroducedView() {
     self.addToLocal = function(bill, chamber) {
         application.localDb.transaction(
             function(transaction) {
-                transaction.executeSql("INSERT INTO LegislationIntroduced (bill_id, chamber, bill_title, introduced_at) VALUES (?, ?, ?, ?)", [bill.type + '-' + bill.number, bill.chamber, bill.official_title, bill.introduced_at.replace(' +0000', '').replace(/\//g, '-')]);
+                transaction.executeSql("INSERT INTO LegislationIntroduced (bill_id, chamber, bill_title, introduced_at) VALUES (?, ?, ?, ?)", [bill.bill_id, bill.chamber, bill.official_title, bill.introduced_at.replace(' +0000', '').replace(/\//g, '-')]);
             }
         );        
     }
@@ -30,7 +30,6 @@ function LegislationIntroducedView() {
     }
     
     self.dbGetLatest = function(chamber) {
-        alert("dgl");
         application.localDb.transaction(
             function(transaction) {
                transaction.executeSql("SELECT * FROM LegislationIntroduced WHERE chamber = ? ORDER BY introduced_at DESC LIMIT 20", [chamber,], self.dataHandler);
@@ -69,6 +68,7 @@ function LegislationIntroducedView() {
     }
     
     self.renderRow = function(row, dest_list) { 
+        alert(row.bill_id);
         var newItem = document.createElement("li");
         
         var result = document.createElement("div");
@@ -80,7 +80,7 @@ function LegislationIntroducedView() {
         
         var anchor = document.createElement("a");
     	$(anchor).click(function() {
-    		self.loadRoll(row.id);
+    		self.loadBill(row.bill_id);
     	});
     	
         var subTitleDiv = document.createElement("div");
@@ -99,7 +99,6 @@ function LegislationIntroducedView() {
         self.showProgress();
         
         jsonUrl = "http://" + application.drumboneDomain + "/v1/api/bills.json?order=last_action_at&sort=desc&sections=chamber,introduced_at,type,number,official_title&apikey=" + settings.sunlightServicesKey;
-        alert(jsonUrl);
  
         $.jsonp({
             url: jsonUrl,

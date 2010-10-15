@@ -29,6 +29,8 @@
 	<script type="text/javascript" src="js/legislation/legislation_introduced.js"></script>
 	<script type="text/javascript" src="js/legislation/legislation_recent.js"></script>
 	<script type="text/javascript" src="js/legislation/legislation_bill_num.js"></script>
+	<script type="text/javascript" src="js/legislation/search_results.js"></script>
+
 
 	<script type="text/javascript" src="js/legislators/committees.js"></script>
 	<script type="text/javascript" src="js/legislators/legislator.js"></script>
@@ -181,8 +183,28 @@
 	</div>
 	
 	<div id="legislation_bill_num_body" class="content">
-		bill_num
-	</div>	
+		<div class="form_wrapper">
+		    <form id="bill_num_search" class="panel" selected="true"> 
+		        <h4>Find Legislation by Bill Number</h4> 
+		        <fieldset> 
+		            <div class="row"> 
+		                <label>Congress</label> 
+		                <input id="bill_num_congress_field" type="search" pattern="[0-9]*" value="111"/> 
+		            </div> 
+		            <div class="row"> 
+		                <label>Bill Number</label> 
+		                <input id="bill_num_field" type="search" value=""/> 
+		            </div> 
+		        </fieldset> 
+		        <a id="bill_num_search_button" class="whiteButton" type="submit" href="#">Search</a> 
+		    </form>
+		</div>
+	</div>
+	
+	<div id="legislation_search_results_body" class="content">
+		<ul id="legislation_search_results_list" class="classic_list">
+		</ul>
+	</div>
 	
 	<div id="legislators_favorites_body" class="content">
 		<ul id="legislators_favorites_list" class="classic_list">

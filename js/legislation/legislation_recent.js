@@ -9,7 +9,7 @@ function LegislationRecentView() {
     self.addToLocal = function(bill, chamber) {
         application.localDb.transaction(
             function(transaction) {
-                transaction.executeSql("INSERT INTO LegislationRecent (bill_id, chamber, bill_title, last_action_at) VALUES (?, ?, ?, ?)", [bill.type + '-' + bill.number, bill.chamber, bill.official_title, bill.last_action_at.replace(' +0000', '').replace(/\//g, '-')]);
+                transaction.executeSql("INSERT INTO LegislationRecent (bill_id, chamber, bill_title, last_action_at) VALUES (?, ?, ?, ?)", [bill.bill_id, bill.chamber, bill.official_title, bill.last_action_at.replace(' +0000', '').replace(/\//g, '-')]);
             }
         );        
     }
