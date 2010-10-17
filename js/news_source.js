@@ -143,7 +143,7 @@ function NewsSourceView() {
         if (localStorage.getItem("current_news_source") == "all") {
             var subDiv2 = document.createElement("div");
             subDiv2.className = 'result_subtitle';
-            subDiv2.innerHTML = self.sourceTitle[row.doc_type];
+            subDiv2.innerHTML = '<img class="news_logo" src="images/news_logos/' + row.doc_type + '.png"> ' + self.sourceTitle[row.doc_type];
             anchor.appendChild(subDiv2);
         }
         anchor.appendChild(titleDiv);
