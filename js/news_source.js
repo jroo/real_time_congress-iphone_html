@@ -102,7 +102,8 @@ function NewsSourceView() {
             function(transaction) {
                transaction.executeSql("UPDATE News SET viewed = 1 WHERE id = ?", [id]);
             }
-        );        
+        );
+        document.getElementById('news_title_' + id).className = 'result_title_viewed';     
         return true;
     }
 
@@ -131,6 +132,7 @@ function NewsSourceView() {
             title_suffix = '_viewed';
         }
         var titleDiv = document.createElement("div");
+        titleDiv.id = 'news_title_' + row.id;
         titleDiv.className = 'result_title' + title_suffix;
         titleDiv.innerHTML = row.title;
 
