@@ -225,13 +225,19 @@ body {
     font-weight: bold;
 }
 
+.result_title_viewed {
+    margin-right:20px;
+    font-weight: bold;
+    color: #999999;
+}
+
 .result_head {
     margin-bottom:8px;
 }
 
 .result_subtitle {
     margin-right:20px;
-    color: #777777;
+    color: #999999;
     font-size:10pt;
 }
 
@@ -359,6 +365,11 @@ body {
     margin-top: 25px;
 }
 
+.news_logo {
+    height: 12px;
+    width: 12px;
+    vertical-align: middle;
+}
 #about_body { display:none }
 #committee_body { display:none }
 #doc_list_body { display:none }

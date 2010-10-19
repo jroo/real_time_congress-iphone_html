@@ -43,7 +43,7 @@ function NewsSourceView() {
                 latest_list.push({row_type:'header', title:friendly_date, subtitle:'subby'});
                 last_date = this_date;
             }
-            latest_list.push({row_type:'content', title:row.title, description:row.description, url:row.url, date:row.date, doc_type:row.doc_type});        
+            latest_list.push({row_type:'content', id:row.id, title:row.title, description:row.description, url:row.url, date:row.date, doc_type:row.doc_type, viewed:row.viewed});        
         }
         return latest_list;
     }
@@ -89,12 +89,22 @@ function NewsSourceView() {
         application.localDb.transaction(
             function(transaction) {
                 if (news_source == "all") {
-                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News ORDER BY date DESC, url DESC LIMIT 30", [], self.dataHandler);
+                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type, viewed FROM News ORDER BY date DESC, url DESC LIMIT 30", [], self.dataHandler);
                 } else {
-                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
+                    transaction.executeSql("SELECT id, datetime(date, 'localtime') AS date, title, url, doc_type, viewed FROM News WHERE doc_type = ? ORDER BY date DESC, url DESC LIMIT 20", [news_source,], self.dataHandler);
                 }
             }
         );
+    }
+    
+    self.markViewed = function(id) {
+        application.localDb.transaction(
+            function(transaction) {
+               transaction.executeSql("UPDATE News SET viewed = 1 WHERE id = ?", [id]);
+            }
+        );
+        document.getElementById('news_title_' + id).className = 'result_title_viewed';     
+        return true;
     }
 
     self.renderRow = function(row, dest_list) {    
@@ -113,11 +123,17 @@ function NewsSourceView() {
         anchor.href = row.url;
         $(anchor).unbind();
     	$(anchor).click(function() {
-    		return true;
+    	    return(self.markViewed(row.id));
     	});
 
+
+        title_suffix = '';
+        if (row.viewed) {
+            title_suffix = '_viewed';
+        }
         var titleDiv = document.createElement("div");
-        titleDiv.className = 'result_title';
+        titleDiv.id = 'news_title_' + row.id;
+        titleDiv.className = 'result_title' + title_suffix;
         titleDiv.innerHTML = row.title;
 
         var subDiv = document.createElement("div");
@@ -127,7 +143,7 @@ function NewsSourceView() {
         if (localStorage.getItem("current_news_source") == "all") {
             var subDiv2 = document.createElement("div");
             subDiv2.className = 'result_subtitle';
-            subDiv2.innerHTML = self.sourceTitle[row.doc_type];
+            subDiv2.innerHTML = '<img class="news_logo" src="images/news_logos/' + row.doc_type + '.png"> ' + self.sourceTitle[row.doc_type];
             anchor.appendChild(subDiv2);
         }
         anchor.appendChild(titleDiv);
