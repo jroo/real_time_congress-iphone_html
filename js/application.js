@@ -1,6 +1,6 @@
 function Application() {
     this.title = "Real Time Congress";
-    this.version = "1.95";
+    this.version = "1.96";
     this.author = "Joshua Ruihley, Sunlight Foundation";
     this.copyright = "Copyright 2010, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
