@@ -5,6 +5,7 @@ function NewsSourceView() {
     self.destinationList = document.getElementById('news_list');
     self.titleString = 'News';
     self.sourceTitle = { 
+        'congressmatters':'Congress Matters',
         'govtrackinsider':'GovTrack Insider',
         'thehill':'The Hill',
         'hotline':'Hotline on Call',
@@ -15,6 +16,7 @@ function NewsSourceView() {
         'plumline':'The Plum Line',
         'politico':'Politico',
         'politicalwire':'Teagan Goddard\'s Political Wire',
+        'rollcall':'Roll Call',
         'washpost':'Washington Post'
     }
     

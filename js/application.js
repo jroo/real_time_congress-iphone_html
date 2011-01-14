@@ -2,11 +2,11 @@ function Application() {
     this.title = "Real Time Congress";
     this.version = "1.97b";
     this.author = "Joshua Ruihley, Sunlight Foundation";
-    this.copyright = "Copyright 2010, Sunlight Foundation";
+    this.copyright = "Copyright 2011, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
 
     //this.rtcDomain = 'realtimecongress.org';
-    this.rtcDomain = 'realtimecongress.org';
+    this.rtcDomain = 'eleventy6.com:8000';
     this.docserverDomain = 'docserver.org';
     this.ajaxTimeout = 10000;
     this.localDb = this.openDb('rtc', '1.0', 'Real Time Congress');
