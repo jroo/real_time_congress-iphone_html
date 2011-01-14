@@ -54,8 +54,11 @@ function WhipNoticesView() {
                        transaction.executeSql("DELETE FROM LeadershipNotices")
                        transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['dww', data[0]['dww'].date, data[0]['dww'].url]);
                        transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['dwd', data[0]['dwd'].date, data[0]['dwd'].url]);
-                       transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rwd', data[0]['rwd'].date, data[0]['rwd'].url]);
-                       transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rww', data[0]['rww'].date, data[0]['rww'].url]);
+                       transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['dwn', data[0]['dwn'].date, data[0]['dwn'].url]);
+                       
+                       //remove support for republican whip updates until they start publishing again
+                       //transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rwd', data[0]['rwd'].date, data[0]['rwd'].url]);
+                       //transaction.executeSql("INSERT INTO LeadershipNotices (doc_type, date, url) VALUES (?, ?, ?)", ['rww', data[0]['rww'].date, data[0]['rww'].url]);
                     }
                 ); 
                 application.markViewed('whip_notices');
