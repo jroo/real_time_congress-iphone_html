@@ -1,6 +1,6 @@
 function Application() {
     this.title = "Real Time Congress";
-    this.version = "1.97";
+    this.version = "1.98";
     this.author = "Joshua Ruihley, Sunlight Foundation";
     this.copyright = "Copyright 2011, Sunlight Foundation";
     this.url = "http://realtimecongress.org";
@@ -138,4 +138,5 @@ $(document).ready(function() {
     application = new Application();
     application.initializeDb();
     application.dbPurgeOld();
+	PhoneGap.exec("GA.gaTrackPageview", "/" + application.version + "/app_launched/");
 });

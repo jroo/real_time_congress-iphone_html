@@ -75,6 +75,7 @@ View.prototype.hideProgress = function() {
 }
 
 View.prototype.show = function() {
+	PhoneGap.exec("GA.gaTrackPageview", "/" + application.version + "/" + this.viewName + "/");
     $('#'+this.containerDiv).show();
 }
 

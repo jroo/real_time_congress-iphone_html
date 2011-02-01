@@ -11,6 +11,7 @@ function NewsView() {
     }
 
     self.render = function() {
+		self.viewName = 'news';
         self.setTitle(self.titleString);
         self.setLeftButton('back', 'main_menu');
         self.setRightButton();

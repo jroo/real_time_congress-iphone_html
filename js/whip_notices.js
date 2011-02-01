@@ -5,6 +5,7 @@ function WhipNoticesView() {
     self.titleString = 'Whip Notices';
 
     self.render = function() {
+        self.viewName = "whip_notices";
         self.setTitle(self.titleString);
         self.setLeftButton('back', 'main_menu');
         self.setRightButton('reload');

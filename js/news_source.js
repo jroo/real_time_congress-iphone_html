@@ -21,6 +21,7 @@ function NewsSourceView() {
     }
     
     self.render = function() {
+        self.viewName = "news/" + localStorage.getItem("current_news_source");
         self.setTitle(localStorage.getItem("current_news_title"));
         self.setLeftButton('back', 'news');
         self.setRightButton('reload');

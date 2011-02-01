@@ -35,6 +35,7 @@ function DocListView() {
     }
     
     self.render = function() {
+		self.viewName = 'documents/' + localStorage.getItem("current_doc_list");
         self.setTitle(localStorage.getItem("current_doc_title"));
         self.setLeftButton('back', 'documents');
         self.setRightButton('reload');

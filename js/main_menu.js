@@ -6,6 +6,7 @@ function MainMenuView() {
     self.titleString = 'Menu';
 
     self.render = function() {
+		self.viewName = "main_menu";
         self.setTitle(self.titleString);
         self.setLeftButton();
         self.setRightButton();

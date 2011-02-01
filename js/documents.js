@@ -11,6 +11,7 @@ function DocumentsView() {
     }
 
     self.render = function() {
+		self.viewName = 'documents';
         self.setTitle(self.titleString);
         self.setLeftButton('back', 'main_menu');
         self.setRightButton();

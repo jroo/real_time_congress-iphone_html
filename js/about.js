@@ -5,6 +5,7 @@ function AboutView() {
     self.titleString = 'About';
 
     self.render = function() {
+		self.viewName = 'about';
         $("#title").html(application.title);
         $("#version").html("v" + application.version);
         $("#copyright").html(application.copyright);

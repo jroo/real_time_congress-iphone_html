@@ -7,6 +7,7 @@ function FloorUpdatesView() {
     self.destinationList = document.getElementById('update_list'); 
 
     self.loadChamber = function(chamber) {
+		self.viewName = 'floor_updates/' + chamber;
         self.currentChamber = chamber;
         self.setTitle(chamber + " Floor");
         self.dbGetLatest(chamber);

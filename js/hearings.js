@@ -6,6 +6,11 @@ function HearingsView() {
     self.destinationList = document.getElementById('hearing_list');
     self.titleString = 'Hearings';
 
+	
+	self.t = function() {
+		alert('t');
+	}
+	
     self.render = function() {
         self.setTitle(self.titleString);
         self.setLeftButton('back', 'main_menu');
@@ -15,6 +20,7 @@ function HearingsView() {
     }
     
     self.loadChamber = function(chamber) {
+		self.viewName = 'hearings/' + chamber;
         self.currentChamber = chamber;
         self.setTitle(chamber + " Hearings");
         self.dbGetLatest(chamber);
